@@ -41,15 +41,16 @@ function StandardCard({ article, className }: ArticleCardProps) {
   return (
     <article
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:ring-2 focus-within:ring-ring",
+        "group relative flex cursor-pointer flex-col overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:ring-2 focus-within:ring-ring",
         className
       )}
+      role="button"
+      tabIndex={0}
+      onClick={() => navigateTo("article", article.slug)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigateTo("article", article.slug); } }}
+      aria-label={`Read: ${article.title}`}
     >
-      <button
-        onClick={() => navigateTo("article", article.slug)}
-        className="relative block aspect-[16/10] w-full overflow-hidden text-left"
-        aria-label={`Read: ${article.title}`}
-      >
+      <div className="relative block aspect-[16/10] w-full overflow-hidden">
         <Image
           src={article.coverImage}
           alt=""
@@ -64,17 +65,11 @@ function StandardCard({ article, className }: ArticleCardProps) {
         >
           {article.category}
         </Badge>
-      </button>
+      </div>
       <div className="flex flex-1 flex-col p-4 sm:p-5">
-        <button
-          onClick={() => navigateTo("article", article.slug)}
-          className="group/title inline-block text-left"
-          aria-label={`Read: ${article.title}`}
-        >
-          <h3 className="font-serif text-lg leading-snug text-foreground transition-colors group-hover/title:text-primary line-clamp-2 sm:text-xl">
-            {article.title}
-          </h3>
-        </button>
+        <h3 className="font-serif text-lg leading-snug text-foreground transition-colors group-hover:text-primary line-clamp-2 sm:text-xl">
+          {article.title}
+        </h3>
         <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
           {article.excerpt}
         </p>
@@ -98,15 +93,16 @@ function FeaturedCard({ article, className }: ArticleCardProps) {
   return (
     <article
       className={cn(
-        "group relative overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-lg focus-within:ring-2 focus-within:ring-ring",
+        "group relative cursor-pointer overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-lg focus-within:ring-2 focus-within:ring-ring",
         className
       )}
+      role="button"
+      tabIndex={0}
+      onClick={() => navigateTo("article", article.slug)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigateTo("article", article.slug); } }}
+      aria-label={`Read: ${article.title}`}
     >
-      <button
-        onClick={() => navigateTo("article", article.slug)}
-        className="relative block aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden text-left"
-        aria-label={`Read: ${article.title}`}
-      >
+      <div className="relative block aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden">
         <Image
           src={article.coverImage}
           alt=""
@@ -116,7 +112,7 @@ function FeaturedCard({ article, className }: ArticleCardProps) {
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-      </button>
+      </div>
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
         <Badge
           variant="secondary"
@@ -124,15 +120,9 @@ function FeaturedCard({ article, className }: ArticleCardProps) {
         >
           {article.category}
         </Badge>
-        <button
-          onClick={() => navigateTo("article", article.slug)}
-          className="text-left"
-          aria-label={`Read: ${article.title}`}
-        >
-          <h3 className="font-serif text-xl leading-snug text-white sm:text-2xl md:text-3xl">
-            {article.title}
-          </h3>
-        </button>
+        <h3 className="font-serif text-xl leading-snug text-white sm:text-2xl md:text-3xl">
+          {article.title}
+        </h3>
         <p className="mt-2 line-clamp-2 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
           {article.excerpt}
         </p>
@@ -156,14 +146,18 @@ function HorizontalCard({ article, className }: ArticleCardProps) {
   return (
     <article
       className={cn(
-        "group flex flex-col overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:ring-2 focus-within:ring-ring sm:flex-row",
+        "group flex cursor-pointer flex-col overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:ring-2 focus-within:ring-ring sm:flex-row sm:items-stretch",
         className
       )}
+      role="button"
+      tabIndex={0}
+      onClick={() => navigateTo("article", article.slug)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigateTo("article", article.slug); } }}
+      aria-label={`Read: ${article.title}`}
     >
-      <button
-        onClick={() => navigateTo("article", article.slug)}
-        className="relative block aspect-[16/10] w-full shrink-0 overflow-hidden sm:aspect-auto sm:h-full sm:w-[40%] text-left"
-        aria-label={`Read: ${article.title}`}
+      <div
+        className="relative block aspect-[16/10] w-full shrink-0 overflow-hidden sm:aspect-auto sm:w-[40%]"
+        aria-hidden="true"
       >
         <Image
           src={article.coverImage}
@@ -173,20 +167,14 @@ function HorizontalCard({ article, className }: ArticleCardProps) {
           className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
           loading="lazy"
         />
-      </button>
+      </div>
       <div className="flex flex-1 flex-col justify-center p-4 sm:p-6">
         <Badge variant="secondary" className="mb-2 w-fit text-xs font-medium">
           {article.category}
         </Badge>
-        <button
-          onClick={() => navigateTo("article", article.slug)}
-          className="group/title inline-block text-left"
-          aria-label={`Read: ${article.title}`}
-        >
-          <h3 className="font-serif text-lg leading-snug text-foreground transition-colors group-hover/title:text-primary line-clamp-2">
-            {article.title}
-          </h3>
-        </button>
+        <h3 className="font-serif text-lg leading-snug text-foreground transition-colors group-hover:text-primary line-clamp-2">
+          {article.title}
+        </h3>
         <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
           {article.excerpt}
         </p>
