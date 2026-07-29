@@ -39,7 +39,7 @@ export function Header() {
       } else if (action === "category" && category) {
         navigateTo("blog", null, category);
       } else if (action === "about") {
-        goHome();
+        navigateTo("about");
       } else {
         goHome();
       }
@@ -77,7 +77,8 @@ export function Header() {
           {navItems.map((item) => {
             const isActive =
               (item.action === "blog" && view === "blog" && !blogCategory) ||
-              (item.action === "category" && blogCategory === item.category);
+              (item.action === "category" && blogCategory === item.category) ||
+              (item.action === "about" && view === "about");
             return (
               <li key={item.label} role="none">
                 <button

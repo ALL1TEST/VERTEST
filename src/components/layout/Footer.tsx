@@ -107,26 +107,27 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5" role="list">
               <li>
                 <button
-                  onClick={goHome}
+                  onClick={() => navigateTo("about")}
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
                 >
                   About Us
                 </button>
               </li>
               <li>
-                <span className="text-sm text-muted-foreground">
+                <button
+                  onClick={() => navigateTo("contact")}
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
+                >
                   Contact
-                </span>
+                </button>
               </li>
               <li>
-                <span className="text-sm text-muted-foreground">
+                <button
+                  onClick={() => navigateTo("privacy")}
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
+                >
                   Privacy Policy
-                </span>
-              </li>
-              <li>
-                <span className="text-sm text-muted-foreground">
-                  Terms of Service
-                </span>
+                </button>
               </li>
             </ul>
           </div>

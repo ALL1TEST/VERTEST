@@ -10,6 +10,9 @@ import { NewsletterSection } from "@/components/blog/NewsletterSection";
 import { AboutBlurb } from "@/components/blog/AboutBlurb";
 import { BlogListing } from "@/components/blog/BlogListing";
 import { ArticleView } from "@/components/blog/ArticleView";
+import { AboutPage } from "@/components/pages/AboutPage";
+import { ContactPage } from "@/components/pages/ContactPage";
+import { PrivacyPage } from "@/components/pages/PrivacyPage";
 
 function HomeView() {
   return (
@@ -34,6 +37,18 @@ export function ViewRouter() {
 
   if (view === "blog") {
     return <BlogListing />;
+  }
+
+  if (view === "about") {
+    return <AboutPage />;
+  }
+
+  if (view === "contact") {
+    return <ContactPage />;
+  }
+
+  if (view === "privacy") {
+    return <PrivacyPage />;
   }
 
   return <HomeView />;

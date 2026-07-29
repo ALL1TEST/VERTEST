@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ArticleCard } from "@/components/blog/ArticleCard";
+import { CommentSection } from "@/components/blog/CommentSection";
 import { useNavigation } from "@/lib/store";
 import { getArticleBySlug, getRelatedArticles } from "@/lib/data";
 
@@ -178,6 +179,12 @@ export function ArticleView({ slug }: { slug: string }) {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Comments */}
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <Separator className="mb-10" />
+        <CommentSection articleSlug={slug} />
       </div>
 
       {/* Related Articles */}

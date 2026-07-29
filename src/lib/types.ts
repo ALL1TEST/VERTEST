@@ -23,6 +23,15 @@ export interface Article {
 
 export type ArticleCardVariant = "standard" | "featured" | "horizontal";
 
-export type ViewType = "home" | "blog" | "article";
+export type ViewType = "home" | "blog" | "article" | "about" | "contact" | "privacy";
 
 export type BlogSort = "newest" | "oldest" | "popular";
+
+export interface Comment {
+  id: string;
+  articleSlug: string;
+  name: string;
+  email: string;
+  content: string;
+  createdAt: string;
+}
