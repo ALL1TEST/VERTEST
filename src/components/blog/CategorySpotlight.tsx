@@ -1,7 +1,9 @@
-import Link from "next/link";
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import { ArticleCard } from "./ArticleCard";
 import { plantCareArticles, plantProfileArticles } from "@/lib/data";
+import { useNavigation } from "@/lib/store";
 
 interface CategorySpotlightProps {
   title: string;
@@ -10,19 +12,21 @@ interface CategorySpotlightProps {
 }
 
 function CategoryColumn({ title, slug, articles }: CategorySpotlightProps) {
+  const { navigateTo } = useNavigation();
+
   return (
     <div>
       <div className="flex items-center justify-between gap-2">
         <h3 className="font-serif text-lg tracking-tight text-foreground sm:text-xl">
           {title}
         </h3>
-        <Link
-          href={`/category/${slug}`}
+        <button
+          onClick={() => navigateTo("blog", null, slug)}
           className="flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:underline"
         >
           View all
           <ArrowRight className="h-3 w-3" aria-hidden="true" />
-        </Link>
+        </button>
       </div>
       <div className="mt-4 flex flex-col gap-4">
         {articles.slice(0, 3).map((article) => (

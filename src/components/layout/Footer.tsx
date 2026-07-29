@@ -1,7 +1,9 @@
-import Link from "next/link";
+"use client";
+
 import { Leaf, Instagram, Youtube, Facebook, Rss } from "lucide-react";
-import { siteConfig, navigationItems, categories } from "@/lib/site-config";
+import { siteConfig, categories } from "@/lib/site-config";
 import { Separator } from "@/components/ui/separator";
+import { useNavigation } from "@/lib/store";
 
 const socialLinks = [
   { label: "Instagram", href: "https://instagram.com", icon: Instagram },
@@ -10,8 +12,17 @@ const socialLinks = [
   { label: "RSS Feed", href: "/feed.xml", icon: Rss },
 ];
 
+const exploreItems = [
+  { label: "Plant Care", category: "plant-care" as const },
+  { label: "Beginner Guides", category: "beginner-guides" as const },
+  { label: "Design Ideas", category: "design-ideas" as const },
+  { label: "Plant Profiles", category: "plant-profiles" as const },
+  { label: "Tools & Supplies", category: "tools" as const },
+];
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { navigateTo, goHome } = useNavigation();
 
   return (
     <footer role="contentinfo" className="border-t bg-card">
@@ -20,8 +31,8 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Column 1: Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link
-              href="/"
+            <button
+              onClick={goHome}
               className="inline-flex items-center gap-2"
               aria-label={`${siteConfig.name} — Home`}
             >
@@ -29,7 +40,7 @@ export function Footer() {
               <span className="font-serif text-lg text-foreground">
                 {siteConfig.name}
               </span>
-            </Link>
+            </button>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
               {siteConfig.description}
             </p>
@@ -56,14 +67,14 @@ export function Footer() {
               Explore
             </h3>
             <ul className="mt-4 space-y-2.5" role="list">
-              {navigationItems.slice(0, 5).map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
+              {exploreItems.map((item) => (
+                <li key={item.category}>
+                  <button
+                    onClick={() => navigateTo("blog", null, item.category)}
                     className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
                   >
                     {item.label}
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -77,12 +88,12 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5" role="list">
               {categories.slice(0, 6).map((cat) => (
                 <li key={cat.slug}>
-                  <Link
-                    href={`/category/${cat.slug}`}
+                  <button
+                    onClick={() => navigateTo("blog", null, cat.slug)}
                     className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
                   >
                     {cat.name}
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -95,36 +106,27 @@ export function Footer() {
             </h3>
             <ul className="mt-4 space-y-2.5" role="list">
               <li>
-                <Link
-                  href="/about"
+                <button
+                  onClick={goHome}
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
                 >
                   About Us
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href="/contact"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
-                >
+                <span className="text-sm text-muted-foreground">
                   Contact
-                </Link>
+                </span>
               </li>
               <li>
-                <Link
-                  href="/privacy"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
-                >
+                <span className="text-sm text-muted-foreground">
                   Privacy Policy
-                </Link>
+                </span>
               </li>
               <li>
-                <Link
-                  href="/terms"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
-                >
+                <span className="text-sm text-muted-foreground">
                   Terms of Service
-                </Link>
+                </span>
               </li>
             </ul>
           </div>

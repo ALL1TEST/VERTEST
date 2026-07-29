@@ -1,10 +1,14 @@
-import Link from "next/link";
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import { ArticleCard } from "./ArticleCard";
 import { Button } from "@/components/ui/button";
 import { latestArticles } from "@/lib/data";
+import { useNavigation } from "@/lib/store";
 
 export function LatestPosts() {
+  const { navigateTo } = useNavigation();
+
   return (
     <section aria-labelledby="latest-heading" className="py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -24,12 +28,10 @@ export function LatestPosts() {
           <Button
             variant="ghost"
             className="hidden shrink-0 text-sm sm:inline-flex"
-            asChild
+            onClick={() => navigateTo("blog")}
           >
-            <Link href="/blog">
-              View all
-              <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
-            </Link>
+            View all
+            <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
 
@@ -42,11 +44,13 @@ export function LatestPosts() {
 
         {/* Mobile "View all" button per Section 14 touch-friendly */}
         <div className="mt-8 flex justify-center sm:hidden">
-          <Button variant="outline" className="w-full max-w-xs" asChild>
-            <Link href="/blog">
-              View all articles
-              <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
-            </Link>
+          <Button
+            variant="outline"
+            className="w-full max-w-xs"
+            onClick={() => navigateTo("blog")}
+          >
+            View all articles
+            <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
       </div>

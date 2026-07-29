@@ -1,10 +1,14 @@
-import Link from "next/link";
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import { ArticleCard } from "./ArticleCard";
 import { Button } from "@/components/ui/button";
 import { trendingArticles } from "@/lib/data";
+import { useNavigation } from "@/lib/store";
 
 export function TrendingPosts() {
+  const { navigateTo } = useNavigation();
+
   return (
     <section aria-labelledby="trending-heading" className="bg-muted/40 py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -23,12 +27,10 @@ export function TrendingPosts() {
           <Button
             variant="ghost"
             className="hidden shrink-0 text-sm sm:inline-flex"
-            asChild
+            onClick={() => navigateTo("blog")}
           >
-            <Link href="/trending">
-              See all
-              <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
-            </Link>
+            See all
+            <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
 

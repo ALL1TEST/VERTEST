@@ -1,6 +1,8 @@
-import Link from "next/link";
+"use client";
+
 import { Sprout, BookOpen, Lamp, Flower2, Shovel, Scissors } from "lucide-react";
 import { categories } from "@/lib/site-config";
+import { useNavigation } from "@/lib/store";
 import type { LucideIcon } from "lucide-react";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -13,6 +15,8 @@ const iconMap: Record<string, LucideIcon> = {
 };
 
 export function CategoryLinks() {
+  const { navigateTo } = useNavigation();
+
   return (
     <section aria-labelledby="categories-heading" className="border-y bg-muted/40">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
@@ -27,9 +31,9 @@ export function CategoryLinks() {
           {categories.map((cat) => {
             const Icon = iconMap[cat.icon] ?? Sprout;
             return (
-              <Link
+              <button
                 key={cat.slug}
-                href={`/category/${cat.slug}`}
+                onClick={() => navigateTo("blog", null, cat.slug)}
                 className="group flex flex-col items-center gap-2.5 rounded-xl p-3 text-center transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:p-4"
                 aria-label={`Browse ${cat.name} articles`}
               >
@@ -39,7 +43,7 @@ export function CategoryLinks() {
                 <span className="text-xs font-medium text-foreground sm:text-sm">
                   {cat.name}
                 </span>
-              </Link>
+              </button>
             );
           })}
         </div>
