@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Menu, Search, Leaf, BookOpen } from "lucide-react";
+import { Menu, Search, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -60,7 +60,7 @@ export function Header() {
         aria-label="Primary"
         className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
       >
-        {/* Logo */
+        {/* Logo */}
         <button
           onClick={goHome}
           className="flex items-center gap-2 transition-opacity hover:opacity-80"
@@ -72,7 +72,7 @@ export function Header() {
           </span>
         </button>
 
-        {/* Desktop Navigation */
+        {/* Desktop Navigation */}
         <ul className="hidden items-center gap-1 lg:flex" role="menubar">
           {navItems.map((item) => {
             const isActive =
