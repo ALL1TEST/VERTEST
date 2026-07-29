@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Leaf, Heart, Target, Users } from "lucide-react";
+import { Leaf, Heart, Target, MessageCircle } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 
 const values = [
@@ -18,33 +18,13 @@ const values = [
       "Our care guides combine horticultural science with real-world experience. We test every tip in our own indoor gardens before publishing.",
   },
   {
-    icon: Users,
+    icon: MessageCircle,
     title: "Community Driven",
     description:
       "Verdant is built by plant lovers, for plant lovers. Our growing community of readers shapes the content we create and the topics we cover.",
   },
 ];
 
-const team = [
-  {
-    name: "Elena Greenfield",
-    role: "Founder & Lead Writer",
-    bio: "Certified horticulturist with 12 years of experience helping people create thriving indoor gardens. Elena started Verdant after seeing too many new plant parents struggle with conflicting advice online.",
-    avatar: "/images/author-elena.jpg",
-  },
-  {
-    name: "Marcus Chen",
-    role: "Plant Photography & Design",
-    bio: "A botanical photographer and interior designer who brings visual storytelling to every article. Marcus ensures our plant styling tips are as beautiful as they are practical.",
-    avatar: "/images/author-elena.jpg",
-  },
-  {
-    name: "Sarah Okafor",
-    role: "Editorial Director",
-    bio: "With a background in botanical journalism, Sarah ensures every guide meets our standards for accuracy, clarity, and usefulness for plant parents at every level.",
-    avatar: "/images/author-elena.jpg",
-  },
-];
 
 export function AboutPage() {
   return (
@@ -119,36 +99,6 @@ export function AboutPage() {
                 </div>
                 <h3 className="mt-4 font-serif text-lg text-foreground">{value.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center font-serif text-2xl tracking-tight text-foreground sm:text-3xl">
-            Meet the Team
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-center text-muted-foreground">
-            The plant-obsessed humans behind every article, guide, and tip.
-          </p>
-          <div className="mt-10 grid gap-8 sm:grid-cols-3">
-            {team.map((member) => (
-              <div key={member.name} className="text-center">
-                <div className="mx-auto relative h-28 w-28 overflow-hidden rounded-full">
-                  <Image
-                    src={member.avatar}
-                    alt={member.name}
-                    fill
-                    sizes="112px"
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="mt-4 font-serif text-lg text-foreground">{member.name}</h3>
-                <p className="text-sm font-medium text-primary">{member.role}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{member.bio}</p>
               </div>
             ))}
           </div>

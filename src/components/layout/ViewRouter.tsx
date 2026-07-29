@@ -7,7 +7,6 @@ import { LatestPosts } from "@/components/blog/LatestPosts";
 import { TrendingPosts } from "@/components/blog/TrendingPosts";
 import { CategorySpotlight } from "@/components/blog/CategorySpotlight";
 import { NewsletterSection } from "@/components/blog/NewsletterSection";
-import { AboutBlurb } from "@/components/blog/AboutBlurb";
 import { BlogListing } from "@/components/blog/BlogListing";
 import { ArticleView } from "@/components/blog/ArticleView";
 import { AboutPage } from "@/components/pages/AboutPage";
@@ -23,7 +22,6 @@ function HomeView() {
       <TrendingPosts />
       <CategorySpotlight />
       <NewsletterSection />
-      <AboutBlurb />
     </>
   );
 }

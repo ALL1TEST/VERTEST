@@ -56,3 +56,17 @@ Stage Summary:
 - Form validation with error messages
 - Comment list with user icon, name, "says:", content, and timestamp
 - Design matches the WordPress-style Leave a Reply reference screenshot
+---
+Task ID: 4
+Agent: Main
+Task: Remove Meet Verdant and Meet the Team sections
+
+Work Log:
+- Removed AboutBlurb import and usage from ViewRouter (homepage)
+- Removed team data array and Team section JSX from AboutPage
+- Fixed broken Users import by replacing with MessageCircle icon
+
+Stage Summary:
+- Homepage no longer shows "Meet Verdant" section
+- About page no longer shows "Meet the Team" section
+- No errors in dev log
