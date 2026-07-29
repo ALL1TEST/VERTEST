@@ -1,0 +1,2002 @@
+     1→---
+     2→name: blog-ui-design-expert
+     3→description: "Comprehensive Blog UI Design Expert system for creating world-class blogging websites across ANY niche (indoor plants, gardening, pets, home, finance, health, technology, food, travel, education, lifestyle, DIY, parenting, fitness, beauty, fashion, automotive, real estate, legal, business, marketing, etc.). Use this skill whenever the user requests blog design, website design for content sites, magazine-style layouts, editorial designs, publishing platforms, news sites, article-based websites, content-heavy web applications, or any UI/UX work involving blogs, articles, posts, or content consumption. Trigger this skill for phrases like 'design a blog', 'create a blog layout', 'blog UI', 'magazine website', 'content site design', 'editorial design', 'publishing platform', 'article page design', or when building WordPress themes, Next.js blogs, Ghost themes, or any content management frontend. This skill provides complete design systems, component libraries, typography rules, color systems, accessibility guidelines, SEO optimization, E-E-A-T compliance, ad integration patterns, mobile-first responsive design, and production-ready coding standards specifically optimized for professional blogging platforms."
+     4→compatibility: "Works with Next.js, React, Vue, Svelte, WordPress (block/classic themes), Ghost, Astro, and any modern frontend framework. Requires Tailwind CSS for optimal implementation."
+     5→version: "1.0.0"
+     6→author: "Blog UI Design System"
+     7→---
+     8→
+     9→# Blog UI Design Expert Skill
+    10→
+    11→A comprehensive, reusable design system and documentation for building world-class blogging websites across any niche. This skill extracts proven design principles from industry-leading publications and translates them into actionable, framework-agnostic guidelines.
+    12→
+    13→---
+    14→
+    15→## Table of Contents
+    16→
+    17→1. [Design Philosophy](#1-design-philosophy)
+    18→2. [UX Principles](#2-ux-principles)
+    19→3. [UI Principles](#3-ui-principles)
+    20→4. [Typography System](#4-typography-system)
+    21→5. [Color System](#5-color-system)
+    22→6. [Spacing System](#6-spacing-system)
+    23→7. [Component Library Rules](#7-component-library-rules)
+    24→8. [Accessibility (WCAG AA)](#8-accessibility-wcag-aa)
+    25→9. [SEO Layout Best Practices](#9-seo-layout-best-practices)
+    26→10. [E-E-A-T Layout Rules](#10-e-e-at-layout-rules)
+    27→11. [Google Discover Optimization](#11-google-discover-optimization)
+    28→12. [Pinterest-Friendly Layout Rules](#12-pinterest-friendly-layout-rules)
+    29→13. [AdSense-Friendly Layout Rules](#13-adsense-friendly-layout-rules)
+    30→14. [Mobile-First Rules](#14-mobile-first-rules)
+    31→15. [Responsive Rules](#15-responsive-rules)
+    32→16. [Header Design Rules](#16-header-design-rules)
+    33→17. [Footer Design Rules](#17-footer-design-rules)
+    34→18. [Homepage Rules](#18-homepage-rules)
+    35→19. [Article Page Rules](#19-article-page-rules)
+    36→20. [Category Page Rules](#20-category-page-rules)
+    37→21. [Search Page Rules](#21-search-page-rules)
+    38→22. [Author Page Rules](#22-author-page-rules)
+    39→23. [About Page Rules](#23-about-page-rules)
+    40→24. [Contact Page Rules](#24-contact-page-rules)
+    41→25. [Newsletter Rules](#25-newsletter-rules)
+    42→26. [Card Design Rules](#26-card-design-rules)
+    43→27. [Navigation Rules](#27-navigation-rules)
+    44→28. [Forms Rules](#28-forms-rules)
+    45→29. [Animation Rules](#29-animation-rules)
+    46→30. [Loading Performance Rules](#30-loading-performance-rules)
+    47→31. [Core Web Vitals Rules](#31-core-web-vitals-rules)
+    48→32. [WordPress Theme Guidelines](#32-wordpress-theme-guidelines)
+    49→33. [Next.js Guidelines](#33-nextjs-guidelines)
+    50→34. [Anti-Patterns](#34-anti-patterns)
+    51→35. [Coding Standards](#35-coding-standards)
+    52→36. [Tailwind CSS Conventions](#36-tailwind-css-conventions)
+    53→37. [Component Naming Conventions](#37-component-naming-conventions)
+    54→38. [File Structure](#38-file-structure)
+    55→39. [Folder Structure](#39-folder-structure)
+    56→40. [Prompt Examples for Future AI Tasks](#40-prompt-examples-for-future-ai-tasks)
+    57→
+    58→---
+    59→
+    60→## 1. Design Philosophy
+    61→
+    62→### Core Tenets
+    63→
+    64→**Content-First Design**
+    65→The primary purpose of any blog is content consumption. Every design decision must prioritize readability, scannability, and engagement with written and visual content. Decorative elements exist only to support content hierarchy.
+    66→
+    67→**Progressive Enhancement**
+    68→Build a solid, functional foundation that works everywhere. Layer enhancements (animations, complex layouts, interactive features) on top without breaking core functionality for users with older devices or slower connections.
+    69→
+    70→**Intentional Restraint**
+    71→Great blog design knows what to omit as much as what to include. Each element must justify its existence by serving user needs or business goals. When in doubt, remove it.
+    72→
+    73→**Niche Adaptability**
+    74→This system works across all niches because it focuses on universal principles rather than specific aesthetics. The same structural rules apply whether designing for a gardening blog or a fintech publication—only surface-level styling changes.
+    75→
+    76→**Trust Through Consistency**
+    77→Users trust blogs that feel cohesive and professional. Maintain consistent patterns across all pages, interactions, and states. Inconsistency signals amateurism and erodes credibility.
+    78→
+    79→### Design Hierarchy Pyramid
+    80→
+    81→```
+    82→                    ┌─────────────┐
+    83→                    │   Delight    │  (Animations, micro-interactions)
+    84→                   ┌┴─────────────┴┐
+    85→                   │  Personality  │  (Brand colors, unique components)
+    86→                  ┌┴───────────────┴┐
+    87→                  │    Function     │  (Navigation, search, sharing)
+    88→                 ┌┴─────────────────┴┐
+    89→                 │   Readability     │  (Typography, spacing, contrast)
+    90→                ┌┴───────────────────┴┐
+    91→                │      Content        │  (Articles, images, media)
+    92→                └─────────────────────┘
+    93→```
+    94→
+    95→Each layer depends on the layers below. Never sacrifice lower layers for upper layers.
+    96→
+    97→### Mental Models
+    98→
+    99→**The Scanning Reader**
+   100→Most blog visitors scan before they read. Design for scanners first—clear headings, visual breaks, pull quotes, and highlighted key information. Deep readers will find their way naturally.
+   101→
+   102→**The Task-Oriented Visitor**
+   103→Many users arrive with specific intent (finding a recipe, solving a problem, learning a skill). Reduce friction between arrival and goal completion.
+   104→
+   105→**The Serendipitous Browser**
+   106→Some users explore without specific goals. Create discovery pathways through related content, category browsing, and visually appealing recommendations.
+   107→
+   108→**The Returning Reader**
+   109→Loyal readers develop mental models of your layout. Honor their learned expectations while gently introducing improvements.
+   110→
+   111→---
+   112→
+   113→## 2. UX Principles
+   114→
+   115→### Reading Experience
+   116→
+   117→**Optimal Line Length**
+   118→- Body text: 60-75 characters per line (including spaces)
+   119→- Maximum width: ~680px for comfortable reading
+   120→- Minimum width: ~320px to prevent excessive line wrapping
+   121→- Use CSS `ch` units or `max-width` with rem values
+   122→
+   123→**Vertical Rhythm**
+   124→Maintain consistent spacing multiples throughout:
+   125→- Base unit: 0.25rem (4px) or 0.5rem (8px)
+   126→- All margins, padding, and gaps should be multiples of the base
+   127→- Creates visual harmony and predictable spacing
+   128→
+   129→**Content Density Balance**
+   130→- Too sparse: Users scroll excessively, lose context
+   131→- Too dense: Overwhelming, feels like wall of text
+   132→- Target: 50-60% white space on article pages
+   133→- Adjust based on content type (reference material can be denser)
+   134→
+   135→**Paragraph Spacing**
+   136→- Between paragraphs: 1.5em (or 1.5 × line-height)
+   137→- Never use indentation for web paragraphs (print convention)
+   138→- First paragraph after heading can be slightly larger for emphasis
+   139→
+   140→### Navigation Flow
+   141→
+   142→**The Three-Click Rule (Modified)**
+   143→Users should reach any major content area within three clicks from anywhere on the site. However, don't sacrifice information architecture for arbitrary click counts—clarity trumps brevity.
+   144→
+   145→**Breadcrumb Psychology**
+   146→Breadcrumbs reduce cognitive load by showing location in information hierarchy. Always include them on inner pages (articles, categories, products).
+   147→
+   148→**Expected Placement**
+   149→Place navigation elements where users expect them:
+   150→- Logo: Top-left (LTR) / Top-right (RTL)
+   151→- Primary nav: Horizontal bar below header
+   152→- Search: Header area, visible icon
+   153→- Social links: Header or footer
+   154→- Newsletter: Footer or dedicated section
+   155→
+   156→### Interaction Feedback
+   157→
+   158→**Immediate Response**
+   159→All interactive elements must provide feedback within 100ms:
+   160→- Hover states for mouse users
+   161→- Focus states for keyboard users
+   162→- Active/pressed states for touch users
+   163→- Loading indicators for async operations
+   164→
+   165→**Progressive Disclosure**
+   166→Show essential information first; reveal details on demand:
+   167→- Expandable FAQ sections
+   168→- "Read more" links for long excerpts
+   169→- Collapsible technical details
+   170→- Tooltip previews for linked content
+   171→
+   172→**Error Prevention Over Error Recovery**
+   173→Design forms and interactions that prevent errors:
+   174→- Input validation before submission
+   175→- Clear label and placeholder text
+   176→- Confirmation for destructive actions
+   177→- Undo capability for reversible actions
+   178→
+   179→### Content Discovery
+   180→
+   181→**Related Content Placement**
+   182→Position related articles at natural stopping points:
+   183→- Inline recommendations mid-article (after 30% scroll)
+   184→- End-of-article recommendations (primary placement)
+   185→- Sidebar recommendations (secondary placement)
+   186→
+   187→**Category Exploration**
+   188→Help users discover content by topic:
+   189→- Clear category labels with descriptive names
+   190→- Category pages with featured content
+   191→- Cross-linking between related categories
+   192→- Breadcrumbs showing hierarchical relationships
+   193→
+   194→**Search Behavior Support**
+   195→Accommodate different search behaviors:
+   196→- Instant results as user types
+   197→- Search suggestions based on popular queries
+   198→- Faceted filtering for content types
+   199→- "Did you mean?" corrections for typos
+   200→
+   201→---
+   202→
+   203→## 3. UI Principles
+   204→
+   205→### Visual Hierarchy
+   206→
+   207→**The F-Pattern for Text-Heavy Pages**
+   208→Users scan in an F-pattern on content pages:
+   209→- Horizontal movement across top (headline, primary nav)
+   210→- Second horizontal movement (subheadings, secondary nav)
+   211→- Vertical movement down left side (first words of paragraphs)
+   212→- Place important elements along these scanning paths
+   213→
+   214→**The Z-Pattern for Landing Pages**
+   215→For promotional or landing pages:
+   216→- Eye moves top-left to top-right
+   217→- Diagonally down to bottom-left
+   218→- Across to bottom-right
+   219→- Place CTAs at pattern endpoints
+   220→
+   221→**Size Indicates Importance**
+   222→Larger elements attract more attention. Use scale deliberately:
+   223→- Headlines: Largest (H1: 2.5-3rem)
+   224→- Subheadings: Large (H2: 1.8-2.2rem)
+   225→- Body: Medium (16-18px)
+   226→- Meta/supporting: Small (14px or less)
+   227→
+   228→**Contrast Creates Separation**
+   229→Use contrast differences to create layers:
+   230→- Highest contrast: Primary CTA, alerts
+   231→- High contrast: Headlines, important info
+   232→- Medium contrast: Body text
+   233→- Low contrast: Secondary info, metadata
+   234→
+   235→### Layout Principles
+   236→
+   237→**Grid Systems**
+   238→Use a 12-column grid for flexibility:
+   239→- Homepage: Complex multi-column layouts
+   240→- Article: Single column + optional sidebar
+   241→- Archive: 2-3 column grid for cards
+   242→- Mobile: Always single column
+   243→
+   244→**Alignment & Proximity**
+   245→- Align related items to create visual groups
+   246→- Group related items closer than unrelated items
+   247→- Left-align body text for readability
+   248→- Center only for short headlines and CTAs
+   249→
+   250→**Asymmetric Balance**
+   251→Symmetric layouts feel static; asymmetric feels dynamic:
+   252→- Use a dominant element (hero image, large headline)
+   253→- Balance with smaller supporting elements
+   254→- Maintain visual weight distribution even when asymmetrical
+   255→
+   256→**Negative Space as Design Element**
+   257→White space is not empty—it's an active design element:
+   258→- Breathing room around content blocks
+   259→- Margins that separate distinct sections
+   260→- Padding that prevents cramped feeling
+   261→- Generous whitespace signals quality and focus
+   262→
+   263→### Component Consistency
+   264→
+   265→**Atomic Design Methodology**
+   266→Structure components in five levels:
+   267→1. **Atoms**: Buttons, inputs, labels, icons
+   268→2. **Molecules**: Search bars, card headers, form fields
+   269→3. **Organisms**: Headers, cards, navigation bars
+   270→4. **Templates**: Page layouts with placeholder content
+   271→5. **Pages**: Templates with real content
+   272→
+   273→**Consistent Component API**
+   274→Every component should have predictable props:
+   275→- `variant`: Visual style variations
+   276→- `size`: Size options (sm, md, lg)
+   277→- `disabled`: Disabled state
+   278→- `loading`: Loading state
+   279→- `className`: Escape hatch for custom styling
+   280→
+   281→**State Management**
+   282→Define all component states:
+   283→- Default/Normal
+   284→- Hover/Focus
+   285→- Active/Selected
+   286→- Disabled
+   287→- Loading/Error
+   288→- Empty (no data)
+   289→
+   290→---
+   291→
+   292→## 4. Typography System
+   293→
+   294→### Font Selection Strategy
+   295→
+   296→**Primary Font (Body Text)**
+   297→Choose fonts optimized for screen reading:
+   298→- Characteristics: Tall x-height, open counters, clear letterforms
+   299→- Recommended categories: Humanist sans-serif, Grotesque sans-serif
+   300→- Examples: Inter, Source Sans Pro, Lato, Nunito Sans, Plus Jakarta Sans
+   301→- Avoid: Display fonts, condensed faces, decorative fonts for body
+   302→
+   303→**Secondary Font (Headings)**
+   304→Can be more expressive but must remain readable:
+   305→- Characteristics: Distinctive personality, good weight range
+   306→- Recommended categories: Geometric sans-serif, Modern serif, Slab serif
+   307→- Examples: DM Serif Display, Playfair Display, Fraunces, Space Grotesk, Sora
+   308→- Must pair harmoniously with primary font
+   309→
+   310→**Tertiary Font (Code/Accents)**
+   311→Monospace for code, numbers, or special callouts:
+   312→- Examples: JetBrains Mono, Fira Code, Source Code Pro
+   313→- Use sparingly for technical content or data display
+   314→
+   315→**Font Pairing Rules**
+   316→1. Limit to 2-3 font families maximum
+   317→2. Pair contrasting classifications (sans + serif works well)
+   318→3. Match x-heights approximately
+   319→4. Ensure similar color temperature (both warm or both neutral)
+   320→5. Test at actual sizes before finalizing
+   321→
+   322→### Type Scale
+   323→
+   324→**Modular Scale System**
+   325→Use a ratio-based scale for consistency:
+   326→
+   327→| Element       | Size (rem) | Line Height | Weight | Letter Spacing |
+   328→|---------------|------------|-------------|--------|----------------|
+   329→| Hero (H1)     | 3.0 - 3.5  | 1.1 - 1.2   | 700-800 | -0.02em - -0.03em |
+   330→| Page Title    | 2.25 - 2.5 | 1.2 - 1.25  | 700    | -0.01em - -0.02em |
+   331→| Section (H2)  | 1.875 - 2  | 1.25 - 1.3  | 600-700 | -0.01em |
+   332→| Subsection    | 1.5 - 1.75 | 1.3 - 1.35  | 600    | 0              |
+   333→| Card Title    | 1.25 - 1.5 | 1.35 - 1.4  | 600    | 0              |
+   334→| Body Large    | 1.125 - 1.25| 1.6 - 1.7   | 400    | 0              |
+   335→| Body          | 1 (16px)   | 1.65 - 1.75 | 400    | 0              |
+   336→| Body Small    | 0.875      | 1.6         | 400    | 0              |
+   337→| Caption       | 0.75       | 1.5         | 400    | 0.01em - 0.02em |
+   338→| Overline      | 0.6875     | 1.4         | 500-600 | 0.05em - 0.1em  |
+   339→
+   340→**Responsive Typography**
+   341→Adjust sizes for viewport:
+   342→
+   343→```css
+   344→/* Fluid typography formula */
+   345→body {
+   346→  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+   347→}
+   348→
+   349→h1 {
+   350→  font-size: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+   351→}
+   352→```
+   353→
+   354→### Typography Best Practices
+   355→
+   356→**Line Height Guidelines**
+   357→- Headings: 1.1 - 1.3 (tighter for impact)
+   358→- Body text: 1.65 - 1.8 (comfortable reading)
+   359→- Long-form content: 1.7 - 1.85 (reduced eye strain)
+   360→- Never below 1.3 for body, never above 2.2
+   361→
+   362→**Paragraph Width Control**
+   363→```css
+   364→.article-content {
+   365→  max-width: 70ch; /* Optimal reading measure */
+   366→  margin-left: auto;
+   367→  margin-right: auto;
+   368→}
+   369→```
+   370→
+   371→**Text Rendering Optimization**
+   372→```css
+   373→body {
+   374→  -webkit-font-smoothing: antialiased;
+   375→  -moz-osx-font-smoothing: grayscale;
+   376→  text-rendering: optimizeLegibility;
+   377→  font-feature-settings: 'kern' 1, 'liga' 1;
+   378→}
+   379→```
+   380→
+   381→**Orphan & Widow Control**
+   382→- Avoid single words on last line (orphans)
+   383→- Avoid single lines at top of new page/column (widows)
+   384→- CSS solution limited; prefer editorial awareness
+   385→
+   386→**Emphasis Hierarchy**
+   387→1. Bold: Key terms, first use of important concepts
+   388→2. Italics: Publication titles, foreign terms, subtle emphasis
+   389→3. ALL CAPS: Very sparingly, for labels/categories only
+   390→4. Color: For interactive elements or status indicators
+   391→5. Underline: Links only (never for emphasis)
+   392→
+   393→---
+   394→
+   395→## 5. Color System
+   396→
+   397→### Color Philosophy
+   398→
+   399→**Color Roles, Not Just Colors**
+   400→Assign semantic roles to colors:
+   401→- **Primary**: Brand identity, primary actions, active states
+   402→- **Secondary**: Supporting brand elements, secondary actions
+   403→- **Accent**: Highlights, CTAs, important notifications
+   404→- **Neutral**: Backgrounds, text, borders, structure
+   405→- **Semantic**: Success, warning, error, info (universal meanings)
+   406→
+   407→**Accessibility-First Palette**
+   408→Build palettes that meet WCAG AA from the start:
+   409→- All text/background combinations: minimum 4.5:1 ratio
+   410→- Large text (18px+): minimum 3:1 ratio
+   411→- Interactive elements: 3:1 against adjacent colors
+   412→- Focus indicators: 3:1 against adjacent colors
+   413→
+   414→### Neutral Scale
+   415→
+   416→Build from a base neutral, extending in both directions:
+   417→
+   418→```
+   419→Gray Scale (Example):
+   420→├── gray-50:   #FAFAFA  (Subtle backgrounds)
+   421→├── gray-100:  #F5F5F5  (Page backgrounds, card backgrounds)
+   422→├── gray-200:  #EEEEEE  (Borders, dividers)
+   423→├── gray-300:  #E0E0E0  (Disabled states, light borders)
+   424→├── gray-400:  #BDBDBD  (Placeholder text, icons)
+   425→├── gray-500:  #9E9E9E  (Secondary text, muted elements)
+   426→├── gray-600:  #757575  (Supporting text, captions)
+   427→├── gray-700:  #616161  (Body text on light surfaces)
+   428→├── gray-800:  #424242  (Headings, emphasized text)
+   429→└── gray-900:  #212121  (Primary text, strongest emphasis)
+   430→```
+   431→
+   432→### Primary Color Generation
+   433→
+   434→From a single hue, generate a complete palette:
+   435→
+   436→```
+   437→Primary Scale (Example using emerald):
+   438→├── primary-50:   Lightest tint (light mode backgrounds)
+   439→├── primary-100:  Very light tint (hover states)
+   440→├── primary-200:  Light tint (subtle highlights)
+   441→├── primary-300:  Medium-light (secondary elements)
+   442→├── primary-400:  Medium (supporting accents)
+   443→├── primary-500:  Base color (brand primary)
+   444→├── primary-600:  Dark shade (default dark text, hover states)
+   445→├── primary-700:  Darker (active states, headings)
+   446→├── primary-800:  Dark (emphasis, dark mode accents)
+   447→└── primary-900:  Darkest (strongest emphasis)
+   448→```
+   449→
+   450→### Semantic Colors
+   451→
+   452→Universal meanings that transcend brand:
+   453→
+   454→| Role      | Usage                          | Example Hue  | Contrast Req. |
+   455→|-----------|--------------------------------|--------------|---------------|
+   456→| Success   | Confirmations, positive states | Green        | 3:1 minimum   |
+   457→| Warning   | Cautions, attention needed     | Amber/Yellow | 3:1 minimum   |
+   458→| Error     | Errors, destructive actions    | Red          | 4.5:1 minimum |
+   459→| Info      | Informational, help            | Blue         | 3:1 minimum   |
+   460→
+   461→**Important**: Semantic colors must be distinguishable by color blindness. Never rely solely on hue—always pair with icons or text labels.
+   462→
+   463→### Dark Mode Considerations
+   464→
+   465→**Not Just Invert**
+   466→Dark mode requires intentional design:
+   467→- Pure black (#000000) is too harsh; use dark grays (#1a1a1a to #171717)
+   468→- Reduce overall luminance, not just swap light/dark
+   469→- Desaturate slightly for reduced eye strain
+   470→- Increase contrast slightly compared to light mode
+   471→- Add subtle elevation through lighter surfaces
+   472→
+   473→**Surface Elevations (Dark Mode)**
+   474→```
+   475→├── Surface 0 (Base):    #121212 or #0a0a0a
+   476→├── Surface 1 (Raised):  #1E1E1E or #141414
+   477→├── Surface 2 (Overlay): #2D2D2D or #1c1c1c
+   478→└── Surface 3 (Modal):   #3C3C3C or #242424
+   479→```
+   480→
+   481→### Niche Color Guidance
+   482→
+   483→While this system is generic, consider niche-appropriate emotional associations:
+   484→
+   485→| Niche Family       | Common Associations           | Approach                        |
+   486→|--------------------|-------------------------------|---------------------------------|
+   487→| Nature/Garden      | Growth, organic, earthy       | Greens, browns, warm neutrals   |
+   488→| Home/Interior      | Warmth, comfort, sophistication| Warm grays, terracotta, navy    |
+   489→| Finance/Business   | Trust, stability, intelligence| Navy, charcoal, gold accents    |
+   490→| Health/Wellness    | Freshness, calm, vitality     | Soft blues, greens, whites      |
+   491→| Food/Cooking       | Appetite, warmth, authenticity| Warm tones, oranges, reds       |
+   492→| Technology         | Innovation, precision, future | Cool grays, electric accents    |
+   493→| Travel             | Adventure, freedom, escape    | Teals, sky blues, sunset tones  |
+   494→| Education          | Knowledge, growth, clarity    | Blues, warm yellows, clean BG   |
+   495→| Pets               | Playfulness, warmth, care     | Warm colors, friendly rounded   |
+   496→| Fashion/Lifestyle  | Elegance, trend, expression   | Monochrome with bold accent     |
+   497→
+   498→---
+   499→
+   500→## 6. Spacing System
+   501→
+   502→### Base Unit System
+   503→
+   504→Establish a base unit (typically 4px or 8px) and build all spacing from multiples:
+   505→
+   506→```
+   507→Base Unit: 4px (0.25rem)
+   508→
+   509→Spacing Scale:
+   510→├── 0:     0px      (reset, flush)
+   511→├── 0.5:   2px      (tight, icon gaps)
+   512→├── 1:     4px      (inline element spacing)
+   513→├── 1.5:   6px      (rare, transitional)
+   514→├── 2:     8px      (small gaps, button padding-y)
+   515→├── 2.5:   10px     (transitional)
+   516→├── 3:     12px     (standard gap, form padding)
+   517→├── 4:     16px     (card padding, section padding-sm)
+   518→├── 5:     20px     (component gaps)
+   519→├── 6:     24px     (section padding-md)
+   520→├── 8:     32px     (section padding-lg)
+   521→├── 10:    40px     (section padding-xl)
+   522→├── 12:    48px     (large section gaps)
+   523→├── 16:    64px     (page section gaps)
+   524→├── 20:    80px     (major section divisions)
+   525→├── 24:    96px     (page-level spacing)
+   526→└── 32:    128px    (hero-level spacing)
+   527→```
+   528→
+   529→### Contextual Spacing Rules
+   530→
+   531→**Element Internal Padding**
+   532→- Buttons: 8-16px horizontal, 6-12px vertical
+   533→- Cards: 16-24px (mobile), 24-32px (desktop)
+   534→- Form inputs: 10-14px vertical, 12-16px horizontal
+   535→- Badges/tags: 4-8px vertical, 8-12px horizontal
+   536→
+   537→**Element External Margins**
+   538→- Between paragraphs: 16-24px
+   539→- Between sections: 48-96px
+   540→- Between cards in grid: 16-24px
+   541→- Around main content: 24-48px (mobile), 48-80px (desktop)
+   542→
+   543→**Layout Spacing**
+   544→- Container max-width gutters: 16-24px (mobile), 24-40px (desktop)
+   545→- Grid gaps: 16-24px standard, 8-12px tight
+   546→- Sidebar from main: 32-48px
+   547→- Sticky element from viewport edge: 16-24px
+   548→
+   549→### Responsive Spacing
+   550→
+   551→Reduce spacing on smaller screens proportionally:
+   552→
+   553→```css
+   554→/* Pattern: scale down spacing breakpoints */
+   555→.section {
+   556→  padding: 64px 24px; /* Desktop */
+   557→}
+   558→
+   559→@media (max-width: 768px) {
+   560→  .section {
+   561→    padding: 48px 16px; /* Tablet */
+   562→  }
+   563→}
+   564→
+   565→@media (max-width: 480px) {
+   566→  .section {
+   567→    padding: 32px 12px; /* Mobile */
+   568→  }
+   569→}
+   570→```
+   571→
+   572→---
+   573→
+   574→## 7. Component Library Rules
+   575→
+   576→### Core Components Specification
+   577→
+   578→#### Button Component
+   579→
+   580→**Variants Required:**
+   581→- `primary`: Main call-to-action (filled, brand color)
+   582→- `secondary`: Alternative action (outlined or neutral filled)
+   583→- `ghost`: Tertiary action (transparent with border on hover)
+   584→- `destructive`: Dangerous actions (red-toned)
+   585→- `link`: Text-only button styled as link
+   586→
+   587→**Sizes:**
+   588→- `sm`: 28-32px height, small text (12-13px)
+   589→- `md`: 36-40px height, standard text (14-16px)
+   590→- `lg`: 44-48px height, large text (16-18px), preferred touch target
+   591→
+   592→**States:** default, hover, focus, active, disabled, loading
+   593→
+   594→**Rules:**
+   595→- Minimum touch target: 44×44px (can include invisible padding)
+   596→- Include icon support (leading, trailing, or icon-only)
+   597→- Loading state shows spinner, disables interaction
+   598→- Focus ring visible and meets 3:1 contrast
+   599→
+   600→#### Card Component
+   601→
+   602→**Required Elements:**
+   603→- Container with background/border
+   604→- Image area (optional, aspect ratio controlled)
+   605→- Content area with padding
+   606→- Title (linked to article)
+   607→- Excerpt/description (optional)
+   608→- Metadata footer (date, category, author, read time)
+   609→
+   610→**Variants:**
+   611→- `standard`: Image top, content below
+   612→- `horizontal`: Image left, content right (landscape)
+   613→- `featured`: Large image, overlay text
+   614→- `compact`: No image, text-focused
+   615→- `stat`: Metric display (number + label)
+   616→
+   617→**Image Aspect Ratios:**
+   618→- Standard: 16:10 or 16:9
+   619→- Portrait: 3:4 or 4:5
+   620→- Square: 1:1
+   621→- Wide: 21:9 or 2:1
+   622→- Hero: Variable, typically 16:9 to 21:9
+   623→
+   624→#### Navigation Components
+   625→
+   626→**Primary Navigation:**
+   627→- Horizontal menu bar
+   628→- Dropdown/flyout submenus (if needed)
+   629→- Current page indicator
+   630→- Mobile: hamburger → slide-out drawer or full-screen overlay
+   631→
+   632→**Breadcrumb:**
+   633→- Separator character (/, >, »)
+   634→- Clickable except current page
+   635→- Truncate if too many levels
+   636→- Schema.org markup for SEO
+   637→
+   638→**Pagination:**
+   639→- Previous/Next buttons with labels
+   640→- Page numbers (show window around current)
+   641→- Ellipsis for large ranges
+   642→- Total count indicator (optional)
+   643→- URL-based for shareability
+   644→
+   645→**Table of Contents (Article):**
+   646→- Auto-generated from headings
+   647→- Sticky positioning option
+   648→- Highlight current section on scroll
+   649→- Collapsible on mobile
+   650→
+   651→#### Form Components
+   652→
+   653→**Input Field:**
+   654→- Label (always visible, not placeholder-only)
+   655→- Placeholder (example format, not instruction)
+   656→- Helper text (below input, optional)
+   657→- Error message (below input, red, with icon)
+   658→- States: default, focus, error, disabled, success
+   659→
+   660→**Search Input:**
+   661→- Icon prefix (magnifying glass)
+   662→- Clear button when has value
+   663→- Submit on Enter
+   664→- Debounced live search (300ms)
+   665→- Results dropdown with keyboard navigation
+   666→
+   667→**Newsletter Signup:**
+   668→- Email input + submit button
+   669→- Privacy assurance text
+   670→- Success confirmation state
+   671→- Error handling with guidance
+   672→- Optional: Name field, checkbox preferences
+   673→
+   674→**Comment Form:**
+   675→- Textarea for comment (resizable)
+   676→- Name, email, website (optional fields marked)
+   677→- Submit button with loading state
+   678→- Preview option (optional)
+   679→- Markdown/formatting toolbar (optional)
+   680→
+   681→#### Media Components
+   682→
+   683→**Image Component:**
+   684→- Lazy loading (native or Intersection Observer)
+   685→- Responsive srcset/sizes
+   686→- Alt text (required, meaningful)
+   687→- Caption (optional, below image)
+   688→- Aspect ratio container (prevents CLS)
+   689→- Fallback placeholder or blur-up
+   690→- Zoom/lightbox option for detailed images
+   691→
+   692→**Video Component:**
+   693→- Thumbnail with play button
+   694→- Lazy load iframe (click to load)
+   695→- Aspect ratio container (16:9 default)
+   696→- Duration badge
+   697→- Caption/title
+   698→- Transcript availability indicator
+   699→
+   700→**Gallery/Carousel:**
+   701→- Prev/next navigation
+   702→- Dot indicators
+   703→- Keyboard navigation (arrows)
+   704→- Touch swipe support
+   705→- Autoplay toggle
+   706→- Thumbnail strip (optional)
+   707→- Fullscreen option
+   708→
+   709→**Figure Component:**
+   710→- Wraps image/video with caption
+   711→- Supports multiple caption positions
+   712→- Attribution line
+   713→- Optional zoom trigger
+   714→- Print-optimized styling
+   715→
+   716→#### Content Components
+   717→
+   718→**Article Header:**
+   719→- Category/tag (above title)
+   720→- Title (H1, linked)
+   721→- Subtitle/excerpt (optional)
+   722→- Author block (avatar, name, date, read time)
+   723→- Featured image (full width or contained)
+   724→- Social share buttons
+   725→- Last updated timestamp
+   726→
+   727→**Article Body:**
+   728→- Prose typography styling
+   729→- Heading hierarchy (H2-H4)
+   730→- Blockquote styling (left border, italic)
+   731→- List styling (ordered, unordered, task)
+   732→- Code block styling (syntax highlighting)
+   733→- Callout/admonition boxes
+   734→- Image figures with captions
+   735→- Table styling (striped, responsive)
+   736→- Embedded content wrappers (tweets, videos)
+   737→
+   738→**Author Bio Component:**
+   739→- Avatar (circular, 80-120px)
+   740→- Name (linked to author page)
+   741→- Title/role
+   742→- Short bio (1-2 sentences)
+   743→- Social links
+   744→- Follow/subscribe button
+   745→- Article count or join date
+   746→
+   747→**Related Posts Component:**
+   748→- Grid of 3-6 article cards
+   749→- "Read More" or contextual header
+   750→- Mix of recent and contextually related
+   751→- Load more/pagination
+   752→- Horizontal carousel option for sidebars
+   753→
+   754→#### Utility Components
+   755→
+   756→**Badge/Tag:**
+   757→- Pill shape (fully rounded ends)
+   758→- Size variants (sm, md)
+   759→- Color variants (category-colored, neutral)
+   760→- Removable variant (with × icon)
+   761→- Link wrapper
+   762→
+   763→**Alert/Notification:**
+   764→- Types: info, success, warning, error
+   765→- Icon + message + dismiss
+   766→- Auto-dismiss option (timing configurable)
+   767→- Stacking behavior for multiple
+   768→- Toast position variants
+   769→
+   770→**Skeleton Loader:**
+   771→- Matches final component shape
+   772→- Animated shimmer effect
+   773→- Multiple density options
+   774→- Accessible (aria-busy, role="status")
+   775→
+   776→**Empty State:**
+   777→- Illustration or icon
+   778→- Message explaining empty state
+   779→- Action button (create, browse, etc.)
+   780→- Helpful secondary link
+   781→
+   782→**Error Boundary:**
+   783→- Friendly error message
+   784→- Retry button
+   785→- Report issue link
+   786→- Home link escape hatch
+   787→
+   788→---
+   789→
+   790→## 8. Accessibility (WCAG AA)
+   791→
+   792→### Non-Negotiable Requirements
+   793→
+   794→**Perceivable**
+   795→
+   796→*Text Alternatives*
+   797→- All images have meaningful alt text
+   798→- Decorative images use alt="" (empty)
+   799→- Icons in buttons have aria-label or visible text
+   800→- Charts/graphs have text descriptions
+   801→- Video has captions/transcript available
+   802→
+   803→*Color & Contrast*
+   804→- Normal text: minimum 4.5:1 contrast ratio
+   805→- Large text (18px+ or 14px+ bold): minimum 3:1
+   806→- Interactive elements: 3:1 against adjacent color
+   807→- Focus indicators: 3:1 against adjacent
+   808→- Don't convey information with color alone
+   809→
+   810→*Resizable Text*
+   811→- Text scales to 200% without loss of function
+   812→- Use relative units (rem, em, %)
+   813→- Viewport meta tag present
+   814→- No horizontal scrolling at 320px zoomed
+   815→
+   816→**Operable**
+   817→
+   818→*Keyboard Navigation*
+   819→- All interactive elements reachable via Tab
+   820→- Visible focus indicators on all focused elements
+   821→- Logical tab order (DOM order = visual order)
+   822→- Skip navigation link (visible on focus)
+   823→- Modal focus trapping
+   824→- Escape closes modals/menus
+   825→- Arrow keys for custom widgets (carousel, tabs)
+   826→
+   827→*Time-Based Content*
+   828→- No time limits for reading
+   829→- If required, provide extension mechanism
+   830→- Auto-playing content has pause control
+   831→- Moving/blinking can be stopped
+   832→
+   833→*Seizure Safety*
+   834→- Nothing flashes more than 3 times per second
+   835→- No rapid color transitions
+   836→- Respect prefers-reduced-motion
+   837→
+   838→**Understandable**
+   839→
+   840→*Readable Content*
+   841→- Page language declared (lang attribute)
+   842→- Language changes marked
+   843→- Unusual words explained
+   844→- Abbreviations expanded on first use
+   845→- Reading level appropriate for audience
+   846→
+   847→*Predictable*
+   848→- Navigation consistent across pages
+   849→- Same components behave same way
+   850→- Context changes only on user initiation
+   851→- Clear labeling of all controls
+   852→
+   853→*Input Assistance*
+   854→- Labels associated with all inputs
+   855→- Instructions provided before input needed
+   856→- Error messages identify problems clearly
+   857→- Error prevention for legal/financial commitments
+   858→- Suggestions for correcting errors
+   859→
+   860→**Robust**
+   861→
+   862→*Compatible*
+   863→- Valid HTML (use semantic elements)
+   864→- ARIA used correctly (not as replacement for semantics)
+   865→- Custom components follow WAI-ARIA Authoring Practices
+   866→- Tested with actual assistive technology
+   867→
+   868→### Accessibility Testing Checklist
+   869→
+   870→- [ ] Screen reader test (VoiceOver, NVDA, JAWS)
+   871→- [ ] Keyboard-only navigation test
+   872→- [ ] Color contrast audit (all combinations)
+   873→- [ ] Focus management review
+   874→- [ ] Zoom to 200% functionality check
+   875→- [ ] Mobile VoiceOver/TalkBack test
+   876→- [ ] Automated testing (axe, WAVE, Lighthouse)
+   877→
+   878→---
+   879→
+   880→## 9. SEO Layout Best Practices
+   881→
+   882→### Semantic HTML Structure
+   883→
+   884→```html
+   885→<!DOCTYPE html>
+   886→<html lang="en">
+   887→<head>
+   888→  <!-- Meta tags, styles, scripts -->
+   889→</head>
+   890→<body>
+   891→  <header role="banner">
+   892→    <nav aria-label="Primary">
+   893→      <!-- Site navigation -->
+   894→    </nav>
+   895→  </header>
+   896→
+   897→  <main role="main" id="main-content">
+   898→    <!-- Primary content -->
+   899→    
+   900→    <article>
+   901→      <header>
+   902→        <h1>Article Title</h1>
+   903→        <!-- Article meta -->
+   904→      </header>
+   905→      
+   906→      <div class="article-body">
+   907→        <!-- Content -->
+   908→      </div>
+   909→    </article>
+   910→    
+   911→    <aside>
+   912→      <!-- Supplementary content -->
+   913→    </aside>
+   914→  </main>
+   915→
+   916→  <footer role="contentinfo">
+   917→    <!-- Site footer -->
+   918→  </footer>
+   919→</body>
+   920→</html>
+   921→```
+   922→
+   923→### Heading Hierarchy Rules
+   924→
+   925→**Single H1 Per Page**
+   926→- Homepage: Site name or tagline
+   927→- Article: Article title
+   928→- Category: Category name
+   929→- Other: Most prominent heading
+   930→
+   931→**Proper Nesting**
+   932→```
+   933→H1 (one per page)
+   934→├── H2 (sections)
+   935→│   ├── H3 (subsections)
+   936→│   │   └── H4 (detail sections - rarely needed)
+   937→│   └── H3
+   938→└── H2
+   939→```
+   940→
+   941→**Never skip levels** (no H1 → H3)
+   942→
+   943→### Structured Data (Schema.org)
+   944→
+   945→**Article Markup (Required)**
+   946→```json
+   947→{
+   948→  "@context": "https://schema.org",
+   949→  "@type": "Article",
+   950→  "headline": "Article Title",
+   951→  "image": ["https://example.com/image.jpg"],
+   952→  "datePublished": "2024-01-15T08:00:00+00:00",
+   953→  "dateModified": "2024-01-20T10:30:00+00:00",
+   954→  "author": {
+   955→    "@type": "Person",
+   956→    "name": "Author Name",
+   957→    "url": "/author/author-slug"
+   958→  },
+   959→  "publisher": {
+   960→    "@type": "Organization",
+   961→    "name": "Site Name",
+   962→    "logo": {
+   963→      "@type": "ImageObject",
+   964→      "url": "https://example.com/logo.png"
+   965→    }
+   966→  }
+   967→}
+   968→```
+   969→
+   970→**BlogPosting vs Article**
+   971→- Use `BlogPosting` for informal, blog-style content
+   972→- Use `Article` for news, formal journalism
+   973→- Use `HowTo` for tutorials with steps
+   974→- Use `FAQPage` for Q&A content
+   975→- Use `Recipe` for recipes (rich results opportunity)
+   976→
+   977→**BreadcrumbList Markup**
+   978→```json
+   979→{
+   980→  "@context": "https://schema.org",
+   981→  "@type": "BreadcrumbList",
+   982→  "itemListElement": [
+   983→    { "@type": "ListItem", "position": 1, "name": "Home", "item": "/" },
+   984→    { "@type": "ListItem", "position": 2, "name": "Category", "item": "/category" },
+   985→    { "@type": "ListItem", "position": 3, "name": "Article" }
+   986→  ]
+   987→}
+   988→```
+   989→
+   990→### URL Structure Best Practices
+   991→
+   992→**Pattern**: `/{content-type}/{category-slug}/{post-slug}/`
+   993→
+   994→Examples:
+   995→- `/blog/gardening/how-to-propagate-monstera/`
+   996→- `/guides/indoor-plants/best-low-light-plants/`
+   997→- `/recipes/desserts/chocolate-lava-cake/`
+   998→
+   999→**URL Rules**
+  1000→- Lowercase only
+  1001→- Hyphens separate words (no underscores)
+  1002→- No query parameters for content URLs
+  1003→- Keep under 60 characters when possible
+  1004→- Include primary keyword naturally
+  1005→- Remove stop words (a, an, the) unless needed for clarity
+  1006→
+  1007→### Internal Linking Architecture
+  1008→
+  1009→**Contextual Links**
+  1010→- 3-5 internal links per 1000 words (natural, not forced)
+  1011→- Link to relevant, high-value pages
+  1012→- Use descriptive anchor text (not "click here")
+  1013→- Vary anchor text for same destination
+  1014→- Open external links in new tab (with indication)
+  1015→
+  1016→**Hub Page Strategy**
+  1017→- Create comprehensive pillar/hub content
+  1018→- Link cluster topics to hub page
+  1019→- Hub links out to all related articles
+  1020→- Articles link back to hub
+  1021→- Creates topical authority signals
+  1022→
+  1023→**Navigation Links**
+  1024→- Categories in main nav (limit to 6-8)
+  1025→- Recent/popular in sidebar or footer
+  1026→- Related posts at article end
+  1027→- Breadcrumbs on all inner pages
+  1028→- HTML sitemap linked from footer
+  1029→
+  1030→---
+  1031→
+  1032→## 10. E-E-A-T Layout Rules
+  1033→
+  1034→### What is E-E-A-T?
+  1035→
+  1036→Google's Quality Rater Guidelines evaluate:
+  1037→- **Experience**: First-hand experience with the topic
+  1038→- **Expertise**: Demonstrated knowledge/credentials
+  1039→- **Authoritativeness**: Recognition as authority on topic
+  1040→- **Trustworthiness**: Reliability, accuracy, honesty
+  1041→
+  1042→### Layout Signals for E-E-A-T
+  1043→
+  1044→**Author Credibility Display (Critical)**
+  1045→
+  1046→Position author information prominently:
+  1047→```
+  1048→┌─────────────────────────────────────────────────┐
+  1049→│  [Avatar]  Dr. Jane Smith, PhD                  │
+  1050→│           Horticulturist • 15 years experience  │
+  1051→│           Verified Expert ✓                     │
+  1052→│                                                 │
+  1053→│           About: Brief bio establishing...      │
+  1054→│           credentials and expertise in this     │
+  1055→│           specific topic area.                  │
+  1056→│                                                 │
+  1057→│           📄 View Credentials    🔗 LinkedIn     │
+  1058→└─────────────────────────────────────────────────┘
+  1059→```
+  1060→
+  1061→**About Page Requirements**
+  1062→- Detailed organization history
+  1063→- Mission statement and editorial process
+  1064→- Team member profiles with credentials
+  1065→- Contact information (physical address if applicable)
+  1066→- Corrections policy
+  1067→- Ethics/disclosure statements
+  1068→
+  1069→**Author Page Requirements**
+  1070→- Professional headshot
+  1071→- Full biography with credentials
+  1072→- Education and certifications
+  1073→- Published works/link to portfolio
+  1074→- Topics they cover
+  1075→- Social proof (mentions, awards)
+  1076→- Contact method
+  1077→
+  1078→**Article-Level E-E-A-T Elements**
+  1079→- Author byline with link to profile
+  1080→- Publication date AND last updated date
+  1081→- Editorial review credit (fact-checker, editor)
+  1082→- Source citations where applicable
+  1083→- Disclaimer for YMYL content
+  1084→- Correction history (if updated)
+  1085→
+  1086→**YMYL (Your Money Your Life) Extra Care**
+  1087→Topics affecting health, finance, safety require:
+  1088→- Clear author credentials displayed
+  1089→- Medical/financial disclaimers
+  1090→- Review date prominently shown
+  1091→- Sources cited inline
+  1092→- Professional oversight indicated
+  1093→- No affiliate disclosure buried (prominent placement)
+  1094→
+  1095→### Trust Badges & Certifications
+  1096→
+  1097→Display third-party validations:
+  1098→- Industry certifications
+  1099→- Awards and recognition
+  1100→- Professional memberships
+  1101→- Media mentions/logos ("As seen in")
+  1102→- SSL/security indicators
+  1103→- Privacy certifications (where applicable)
+  1104→
+  1105→---
+  1106→
+  1107→## 11. Google Discover Optimization
+  1108→
+  1109→### Discover-Friendly Design Elements
+  1110→
+  1111→**High-Quality Imagery Rules**
+  1112→- Minimum width: 1200px
+  1113→- Unique, original images (not stock photos where possible)
+  1114→- Compelling thumbnail that represents content
+  1115→- Images that work at small size (Discover shows thumbnails)
+  1116→- Face detection optimization for people photos
+  1117→- Safe for all audiences (no shocking imagery)
+  1118→
+  1119→**Content Presentation**
+  1120→- Compelling headlines (not clickbait)
+  1121→- Clear value proposition in opening paragraph
+  1122→- Well-structured with clear sections
+  1123→- Satisfying, complete content (not thin)
+  1124→- Original insights or perspectives
+  1125→- Evergreen potential (long-lasting relevance)
+  1126→
+  1127→**Technical Requirements**
+  1128→- Fast loading (< 3 seconds)
+  1129→- Mobile-optimized (Discover is mobile-only)
+  1130→- No intrusive interstitials
+  1131→- Proper structured data
+  1132→- Clean URL structure
+  1133→- HTTPS required
+  1134→
+  1135→### Discover Layout Patterns
+  1136→
+  1137→**Article Page Optimizations**
+  1138→- Featured image at least 1200px wide
+  1139→- Image placed high in content (above fold ideal)
+  1140→- Title in H1, compelling and accurate
+  1141→- Publish date clearly visible
+  1142→- Author clearly attributed
+  1143→- No paywall blocking content
+  1144→
+  1145→**Card Appearance Optimization**
+  1146→Since you can't control exact Discover card rendering:
+  1147→- Ensure og:image is high quality
+  1148→- Write titles under 70 characters for truncation safety
+  1149→- Meta description under 160 characters
+  1150→- First sentence hooks reader immediately
+  1151→
+  1152→---
+  1153→
+  1154→## 12. Pinterest-Friendly Layout Rules
+  1155→
+  1156→### Pinterest-Specific Design
+  1157→
+  1158→**Pinterest-Optimized Images**
+  1159→
+  1160→Create images specifically for Pinterest sharing:
+  1161→- Aspect ratio: 2:3 (vertical) performs best
+  1162→- Minimum size: 1000×1500px
+  1163→- Text overlay: Title + branding (readable at small size)
+  1164→- Consistent template/style for brand recognition
+  1165→- White space around edges (Pinterest adds rounding)
+  1166→
+  1167→**Image Content Rules**
+  1168→- Clear, readable text (high contrast)
+  1169→- Brand logo/watermark subtly placed
+  1170→- Multiple pin images per article (A/B test)
+  1171→- Step-by-step graphics for tutorials
+  1172→- Infographic-style for data/tips content
+  1173→
+  1174→**On-Page Pinterest Integration**
+  1175→
+  1176→```html
+  1177→<!-- Pinterest meta tags -->
+  1178→<meta property="og:image" content="pinterest-optimized-image.jpg">
+  1179→<meta name="pinterest" content="nopin"> <!-- If preventing saves -->
+  1180→
+  1181→<!-- Pin button (optional) -->
+  1182→<button data-pin-do="buttonPin" data-pin-tail="true">
+  1183→  Save to Pinterest
+  1184→</button>
+  1185→
+  1186→<!-- Hover pin button on images -->
+  1187→<a data-pin-do="buttonBookmark">
+  1188→  <img src="image.jpg" alt="Description">
+  1189→</a>
+  1190→```
+  1191→
+  1192→**Layout for Pin-Worthy Content**
+  1193→- Feature one "hero" pin image prominently
+  1194→- Place additional pin images within content
+  1195→- Consider dedicated "Pin this" section at article end
+  1196→- Show multiple image options in gallery format
+  1197→- Overlay text templates for consistent branding
+  1198→
+  1199→### Rich Pin Implementation
+  1200→
+  1201→**Article Rich Pins**
+  1202→- Require Open Graph + Schema markup
+  1203→- Auto-populate headline, description, author
+  1204→- Include favicon as attribution
+  1205→- Verify site in Pinterest Business
+  1206→
+  1207→**Product Rich Pins** (for e-commerce blogs)
+  1208→- Availability, price, product info
+  1209→- Real-time updates from feed
+  1210→
+  1211→---
+  1212→
+  1213→## 13. AdSense-Friendly Layout Rules
+  1214→
+  1215→### Ad Placement Strategy
+  1216→
+  1217→**Above-the-Fold Rules**
+  1218→- No ads that push content below fold (Google penalty risk)
+  1219→- Maximum 1 ad unit above fold (ideally leaderboard/banner)
+  1220→- Content must be visible without scrolling past ads
+  1221→- Ad/content ratio: content should dominate visually
+  1222→
+  1223→**In-Article Ad Placements**
+  1224→
+  1225→Optimal positions (balance revenue vs UX):
+  1226→1. **After 2nd-3rd paragraph** (high visibility, low annoyance)
+  1227→2. **Mid-article** (after ~50% of content, natural break)
+  1228→3. **After article conclusion** (before related posts)
+  1229→
+  1230→**Sidebar Ads**
+  1231→- 300×250 or 300×600 rectangle (standard)
+  1232→- 300×1050 skyscraper (for tall sidebars)
+  1233→- Sticky sidebar ad (follows scroll, one per view)
+  1234→- Maximum 3-4 ads in sidebar total
+  1235→
+  1236→**Between-Content Ads**
+  1237→- Between article end and comments
+  1238→- Between related post rows (every 3-4 cards)
+  1239→- In infinite scroll (between content loads)
+  1240→
+  1241→### Ad Layout Technical Requirements
+  1242→
+  1243→**Ad Container Specifications**
+  1244→```css
+  1245→.ad-container {
+  1246→  min-height: 90px;  /* Prevent CLS from ad loading */
+  1247→  min-width: 728px;  /* Or responsive */
+  1248→  display: flex;
+  1249→  align-items: center;
+  1250→  justify-content: center;
+  1251→  background: #f5f5f5; /* Placeholder */
+  1252→}
+  1253→
+  1254→/* Responsive ad wrapper */
+  1255→.ad-responsive {
+  1256→  max-width: 100%;
+  1257→  overflow: hidden;
+  1258→}
+  1259→```
+  1260→
+  1261→**Non-Intrusive Integration**
+  1262→- Ads match content background where possible
+  1263→- Clear but subtle "Advertisement" label
+  1264→- Adequate spacing from content (16px+)
+  1265→- No animation/movement (distracting, against policy)
+  1266→- No ads that look like content (deceptive)
+  1267→
+  1268→**Mobile Ad Rules**
+  1269→- Fewer ads than desktop (quality over quantity)
+  1270→- Anchor ads (sticky bottom) - one only
+  1271→- In-article native ads preferred
+  1272→- No interstitials covering content
+  1273→- Adequate tap targets between ad and content
+  1274→
+  1275→### AdSense Policy Compliance
+  1276→
+  1277→**Content Rules**
+  1278→- Adequate content between ads (don't "ad farm")
+  1279→- No ads on empty/thin pages
+  1280→- No ads behind login/paywall
+  1281→- No misleading ad placement near navigation
+  1282→
+  1283→**Prohibited Placements**
+  1284→- Ads that could be accidentally clicked
+  1285→- Ads in sliders/carousels (usually)
+  1286→- Pop-ups/pop-unders (against policy)
+  1287→- Ads that obscure content
+  1288→
+  1289→---
+  1290→
+  1291→## 14. Mobile-First Rules
+  1292→
+  1293→### Development Approach
+  1294→
+  1295→**Write Mobile Styles First**
+  1296→```css
+  1297→/* Mobile-first: base styles are mobile */
+  1298→.card {
+  1299→  display: flex;
+  1300→  flex-direction: column;
+  1301→  padding: 16px;
+  1302→}
+  1303→
+  1304→/* Enhance for larger screens */
+  1305→@media (min-width: 768px) {
+  1306→  .card {
+  1307→    flex-direction: row;
+  1308→    padding: 24px;
+  1309→  }
+  1310→}
+  1311→```
+  1312→
+  1313→**Mobile Constraints as Design Foundation**
+  1314→- Single column layouts
+  1315→- Touch-optimized targets (44px minimum)
+  1316→- Simplified navigation (hamburger menu)
+  1317→- Reduced visual complexity
+  1318→- Prioritized content (less visible at once)
+  1319→
+  1320→### Touch Interface Design
+  1321→
+  1322→**Touch Target Sizes**
+  1323→- Primary actions: 48×48px minimum
+  1324→- Secondary actions: 44×44px minimum
+  1325→- Inline actions: 32×32px (with surrounding padding)
+  1326→- Dense lists: 40px height minimum row
+  1327→
+  1328→**Touch Spacing**
+  1329→- 8px minimum between touch targets
+  1330→- 12px recommended for frequently used
+  1331→- 16px for critical actions (prevent mis-taps)
+  1332→
+  1333→**Gesture Support**
+  1334→- Swipe for carousels/galleries
+  1335→- Pull-to-refresh (where appropriate)
+  1336→- Long-press for contextual menus
+  1337→- Pinch-to-zoom for images/maps
+  1338→
+  1339→### Mobile Content Prioritization
+  1340→
+  1341→**Progressive Content Disclosure**
+  1342→1. Critical (always visible): Title, hero, primary CTA
+  1343→2. Important (quick scroll): Key info, navigation
+  1344→3. Useful (further scroll): Details, related content
+  1345→4. Secondary (available): Footer, extras, archives
+  1346→
+  1347→**Mobile-Specific Simplifications**
+  1348→- Condensed navigation (fewer items visible)
+  1349→- Collapsible sections (FAQ, details)
+  1350→- Bottom-anchored actions (sticky CTA)
+  1351→- Simplified forms (fewer fields, smarter defaults)
+  1352→- Tabbed interfaces (save vertical space)
+  1353→
+  1354→### Mobile Performance Budget
+  1355→
+  1356→**Target Metrics**
+  1357→- First Contentful Paint: < 1.5s
+  1358→- Time to Interactive: < 3.5s
+  1359→- Cumulative Layout Shift: < 0.1
+  1360→- Total page weight: < 1.5MB initial load
+  1361→
+  1362→**Performance Techniques**
+  1363→- Lazy load images below fold
+  1364→- Critical CSS inlined
+  1365→- Deferred/non-critical JavaScript
+  1366→- Responsive images (srcset)
+  1367→- Font loading optimization (font-display: swap)
+  1368→- Service worker caching strategy
+  1369→
+  1370→---
+  1371→
+  1372→## 15. Responsive Rules
+  1373→
+  1374→### Breakpoint System
+  1375→
+  1376→**Standard Breakpoints**
+  1377→
+  1378→| Name     | Width      | Target Devices                  |
+  1379→|----------|------------|---------------------------------|
+  1380→| `xs`     | 0-479px    | Small phones                    |
+  1381→| `sm`     | 480-639px  | Large phones                    |
+  1382→| `md`     | 640-767px  | Tablets portrait                |
+  1383→| `lg`     | 768-1023px | Tablets landscape, small laptops|
+  1384→| `xl`     | 1024-1279px| Desktops                        |
+  1385→| `2xl`    | 1280px+    | Large desktops                   |
+  1386→
+  1387→**Naming Convention**
+  1388→Use logical names, not device names:
+  1389→- ✅ `min-width: 768px`
+  1390→- ❌ `@tablet`
+  1391→- ✅ `@media (min-width: 64em)`
+  1392→- ❌ `@media ipad`
+  1393→
+  1394→### Responsive Patterns
+  1395→
+  1396→**Container Pattern**
+  1397→```css
+  1398→.container {
+  1399→  width: 100%;
+  1400→  max-width: 1280px;
+  1401→  margin: 0 auto;
+  1402→  padding: 0 1rem; /* Mobile */
+  1403→}
+  1404→
+  1405→@media (min-width: 768px) {
+  1406→  .container {
+  1407→    padding: 0 2rem; /* Tablet+ */
+  1408→  }
+  1409→}
+  1410→```
+  1411→
+  1412→**Grid Responsiveness**
+  1413→```
+  1414→Mobile (default):  1 column
+  1415→Tablet (md):       2 columns  
+  1416→Desktop (lg):      3 columns
+  1417→Large (xl):        4 columns (sidebar + 3 content)
+  1418→```
+  1419→
+  1420→**Typography Scaling**
+  1421→- Mobile: Slightly larger relative sizes (easier to read)
+  1422→- Tablet: Standard scale
+  1423→- Desktop: Can be slightly smaller (viewing distance)
+  1424→
+  1425→**Navigation Transformation**
+  1426→- Mobile: Hamburger → full-screen overlay or slide-out
+  1427→- Tablet: Hamburger or condensed horizontal
+  1428→- Desktop: Full horizontal with dropdowns
+  1429→
+  1430→**Sidebar Behavior**
+  1431→- Mobile: Below content or hidden (tab access)
+  1432→- Tablet: Below content or narrow sidebar
+  1433→- Desktop: Right or left sidebar (fixed or sticky)
+  1434→
+  1435→### Responsive Images
+  1436→
+  1437→```html
+  1438→<img 
+  1439→  src="image-800.jpg"
+  1440→  srcset="
+  1441→    image-400.jpg 400w,
+  1442→    image-800.jpg 800w,
+  1443→    image-1200.jpg 1200w
+  1444→  "
+  1445→  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 800px"
+  1446→  alt="Descriptive alt text"
+  1447→  loading="lazy"
+  1448→  width="800"
+  1449→  height="450"
+  1450→>
+  1451→```
+  1452→
+  1453→---
+  1454→
+  1455→## 16. Header Design Rules
+  1456→
+  1457→### Header Structure
+  1458→
+  1459→**Essential Elements (Left to Right, LTR)**
+  1460→1. **Logo/Site Name** - Linked to home, alt text = site name
+  1461→2. **Primary Navigation** - Main categories/pages
+  1462→3. **Search** - Icon or input (expandable on mobile)
+  1463→4. **Actions** - Subscribe, social, theme toggle
+  1464→5. **Mobile Menu Toggle** - Hamburger icon (mobile only)
+  1465→
+  1466→**Recommended Heights**
+  1467→- Compact: 56-64px (content-focused sites)
+  1468→- Standard: 64-80px (most blogs)
+  1469→- Expanded: 80-100px (includes secondary elements)
+  1470→
+  1471→### Header Behaviors
+  1472→
+  1473→**Sticky Header Option**
+  1474→- Shrinks on scroll (height reduction)
+  1475→- Adds subtle shadow/elevation
+  1476→- Maintains all functionality
+  1477→- Reserve space to prevent layout shift
+  1478→- Allow disabling for accessibility preference
+  1479→
+  1480→**Transparent Header**
+  1481→- Overlays hero image initially
+  1482→- Becomes solid on scroll
+  1483→- Ensure text contrast over hero
+  1484→- Not recommended for content-heavy sites
+  1485→
+  1486→**Always-Visible Elements**
+  1487→Even in compact sticky state:
+  1488→- Logo (may shrink)
+  1489→- Navigation (may become icons only)
+  1490→- Search access
+  1491→- At least one CTA
+  1492→
+  1493→### Navigation in Header
+  1494→
+  1495→**Maximum Items**
+  1496→- Desktop: 6-8 top-level items
+  1497→- More items → "More" dropdown or reorganize
+  1498→- Mobile: All in hamburger menu
+  1499→
+  1500→**Dropdown Menus**
+  1501→- Appear on hover (desktop) and click (mobile)
+  1502→- Mega-menu for many subcategories
+  1503→- Clear visual separation from header
+  1504→- Keyboard accessible (arrow keys)
+  1505→- Close on outside click or Escape
+  1506→
+  1507→**Current Page Indicator**
+  1508→- Underline, background change, or bold
+  1509→- Breadcrumb supplements, doesn't replace
+  1510→- Consistent across site
+  1511→
+  1512→---
+  1513→
+  1514→## 17. Footer Design Rules
+  1515→
+  1516→### Footer Structure Zones
+  1517→
+  1518→```
+  1519→┌─────────────────────────────────────────────────────┐
+  1520→│  FOOTER TOP (Optional)                              │
+  1521→│  Newsletter signup • Popular posts • CTA            │
+  1522→├─────────────────────────────────────────────────────┤
+  1523→│  FOOTER MAIN                                        │
+  1524→│  ┌─────────┬─────────┬─────────┬─────────┐         │
+  1525→│  │About    │Categories│Resources│Company  │         │
+  1526→│  │Links    │         │         │         │         │
+  1527→│  ├─────────┴─────────┴─────────┴─────────┤         │
+  1528→│  │Social Icons • App Badges               │         │
+  1529→├─────────────────────────────────────────────────────┤
+  1530→│  FOOTER BOTTOM                                     │
+  1531→│  Copyright • Legal • Privacy • Terms • Powered by  │
+  1532→└─────────────────────────────────────────────────────┘
+  1533→```
+  1534→
+  1535→### Footer Content Requirements
+  1536→
+  1537→**Must Have**
+  1538→- Copyright notice with year (dynamic)
+  1539→- Privacy Policy link
+  1540→- Terms of Service link (if applicable)
+  1541→- Contact link or email
+  1542→
+  1543→**Should Have**
+  1544→- About/brand brief
+  1545→- Key navigation links (categories, popular)
+  1546→- Social media profile links
+  1547→- Newsletter signup (if not elsewhere)
+  1548→
+  1549→**Nice to Have**
+  1550→- Site map link
+  1551→- Accessibility statement
+  1552→- RSS feed link
+  1553→- Back to top button
+  1554→- Language selector (multilingual sites)
+  1555→
+  1556→### Footer Design Rules
+  1557→
+  1558→**Visual Weight**
+  1559→- Visually lighter than header (supporting role)
+  1560→- Dark backgrounds common (creates closure)
+  1561→- Or very light (extension of page)
+  1562→- Consistent with overall design system
+  1563→
+  1564→**Link Organization**
+  1565→- Logical groupings with headings
+  1566→- 5-7 links per column maximum
+  1567→- Alphabetical or priority ordering
+  1568→- External links indicate (icon or text)
+  1569→
+  1570→**Sticky Footer Technique**
+  1571→```css
+  1572→/* Prevent footer floating on short pages */
+  1573→body {
+  1574→  min-height: 100vh;
+  1575→  display: flex;
+  1576→  flex-direction: column;
+  1577→}
+  1578→
+  1579→main {
+  1580→  flex: 1;
+  1581→}
+  1582→
+  1583→footer {
+  1584→  margin-top: auto;
+  1585→}
+  1586→```
+  1587→
+  1588→---
+  1589→
+  1590→## 18. Homepage Rules
+  1591→
+  1592→### Homepage Purpose
+  1593→
+  1594→The homepage serves multiple audiences:
+  1595→- **New visitors**: Understand what the site offers
+  1596→- **Returning readers**: Find fresh content
+  1597→- **Search engines**: Understand site structure and authority
+  1598→
+  1599→### Homepage Sections (Recommended Order)
+  1600→
+  1601→```
+  1602→┌─────────────────────────────────────────────────────┐
+  1603→│  HEADER                                             │
+  1604→├─────────────────────────────────────────────────────┤
+  1605→│  HERO SECTION                                       │
+  1606→│  • Featured article with large image                │
+  1607→│  • Headline, excerpt, CTA                           │
+  1608→│  • Optional: Carousel of featured posts             │
+  1609→├─────────────────────────────────────────────────────┤
+  1610→│  CATEGORY QUICK LINKS (Icon + Label)                │
+  1611→├─────────────────────────────────────────────────────┤
+  1612→│  LATEST POSTS GRID                                  │
+  1613→│  • 6-12 article cards                               │
+  1614→│  • Load more / Pagination                           │
+  1615→├─────────────────────────────────────────────────────┤
+  1616→│  FEATURED/TRENDING SECTION                          │
+  1617→│  • Different card style or layout                   │
+  1618→│  • 3-5 highlighted articles                        │
+  1619→├─────────────────────────────────────────────────────┤
+  1620→│  CATEGORY SPOTLIGHTS                                │
+  1621→│  • 2-3 latest from each major category              │
+  1622→│  • Category header with "View all" link             │
+  1623→├─────────────────────────────────────────────────────┤
+  1624→│  NEWSLETTER / CTA SECTION                           │
+  1625→├─────────────────────────────────────────────────────┤
+  1626→│  ABOUT BLURB (Short intro to site)                  │
+  1627→├─────────────────────────────────────────────────────┤
+  1628→│  FOOTER                                             │
+  1629→└─────────────────────────────────────────────────────┘
+  1630→```
+  1631→
+  1632→### Homepage Layout Variants
+  1633→
+  1634→**Magazine Layout**
+  1635→- Asymmetric grid with featured content
+  1636→- Multiple content types (hero, cards, lists)
+  1637→- Dynamic, engaging, editorial feel
+  1638→- Best for: Multi-category content sites
+  1639→
+  1640→**Blog Feed Layout**
+  1641→- Reverse chronological list/card grid
+  1642→- Simpler, more predictable
+  1643→- Familiar to blog readers
+  1644→- Best for: Personal blogs, single-topic sites
+  1645→
+  1646→**Card-Based Layout**
+  1647→- Uniform cards in consistent grid
+  1648→- Clean, modern appearance
+  1649→- Easy to scan
+  1650→- Best for: Portfolio-style, visual content
+  1651→
+  1652→### Homepage Content Decisions
+  1653→
+  1654→**Featured Content Selection**
+  1655→- Newest evergreen content (not time-sensitive)
+  1656→- Highest performing recent content
+  1657→- Seasonally appropriate content
+  1658→- Content representing site's breadth
+  1659→
+  1660→**Content Volume**
+  1661→- Above fold: 1 hero + 3-4 cards OR 5-6 cards
+  1662→- Initial load: 9-12 article cards
+  1663→- Total visible without pagination: 18-24 cards
+  1664→- Balance completeness with performance
+  1665→
+  1666→---
+  1667→
+  1668→## 19. Article Page Rules
+  1669→
+  1670→### Article Page Anatomy
+  1671→
+  1672→```
+  1673→┌─────────────────────────────────────────────────────┐
+  1674→│  HEADER (sticky or static)                          │
+  1675→├─────────────────────────────────────────────────────┤
+  1676→│  BREADCRUMBS                                        │
+  1677→├─────────────────────────────────────────────────────┤
+  1678→│  ARTICLE HEADER                                     │
+  1679→│  • Category/Tag                                    │
+  1680→│  • H1 Title                                        │
+  1681→│  • Subtitle (optional)                             │
+  1682→│  • Author block (avatar, name, date, read time)    │
+  1683→│  • Featured Image (full width or contained)        │
+  1684→│  • Social Share Buttons                            │
+  1685→├─────────────────────────────────────────────────────┤
+  1686→│  TABLE OF CONTENTS (sticky sidebar or top)         │
+  1687→├──────────┬──────────────────────────────────────────┤
+  1688→│ ARTICLE  │  ARTICLE BODY                            │
+  1689→│ SIDEBAR  │  • Lead paragraph (larger, engaging)     │
+  1690→│ (sticky) │  • Content with proper heading hierarchy │
+  1691→│          │  • Images with captions                  │
+  1692→│          │  • Embedded media                        │
+  1693→│          │  • Callouts/quotes                       │
+  1694→│          │  • In-article CTAs (newsletter)          │
+  1695→│          │  • Author bio (end of article)           │
+  1696→│          │                                          │
+  1697→│          │  RELATED POSTS (end of article)          │
+  1698→│          │  COMMENTS SECTION                        │
+  1699→├──────────┴──────────────────────────────────────────┤
+  1700→│  FOOTER                                             │
+  1701→└─────────────────────────────────────────────────────┘
+  1702→```
+  1703→
+  1704→### Article Header Rules
+  1705→
+  1706→**Title (H1)**
+  1707→- Clear, descriptive, keyword-inclusive
+  1708→- 50-60 characters optimal (displays fully in SERPs)
+  1709→- Front-load important words
+  1710→- No clickbait; deliver on promise
+  1711→
+  1712→**Meta Information Display**
+  1713→```
+  1714→[Avatar] By Author Name • January 15, 2024 • 8 min read
+  1715→                      Updated: Jan 20, 2024
+  1716→```
+  1717→
+  1718→**Featured Image**
+  1719→- Minimum 1200px wide (SEO + social sharing)
+  1720→- Relevant to content, high quality
+  1721→- Proper alt text describing image content
+  1722→- Figure caption when appropriate
+  1723→- Lazy loaded with aspect-ratio container
+  1724→
+  1725→### Article Body Typography
+  1726→
+  1727→**Reading Optimization**
+  1728→- Max width: 680-720px for text column
+  1729→- Line length: 60-75 characters
+  1730→- Line height: 1.7-1.8 for body text
+  1731→- Paragraph spacing: 1.5em
+  1732→
+  1733→**Heading Styling**
+  1734→- H2: Clear section breaks, generous top margin
+  1735→- H3: Subsections within H2
+  1736→- H4+: Rarely needed; consider restructuring
+  1737→- All headings left-aligned (except possibly H1)
+  1738→
+  1739→**Special Content Blocks**
+  1740→
+  1741→*Blockquotes:*
+  1742→- Left border accent (3-4px, brand color)
+  1743→- Italic text, slightly larger
+  1744→- Attribution if quoting someone
+  1745→- Max width matching body text
+  1746→
+  1747→*Callouts/Info Boxes:*
+  1748→- Background tint (very light brand or neutral)
+  1749→- Left border or icon indicator
+  1750→- Type variants: tip, note, warning, important
+  1751→- Used sparingly for emphasis
+  1752→
+  1753→*Lists:*
+  1754→- Bullet points for unordered items
+  1755→- Numbered for sequences/steps
+  1756→- Hanging indent for readability
+  1757→- Adequate item spacing (0.5em)
+  1758→
+  1759→### Article Sidebar Content (Priority Order)
+  1760→
+  1761→1. **Table of Contents** (if article is long)
+  1762→2. **Author card** (mini version)
+  1763→3. **Newsletter signup**
+  1764→4. **Related posts** (3-5)
+  1765→5. **Popular posts** (site-wide)
+  1766→6. **Category links**
+  1767→7. **Ad space** (if monetized)
+  1768→8. **Social follow**
+  1769→
+  1770→### Article End Content
+  1771→
+  1772→**Author Bio Box**
+  1773→- Larger avatar (80-100px)
+  1774→- Full name linked to author page
+  1775→- 2-3 sentence bio
+  1776→- Social links
+  1777→- "View all posts by [Author]" link
+  1778→
+  1779→**Related Posts**
+  1780→- 3-6 articles
+  1781→- Contextually relevant (same category/topic)
+  1782→- Mix of recent and evergreen
+  1783→- Card format with thumbnails
+  1784→
+  1785→**Content Bottom CTAs**
+  1786→- Newsletter signup (primary)
+  1787→- Comment prompt
+  1788→- Social share reminder
+  1789→- Back to category link
+  1790→
+  1791→---
+  1792→
+  1793→## 20. Category Page Rules
+  1794→
+  1795→### Category Page Purpose
+  1796→
+  1797→- Showcase breadth of coverage in a topic
+  1798→- Help users find specific content within category
+  1799→- Establish topical authority for SEO
+  1800→- Provide clear navigation within topic
+  1801→
+  1802→### Category Page Structure
+  1803→
+  1804→```
+  1805→┌─────────────────────────────────────────────────────┐
+  1806→│  HEADER                                             │
+  1807→├─────────────────────────────────────────────────────┤
+  1808→│  BREADCRUMBS: Home > Category Name                  │
+  1809→├─────────────────────────────────────────────────────┤
+  1810→│  CATEGORY HERO                                      │
+  1811→│  • Category name (H1)                              │
+  1812→│  • Category description (1-2 paragraphs)           │
+  1813→│  • Category image/illustration (optional)          │
+  1814→│  • Post count, last updated                        │
+  1815→├─────────────────────────────────────────────────────┤
+  1816→│  SUBCATEGORIES (if applicable)                      │
+  1817→│  • Cards or pills linking to subcats               │
+  1818→├─────────────────────────────────────────────────────┤
+  1819→│  FILTER/SORT OPTIONS                                │
+  1820→│  • Subcategory filter (tabs or dropdown)           │
+  1821→│  • Sort: Newest, Popular, Trending                 │
+  1822→├─────────────────────────────────────────────────────┤
+  1823→│  CONTENT GRID                                       │
+  1824→│  • Article cards (consistent format)               │
+  1825→│  • 12-24 per page                                   │
+  1826→│  • Pagination or infinite scroll                   │
+  1827→├─────────────────────────────────────────────────────┤
+  1828→│  SIDEBAR (optional)                                 │
+  1829→│  • Related categories                              │
+  1830→│  • Popular in this category                        │
+  1831→│  • Category-specific newsletter                    │
+  1832→├─────────────────────────────────────────────────────┤
+  1833→│  FOOTER                                             │
+  1834→└─────────────────────────────────────────────────────┘
+  1835→```
+  1836→
+  1837→### Category Page Features
+  1838→
+  1839→**Sorting Options**
+  1840→- Latest (default): Most recently published
+  1841→- Popular: Most views/engagement (time-period option)
+  1842→- Trending: Velocity of engagement
+  1843→- A-Z: Alphabetical by title
+  1844→
+  1845→**Filtering Options**
+  1846→- By subcategory
+  1847→- By tag
+  1848→- By date range (archives)
+  1849→- By author (multi-author sites)
+  1850→
+  1851→**Pagination vs Infinite Scroll**
+  1852→- Pagination: Better for SEO, predictable
+  1853→- Infinite scroll: Engaging, but watch performance
+  1854→- Hybrid: Load more button (recommended)
+  1855→
+  1856→---
+  1857→
+  1858→## 21. Search Page Rules
+  1859→
+  1860→### Search Page Components
+  1861→
+  1862→**Search Input (Prominent)**
+  1863→- Large, centered at top
+  1864→- Pre-filled with query
+  1865→- Clear button when has value
+  1866→- Search button/icon
+  1867→
+  1868→**Search Results Information**
+  1869→- "X results for 'query'" (count)
+  1870→- Search time (optional, builds confidence)
+  1871→- Did-you-mean suggestion (if applicable)
+  1872→- Auto-correction notice (if applied)
+  1873→
+  1874→**Results List**
+  1875→- Same card format as category pages
+  1876→- Highlighted query matches in excerpt
+  1877→- Result type indicator (article, page, author)
+  1878→- URL displayed below result
+  1879→
+  1880→**No Results State**
+  1881→- Friendly message
+  1882→- Search suggestions
+  1883→- Popular searches links
+  1884→- Browse categories CTA
+  1885→- Contact for help option
+  1886→
+  1887→### Search Behavior
+  1888→
+  1889→**Instant Search (Autocomplete)**
+  1890→- Show 5-8 suggestions as user types
+  1891→- Include: articles, categories, authors
+  1892→- Keyboard navigation (arrow keys + enter)
+  1893→- Highlight matched text
+  1894→- Debounce: 200-300ms delay
+  1895→
+  1896→**Advanced Search Options** (Collapsible)
+  1897→- Exact phrase match
+  1898→- Exclude words
+  1899→- Date range
+  1900→- Category filter
+  1901→- Author filter
+  1902→- Sort options
+  1903→
+  1904→---
+  1905→
+  1906→## 22. Author Page Rules
+  1907→
+  1908→### Author Page Structure
+  1909→
+  1910→```
+  1911→┌─────────────────────────────────────────────────────┐
+  1912→│  HEADER                                             │
+  1913→├─────────────────────────────────────────────────────┤
+  1914→│  AUTHOR HEADER                                      │
+  1915→│  • Cover/image banner (optional)                   │
+  1916→│  • Large avatar (120-150px, circular)              │
+  1917→│  • Author name (H1)                                │
+  1918→│  • Title/role                                      │
+  1919→│  • Bio (2-4 sentences)                             │
+  1920→│  • Social links                                    │
+  1921→│  • Follow/Subscribe button                         │
+  1922→│  • Location, website (optional)                    │
+  1923→├─────────────────────────────────────────────────────┤
+  1924→│  AUTHOR STATS                                       │
+  1925→│  • Posts published • Joined date                   │
+  1926→│  • Views/reads (optional)                          │
+  1927→├─────────────────────────────────────────────────────┤
+  1928→│  CONTENT TABS                                       │
+  1929→│  • Articles (default) • About • Contact            │
+  1930→├─────────────────────────────────────────────────────┤
+  1931→│  ARTICLES BY AUTHOR                                 │
+  1932→│  • Standard card grid                              │
+  1933→│  • Paginated                                        │
+  1934→│  • Sort: Newest, Popular                           │
+  1935→├─────────────────────────────────────────────────────┤
+  1936→│  FOOTER                                             │
+  1937→└─────────────────────────────────────────────────────┘
+  1938→```
+  1939→
+  1940→### Author Page E-E-A-T Signals
+  1941→
+  1942→**Credential Display**
+  1943→- Degrees/certifications listed
+  1944→- Years of experience
+  1945→- Publications/awards
+  1946→- Professional affiliations
+  1947→- Links to external verification
+  1948→
+  1949→**Expertise Demonstration**
+  1950→- Featured/top articles highlighted
+  1951→- Topics they cover (tag cloud or list)
+  1952→- Guest contributions noted
+  1953→- Media appearances or mentions
+  1954→
+  1955→---
+  1956→
+  1957→## 23. About Page Rules
+  1958→
+  1959→### About Page Purpose
+  1960→
+  1961→Build trust and connection with readers. This is often the second-most visited page after homepage.
+  1962→
+  1963→### About Page Sections
+  1964→
+  1965→```
+  1966→┌─────────────────────────────────────────────────────┐
+  1967→│  PAGE HERO                                          │
+  1968→│  • Team photo or illustration                      │
+  1969→│  • "About [Site Name]" heading                     │
+  1970→│  • Tagline or mission statement                   │
+  1971→├─────────────────────────────────────────────────────┤
+  1972→│  OUR STORY                                         │
+  1973→│  • Origin story (how/why started)                  │
+  1974→│  • Evolution/growth milestones                     │
+  1975→│  • Vision for the future                           │
+  1976→├─────────────────────────────────────────────────────┤
+  1977→│  OUR MISSION & VALUES                               │
+  1978→│  • What we believe                                 │
+  1979→│  • What we promise readers                         │
+  1980→│  • Editorial standards                             │
+  1981→├─────────────────────────────────────────────────────┤
+  1982→│  THE TEAM                                           │
+  1983→│  • Individual team member cards                    │
+  1984→│  • Photo, name, role, bio                          │
+  1985→│  • Links to social/author pages                    │
+  1986→├─────────────────────────────────────────────────────┤
+  1987→│  OUR PROCESS / EDITORIAL STANDARDS                  │
+  1988→│  • How content is created                          │
+  1989→│  • Research and fact-checking process              │
+  1990→│  • Update/corrections policy                       │
+  1991→│  • Affiliate/sponsorship disclosure                │
+  1992→├─────────────────────────────────────────────────────┤
+  1993→│  CONTACT US                                        │
+  1994→│  • How to reach us                                 │
+  1995→│  • Contact form or email/social links              │
+  1996→│  • Physical address (if applicable)                │
+  1997→├─────────────────────────────────────────────────────┤
+  1998→│  CALL TO ACTION                                     │
+  1999→│  • Join our newsletter                             │
+  2000→│  • Follow us on social                             │
+
+[showing lines 1-2000 of 3937; use offset=2001 with limit to continue reading]
