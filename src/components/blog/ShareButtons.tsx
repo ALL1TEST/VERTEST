@@ -30,23 +30,6 @@ function FacebookIcon({ className }: { className?: string }) {
   );
 }
 
-function TwitterIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-    </svg>
-  );
-}
-
 function PinterestIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -117,7 +100,6 @@ function XIcon({ className }: { className?: string }) {
       <path d="m6 6 6 6-6 6" />
     </svg>
   );
-}
 }
 
 function InstagramIcon({ className }: { className?: string }) {
@@ -206,30 +188,15 @@ export function ShareButtons({ url, title, className = "", variant = "sidebar" }
   return (
     <div className={className}>
       {/* Label */}
-      <div
-        className={
-          isSidebar
-            ? "mb-4 flex items-center gap-2"
-            : "mb-3 flex items-center gap-2"
-        }
-      >
-        <Share2
-          className={isSidebar ? "h-4 w-4 text-muted-foreground" : "h-4 w-4 text-muted-foreground"}
-          aria-hidden="true"
-        />
-        <span className={isSidebar ? "text-xs font-medium uppercase tracking-wider text-muted-foreground" : "text-xs font-medium uppercase tracking-wider text-muted-foreground"}>
+      <div className="mb-4 flex items-center gap-2">
+        <Share2 className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
           Share
         </span>
       </div>
 
-      {/* Icons */
-      <div
-        className={
-          isSidebar
-            ? "flex flex-col items-center gap-3"
-            : "flex flex-wrap items-center gap-2"
-        }
-      >
+      {/* Icons */}
+      <div className={isSidebar ? "flex flex-col items-center gap-3" : "flex flex-wrap items-center gap-2"}>
         {shareItems.map((item) => {
           const Icon = item.icon;
           return (
@@ -239,11 +206,7 @@ export function ShareButtons({ url, title, className = "", variant = "sidebar" }
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Share on ${item.name}`}
-              className={
-                isSidebar
-                  ? "group flex h-10 w-10 items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-all hover:border-foreground/20 hover:text-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  : "group flex h-9 w-9 items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-all hover:border-foreground/20 hover:text-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              }
+              className={`group flex ${isSidebar ? "h-10 w-10" : "h-9 w-9"} items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-all hover:border-foreground/20 hover:text-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
               title={`Share on ${item.name}`}
             >
               <Icon className={isSidebar ? "h-[18px] w-[18px]" : "h-4 w-4"} />
@@ -256,14 +219,10 @@ export function ShareButtons({ url, title, className = "", variant = "sidebar" }
           onClick={handleCopy}
           aria-label={copied ? "Link copied" : "Copy link"}
           title={copied ? "Copied!" : "Copy link"}
-          className={
-            isSidebar
-              ? "group flex h-10 w-10 items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-all hover:border-foreground/20 hover:text-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              : "group flex h-9 w-9 items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-all hover:border-foreground/20 hover:text-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          }
+          className={`group flex ${isSidebar ? "h-10 w-10" : "h-9 w-9"} items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-all hover:border-foreground/20 hover:text-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
         >
           {copied ? (
-            <Check className={isSidebar ? "h-[18px] w-[18px] text-green-600" : "h-4 w-4 text-green-600"} />
+            <Check className={isSidebar ? "h-[18px] w-[18px]" : "h-4 w-4"} style={{ color: "var(--color-green-600)" }} />
           ) : (
             <Link2 className={isSidebar ? "h-[18px] w-[18px]" : "h-4 w-4"} />
           )}

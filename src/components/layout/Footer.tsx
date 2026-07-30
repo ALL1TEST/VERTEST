@@ -1,15 +1,30 @@
 "use client";
 
-import { Leaf, Instagram, Youtube, Facebook, Rss } from "lucide-react";
+import { Leaf } from "lucide-react";
 import { siteConfig, categories } from "@/lib/site-config";
 import { Separator } from "@/components/ui/separator";
 import { useNavigation } from "@/lib/store";
 
+function PinterestIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="12" y1="17" x2="12" y2="22" />
+      <path d="M5 12a7 7 0 0 1 12.7-4.1 7 7 0 0 1-2.5 9.7l-1.2-2.5a2.5 2.5 0 0 0-1.3-4.8 2.5 2.5 0 0 0-2.4 3.9l1.2 2.5A7 7 0 0 1 5 12z" />
+    </svg>
+  );
+}
+
 const socialLinks = [
-  { label: "Instagram", href: "https://instagram.com", icon: Instagram },
-  { label: "YouTube", href: "https://youtube.com", icon: Youtube },
-  { label: "Facebook", href: "https://facebook.com", icon: Facebook },
-  { label: "RSS Feed", href: "/feed.xml", icon: Rss },
+  { label: "Pinterest", href: "https://pinterest.com", icon: PinterestIcon },
 ];
 
 const exploreItems = [

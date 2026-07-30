@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { CommentSection } from "@/components/blog/CommentSection";
+import { ShareButtons } from "@/components/blog/ShareButtons";
 import { useNavigation } from "@/lib/store";
 import { getArticleBySlug, getRelatedArticles } from "@/lib/data";
 
@@ -146,13 +147,34 @@ export function ArticleView({ slug }: { slug: string }) {
         <Separator className="mt-8" />
       </header>
 
-      {/* Article Body — rendered Markdown */}
-      <div
-        className="mx-auto max-w-3xl px-4 pb-12 sm:px-6 lg:px-8"
-        itemProp="articleBody"
-      >
-        <div className="prose-article"> 
-          <ReactMarkdown>{article.content}</ReactMarkdown>
+      {/* Article Body with Sticky Share Sidebar */}
+      <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+        <div className="flex gap-8">
+          {/* Sticky share sidebar — desktop only */}
+          <aside className="hidden lg:block lg:w-20 lg:shrink-0">
+            <div className="sticky top-24">
+              <ShareButtons
+                url={typeof window !== "undefined" ? window.location.href : ""}
+                title={article.title}
+                variant="sidebar"
+              />
+            </div>
+          </aside>
+
+          {/* Main article body */}
+          <div className="min-w-0 max-w-3xl flex-1 lg:max-w-none" itemProp="articleBody">
+            {/* Inline share — mobile/tablet */}
+            <div className="mb-6 lg:hidden">
+              <ShareButtons
+                url={typeof window !== "undefined" ? window.location.href : ""}
+                title={article.title}
+                variant="inline"
+              />
+            </div>
+            <div className="prose-article">
+              <ReactMarkdown>{article.content}</ReactMarkdown>
+            </div>
+          </div>
         </div>
       </div>
 
