@@ -4,11 +4,11 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { CommentSection } from "@/components/blog/CommentSection";
 import { ShareButtons } from "@/components/blog/ShareButtons";
+import { BlogSidebar } from "@/components/blog/BlogSidebar";
 import { useNavigation } from "@/lib/store";
 import { getArticleBySlug, getRelatedArticles } from "@/lib/data";
 
@@ -89,69 +89,13 @@ export function ArticleView({ slug }: { slug: string }) {
         </div>
       </div>
 
-      {/* Article Header */}
-      <header className="mx-auto max-w-3xl px-4 pt-8 sm:px-6 lg:px-8">
-        <Badge
-          variant="secondary"
-          className="mb-4 text-xs font-medium"
-        >
-          {article.category}
-        </Badge>
-        <h1
-          className="font-serif text-3xl leading-tight tracking-tight text-foreground sm:text-4xl lg:text-[2.5rem]"
-          itemProp="headline"
-        >
-          {article.title}
-        </h1>
-        <p
-          className="mt-4 text-lg leading-relaxed text-muted-foreground"
-          itemProp="description"
-        >
-          {article.excerpt}
-        </p>
-
-        {/* Author & Meta */}
-        <div className="mt-6 flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-3">
-            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
-              <Image
-                src={article.author.avatar}
-                alt={article.author.name}
-                fill
-                sizes="40px"
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-foreground" itemProp="author">
-                {article.author.name}
-              </p>
-              <p className="text-xs text-muted-foreground">{article.author.role}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <span className="flex items-center gap-1.5" itemProp="datePublished">
-              <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-              <time dateTime={article.date}>{formatDate(article.date)}</time>
-            </span>
-            <span className="text-muted-foreground/40" aria-hidden="true">
-              &middot;
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-              {article.readTime}
-            </span>
-          </div>
-        </div>
-
-        <Separator className="mt-8" />
-      </header>
-
-      {/* Article Body with Sticky Share Sidebar */}
-      <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-        <div className="flex gap-8">
-          {/* Sticky share sidebar — desktop only */}
-          <aside className="hidden lg:block lg:w-20 lg:shrink-0">
+      {/* Article Header + Body with Share Sidebar + Blog Sidebar
+          — Share (left), Article Title (center), Latest Articles (right)
+          all start at the same Y-axis */}
+      <div className="mx-auto max-w-7xl px-4 pt-8 pb-12 sm:px-6 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-[80px_1fr_320px]">
+          {/* Left: Sticky Share sidebar — desktop only */}
+          <aside className="hidden lg:block">
             <div className="sticky top-24">
               <ShareButtons
                 url={typeof window !== "undefined" ? window.location.href : ""}
@@ -161,8 +105,8 @@ export function ArticleView({ slug }: { slug: string }) {
             </div>
           </aside>
 
-          {/* Main article body */}
-          <div className="min-w-0 max-w-3xl flex-1 lg:max-w-none" itemProp="articleBody">
+          {/* Center: Article Header + Body */}
+          <div className="min-w-0">
             {/* Inline share — mobile/tablet */}
             <div className="mb-6 lg:hidden">
               <ShareButtons
@@ -171,42 +115,111 @@ export function ArticleView({ slug }: { slug: string }) {
                 variant="inline"
               />
             </div>
-            <div className="prose-article">
+
+            {/* Article Title — aligned with Share & Latest Articles on same Y */}
+            <h1
+              className="font-serif text-3xl leading-tight tracking-tight text-foreground sm:text-4xl lg:text-[2.5rem]"
+              itemProp="headline"
+            >
+              {article.title}
+            </h1>
+            <p
+              className="mt-4 text-lg leading-relaxed text-muted-foreground"
+              itemProp="description"
+            >
+              {article.excerpt}
+            </p>
+
+            {/* Author & Meta */}
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <div className="flex items-center gap-3">
+                <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                  <Image
+                    src={article.author.avatar}
+                    alt={article.author.name}
+                    fill
+                    sizes="40px"
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground" itemProp="author">
+                    {article.author.name}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{article.author.role}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <span className="flex items-center gap-1.5" itemProp="datePublished">
+                  <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
+                  <time dateTime={article.date}>{formatDate(article.date)}</time>
+                </span>
+                <span className="text-muted-foreground/40" aria-hidden="true">
+                  &middot;
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                  {article.readTime}
+                </span>
+              </div>
+            </div>
+
+            <Separator className="mt-8" />
+
+            {/* Article Body */}
+            <div className="prose-article mt-8" itemProp="articleBody">
               <ReactMarkdown>{article.content}</ReactMarkdown>
             </div>
           </div>
+
+          {/* Right: Blog Sidebar — Latest Articles & Categories */}
+          <div className="hidden lg:block">
+            <BlogSidebar />
+          </div>
         </div>
       </div>
 
-      {/* Author Bio */}
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <Separator className="mb-8" />
-        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full">
-            <Image
-              src={article.author.avatar}
-              alt={article.author.name}
-              fill
-              sizes="64px"
-              className="object-cover"
-            />
-          </div>
+      {/* Author Bio — aligned with article text */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-[80px_1fr_320px]">
+          <div className="hidden lg:block" />
           <div>
-            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Written by
-            </p>
-            <p className="font-serif text-lg text-foreground">{article.author.name}</p>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-              {article.author.bio}
-            </p>
+            <Separator className="mb-8" />
+            <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full">
+                <Image
+                  src={article.author.avatar}
+                  alt={article.author.name}
+                  fill
+                  sizes="64px"
+                  className="object-cover"
+                />
+              </div>
+              <div>
+                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  Written by
+                </p>
+                <p className="font-serif text-lg text-foreground">{article.author.name}</p>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  {article.author.bio}
+                </p>
+              </div>
+            </div>
           </div>
+          <div className="hidden lg:block" />
         </div>
       </div>
 
-      {/* Comments */}
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <Separator className="mb-10" />
-        <CommentSection articleSlug={slug} />
+      {/* Comments — aligned with article text */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-[80px_1fr_320px]">
+          <div className="hidden lg:block" />
+          <div>
+            <Separator className="mb-10" />
+            <CommentSection articleSlug={slug} />
+          </div>
+          <div className="hidden lg:block" />
+        </div>
       </div>
 
       {/* Related Articles */}

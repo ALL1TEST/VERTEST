@@ -1,17 +1,11 @@
 "use client";
 
-import { Shield } from "lucide-react";
-
 export function PrivacyPage() {
   return (
     <div>
       {/* Hero */}
       <section className="border-b bg-muted/30">
         <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:px-8">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
-            <Shield className="h-4 w-4" aria-hidden="true" />
-            Your Privacy Matters
-          </div>
           <h1 className="font-serif text-3xl tracking-tight text-foreground sm:text-4xl lg:text-5xl">
             Privacy Policy
           </h1>

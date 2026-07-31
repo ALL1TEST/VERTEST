@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Leaf, Heart, Target, MessageCircle } from "lucide-react";
+import { Heart, Target, MessageCircle } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 
 const values = [
@@ -32,10 +32,6 @@ export function AboutPage() {
       {/* Hero */}
       <section className="border-b bg-muted/30">
         <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:px-8">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
-            <Leaf className="h-4 w-4" aria-hidden="true" />
-            Our Story
-          </div>
           <h1 className="font-serif text-3xl tracking-tight text-foreground sm:text-4xl lg:text-5xl">
             About {siteConfig.name}
           </h1>

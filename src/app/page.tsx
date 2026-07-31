@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ViewRouter } from "@/components/layout/ViewRouter";
+import { ScrollToTopButton } from "@/components/layout/ScrollToTopButton";
 import { siteConfig } from "@/lib/site-config";
 
 /* Schema.org JSON-LD per Skill Section 9 */
@@ -31,12 +32,15 @@ export default function HomePage() {
 
       <Header />
 
-      {/* Main content — min-h-screen flex layout for sticky footer per Section 17 */}
-      <main id="main-content" className="min-h-screen flex-1">
+      {/* Main content */}
+      <main id="main-content" className="flex-1">
         <ViewRouter />
       </main>
 
       <Footer />
+
+      {/* Floating scroll-to-top button — appears on scroll down */}
+      <ScrollToTopButton />
     </>
   );
 }

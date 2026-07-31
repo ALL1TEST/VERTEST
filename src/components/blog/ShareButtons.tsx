@@ -127,6 +127,7 @@ interface ShareItem {
   name: string;
   icon: React.FC<{ className?: string }>;
   getUrl: (url: string, title: string) => string;
+  color: string;
 }
 
 const shareItems: ShareItem[] = [
@@ -134,36 +135,43 @@ const shareItems: ShareItem[] = [
     name: "Facebook",
     icon: FacebookIcon,
     getUrl: (u, t) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}`,
+    color: "#1877F2",
   },
   {
     name: "X (Twitter)",
     icon: XIcon,
     getUrl: (u, t) => `https://twitter.com/intent/tweet?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t)}`,
+    color: "#000000",
   },
   {
     name: "Pinterest",
     icon: PinterestIcon,
     getUrl: (u, t) => `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(u)}&description=${encodeURIComponent(t)}`,
+    color: "#E60023",
   },
   {
     name: "LinkedIn",
     icon: LinkedInIcon,
     getUrl: (u, t) => `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(u)}&title=${encodeURIComponent(t)}`,
+    color: "#0A66C2",
   },
   {
     name: "WhatsApp",
     icon: WhatsAppIcon,
     getUrl: (u, t) => `https://wa.me/?text=${encodeURIComponent(t + " " + u)}`,
+    color: "#25D366",
   },
   {
     name: "Instagram",
     icon: InstagramIcon,
     getUrl: () => "#",
+    color: "#E4405F",
   },
   {
     name: "Email",
     icon: Mail,
     getUrl: (u, t) => `mailto:?subject=${encodeURIComponent(t)}&body=${encodeURIComponent(u)}`,
+    color: "#6B7280",
   },
 ];
 
@@ -187,16 +195,15 @@ export function ShareButtons({ url, title, className = "", variant = "sidebar" }
 
   return (
     <div className={className}>
-      {/* Label */}
-      <div className="mb-4 flex items-center gap-2">
-        <Share2 className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
-        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Share
-        </span>
-      </div>
+      {/* Label — matches BlogSidebar heading style for alignment */}
+      <h2 className="flex items-center gap-2 font-serif text-xl tracking-tight text-foreground">
+        <Share2 className="h-5 w-5" aria-hidden="true" />
+        Share
+      </h2>
+      <div className="mt-1 h-px w-full bg-border" />
 
       {/* Icons */}
-      <div className={isSidebar ? "flex flex-col items-center gap-3" : "flex flex-wrap items-center gap-2"}>
+      <div className={isSidebar ? "mt-5 flex flex-col items-center gap-3" : "mt-4 flex flex-wrap items-center gap-2"}>
         {shareItems.map((item) => {
           const Icon = item.icon;
           return (
@@ -206,7 +213,8 @@ export function ShareButtons({ url, title, className = "", variant = "sidebar" }
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Share on ${item.name}`}
-              className={`group flex ${isSidebar ? "h-10 w-10" : "h-9 w-9"} items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-all hover:border-foreground/20 hover:text-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
+              className={`group flex ${isSidebar ? "h-10 w-10" : "h-9 w-9"} items-center justify-center rounded-full border border-border/60 transition-all hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
+              style={{ color: item.color }}
               title={`Share on ${item.name}`}
             >
               <Icon className={isSidebar ? "h-[18px] w-[18px]" : "h-4 w-4"} />
@@ -222,7 +230,7 @@ export function ShareButtons({ url, title, className = "", variant = "sidebar" }
           className={`group flex ${isSidebar ? "h-10 w-10" : "h-9 w-9"} items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-all hover:border-foreground/20 hover:text-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
         >
           {copied ? (
-            <Check className={isSidebar ? "h-[18px] w-[18px]" : "h-4 w-4"} style={{ color: "var(--color-green-600)" }} />
+            <Check className={isSidebar ? "h-[18px] w-[18px]" : "h-4 w-4"} style={{ color: "#16a34a" }} />
           ) : (
             <Link2 className={isSidebar ? "h-[18px] w-[18px]" : "h-4 w-4"} />
           )}

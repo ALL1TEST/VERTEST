@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MapPin, Clock, Send, CheckCircle2 } from "lucide-react";
+import { Send, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,10 +25,6 @@ export function ContactPage() {
       {/* Hero */}
       <section className="border-b bg-muted/30">
         <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:px-8">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
-            <Mail className="h-4 w-4" aria-hidden="true" />
-            Get in Touch
-          </div>
           <h1 className="font-serif text-3xl tracking-tight text-foreground sm:text-4xl lg:text-5xl">
             Contact Us
           </h1>
@@ -38,52 +34,11 @@ export function ContactPage() {
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-5">
-            {/* Contact Info */}
-            <div className="lg:col-span-2">
-              <h2 className="font-serif text-xl tracking-tight text-foreground">
-                Let&rsquo;s Connect
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                Whether you need help with a plant problem, want to collaborate, or have feedback about our content — drop us a line.
-              </p>
-
-              <div className="mt-8 space-y-5">
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                    <Mail className="h-4 w-4 text-primary" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Email</p>
-                    <p className="mt-0.5 text-sm text-muted-foreground">hello@verdant.com</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                    <MapPin className="h-4 w-4 text-primary" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Location</p>
-                    <p className="mt-0.5 text-sm text-muted-foreground">Portland, Oregon, USA</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                    <Clock className="h-4 w-4 text-primary" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Response Time</p>
-                    <p className="mt-0.5 text-sm text-muted-foreground">We typically reply within 24–48 hours</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div className="lg:col-span-3">
-              {submitted ? (
+      <section className="pt-16 pb-0 sm:pb-16">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+          {/* Contact Form */}
+          <div>
+            {submitted ? (
                 <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-12 text-center">
                   <CheckCircle2 className="h-12 w-12 text-primary" aria-hidden="true" />
                   <h3 className="mt-4 font-serif text-xl text-foreground">Message Sent!</h3>
@@ -98,8 +53,8 @@ export function ContactPage() {
                     Send Another Message
                   </Button>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="contact-name">Name <span className="text-destructive">*</span></Label>
@@ -143,9 +98,8 @@ export function ContactPage() {
                     {loading ? "Sending..." : "Send Message"}
                     <Send className="ml-2 h-4 w-4" aria-hidden="true" />
                   </Button>
-                </form>
-              )}
-            </div>
+              </form>
+            )}
           </div>
         </div>
       </section>

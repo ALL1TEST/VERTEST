@@ -23,6 +23,7 @@ const navItems = [
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { view, goHome, navigateTo, blogCategory } = useNavigation();
 
   useEffect(() => {
@@ -43,9 +44,15 @@ export function Header() {
       } else {
         goHome();
       }
+      setMobileMenuOpen(false);
     },
     [navigateTo, goHome]
   );
+
+  const handleGoHome = useCallback(() => {
+    goHome();
+    setMobileMenuOpen(false);
+  }, [goHome]);
 
   return (
     <header
@@ -110,7 +117,7 @@ export function Header() {
           </Button>
 
           {/* Mobile menu */}
-          <Sheet>
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
@@ -129,7 +136,7 @@ export function Header() {
               <div className="flex flex-col gap-6 pt-6">
                 <div className="flex items-center justify-between">
                   <button
-                    onClick={goHome}
+                    onClick={handleGoHome}
                     className="flex items-center gap-2"
                     aria-label={`${siteConfig.name} — Home`}
                   >
@@ -161,18 +168,6 @@ export function Header() {
                   </ul>
                 </nav>
 
-                <div className="border-t pt-4">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <input
-                      type="search"
-                      placeholder="Search articles..."
-                      aria-label="Search articles"
-                      onClick={() => navigateTo("blog")}
-                      className="h-11 w-full rounded-lg border border-input bg-background pl-10 pr-4 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    />
-                  </div>
-                </div>
               </div>
             </SheetContent>
           </Sheet>

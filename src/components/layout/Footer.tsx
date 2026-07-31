@@ -5,6 +5,23 @@ import { siteConfig, categories } from "@/lib/site-config";
 import { Separator } from "@/components/ui/separator";
 import { useNavigation } from "@/lib/store";
 
+function FacebookIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  );
+}
+
 function PinterestIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -23,8 +40,29 @@ function PinterestIcon({ className }: { className?: string }) {
   );
 }
 
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  );
+}
+
 const socialLinks = [
-  { label: "Pinterest", href: "https://pinterest.com", icon: PinterestIcon },
+  { label: "Facebook", href: "https://facebook.com", icon: FacebookIcon, color: "#1877F2" },
+  { label: "Instagram", href: "https://instagram.com", icon: InstagramIcon, color: "#E4405F" },
+  { label: "Pinterest", href: "https://pinterest.com", icon: PinterestIcon, color: "#E60023" },
 ];
 
 const exploreItems = [
@@ -68,7 +106,8 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border/60 transition-all hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  style={{ color: social.color }}
                 >
                   <social.icon className="h-4 w-4" aria-hidden="true" />
                 </a>
