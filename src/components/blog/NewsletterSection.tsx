@@ -13,10 +13,21 @@ export function NewsletterSection() {
     e.preventDefault();
     if (!email) return;
     setStatus("loading");
-    // Simulated — no backend per task spec
-    await new Promise((r) => setTimeout(r, 1200));
-    setStatus("success");
-    setEmail("");
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   }
 
   if (status === "success") {

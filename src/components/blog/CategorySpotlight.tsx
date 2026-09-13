@@ -2,13 +2,14 @@
 
 import { ArrowRight } from "lucide-react";
 import { ArticleCard } from "./ArticleCard";
-import { plantCareArticles, plantProfileArticles } from "@/lib/data";
+import { useArticles } from "@/hooks/use-articles";
 import { useNavigation } from "@/lib/store";
+import type { Article } from "@/lib/types";
 
 interface CategorySpotlightProps {
   title: string;
   slug: string;
-  articles: typeof plantCareArticles;
+  articles: Article[];
 }
 
 function CategoryColumn({ title, slug, articles }: CategorySpotlightProps) {
@@ -38,6 +39,8 @@ function CategoryColumn({ title, slug, articles }: CategorySpotlightProps) {
 }
 
 export function CategorySpotlight() {
+  const { plantCareArticles, plantProfileArticles } = useArticles();
+
   return (
     <section aria-labelledby="spotlight-heading" className="py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

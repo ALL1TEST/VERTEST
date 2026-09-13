@@ -3,15 +3,15 @@
 import { useState, useMemo } from "react";
 import { ArrowLeft, SlidersHorizontal } from "lucide-react";
 import { ArticleCard } from "./ArticleCard";
-import { Button } from "components/ui/button";
-import { Badge } from "components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "components/ui/select";
+} from "@/components/ui/select";
 import { useNavigation } from "@/lib/store";
 import { articles } from "@/lib/data";
 import { categories } from "@/lib/site-config";

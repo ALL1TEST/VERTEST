@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { useNavigation } from "@/lib/store";
-import { articles } from "@/lib/data";
+import { useArticles } from "@/hooks/use-articles";
 import { siteConfig, categories } from "@/lib/site-config";
 import type { BlogSort } from "@/lib/types";
 
@@ -18,6 +18,7 @@ const sortOptions: { label: string; value: BlogSort }[] = [
 ];
 
 export function BlogListing() {
+  const { articles } = useArticles();
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<BlogSort>("newest");

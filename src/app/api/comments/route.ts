@@ -75,7 +75,8 @@ export async function POST(req: NextRequest) {
       content: comment.content,
       createdAt: comment.createdAt.toISOString(),
     });
-  } catch {
+  } catch (error) {
+    console.error("POST /api/comments error:", error);
     return NextResponse.json(
       { error: "Failed to post comment" },
       { status: 500 }

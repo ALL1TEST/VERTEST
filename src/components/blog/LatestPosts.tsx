@@ -3,10 +3,11 @@
 import { ArrowRight } from "lucide-react";
 import { ArticleCard } from "./ArticleCard";
 import { Button } from "@/components/ui/button";
-import { latestArticles } from "@/lib/data";
+import { useArticles } from "@/hooks/use-articles";
 import { useNavigation } from "@/lib/store";
 
 export function LatestPosts() {
+  const { latestArticles } = useArticles();
   const { navigateTo } = useNavigation();
 
   return (

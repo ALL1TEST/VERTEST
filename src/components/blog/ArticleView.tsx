@@ -12,6 +12,8 @@ import { BlogSidebar } from "@/components/blog/BlogSidebar";
 import { useNavigation } from "@/lib/store";
 import { getArticleBySlug, getRelatedArticles } from "@/lib/data";
 
+import { useState, useEffect } from "react";
+
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString("en-US", {
     month: "long",
@@ -21,8 +23,27 @@ function formatDate(dateStr: string): string {
 }
 
 export function ArticleView({ slug }: { slug: string }) {
-  const article = getArticleBySlug(slug);
+  const [article, setArticle] = useState(getArticleBySlug(slug));
+  const [related, setRelated] = useState(getRelatedArticles(slug, 3));
   const { navigateTo } = useNavigation();
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch(`/api/articles/${encodeURIComponent(slug)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!isMounted || !data) return;
+        if (data.article) setArticle(data.article);
+        if (Array.isArray(data.related) && data.related.length > 0) {
+          setRelated(data.related);
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      isMounted = false;
+    };
+  }, [slug]);
 
   if (!article) {
     return (
@@ -42,8 +63,6 @@ export function ArticleView({ slug }: { slug: string }) {
       </div>
     );
   }
-
-  const related = getRelatedArticles(slug, 3);
 
   return (
     <article itemScope itemType="https://schema.org/Article">
