@@ -390,6 +390,6 @@ export async function subscribeNewsletterInDb(email: string) {
       create: { email: email.trim().toLowerCase(), active: true },
     });
   } catch (e) {
-    return { email, active: true };
+    return { id: "sub_" + Date.now(), email, active: true, createdAt: new Date() };
   }
 }
