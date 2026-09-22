@@ -1,6 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { BlogViewWrapper } from "@/components/layout/BlogViewWrapper";
+import { ViewRouter } from "@/components/layout/ViewRouter";
 import { ScrollToTopButton } from "@/components/layout/ScrollToTopButton";
 import { getArticlesFromDb } from "@/lib/services/articles";
 
@@ -13,7 +13,7 @@ export default async function BlogPage() {
     <>
       <Header />
       <main id="main-content" className="flex-1">
-        <BlogViewWrapper initialArticles={initialArticles} />
+        <ViewRouter initialArticles={initialArticles} initialView="blog" />
       </main>
       <Footer />
       <ScrollToTopButton />
