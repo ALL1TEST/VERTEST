@@ -23,6 +23,48 @@ function formatDate(dateStr: string): string {
   });
 }
 
+
+function cleanArticleHtml(html: string, title?: string, coverImage?: string): string {
+  if (!html) return "";
+  let cleaned = html
+    .replace(/\s+draggable\s*=\s*["'](?:true|false)["']/gi, "")
+    .replace(/\s+contenteditable\s*=\s*["'](?:true|false)["']/gi, "")
+    .replace(/\s+data-(?:pm|tiptap|node|editor)-[a-zA-Z0-9_-]+\s*=\s*["'][^"']*["']/gi, "")
+    .replace(/\s+data-id\s*=\s*["'][^"']*["']/gi, "")
+    .replace(/\s+class\s*=\s*["'](?:\s*ProseMirror[^"']*)*["']/gi, "")
+    .replace(/<p\s*>\s*(?:<br\s*\/?>)?\s*<\/p>/gi, "");
+
+  // Strip duplicate leading H1 if it matches article title
+  if (title) {
+    const normTitle = title.trim().toLowerCase();
+    cleaned = cleaned.replace(/^\s*<h1\b[^>]*>([\s\S]*?)<\/h1>/i, (match, inner) => {
+      const text = inner.replace(/<[^>]+>/g, "").trim().toLowerCase();
+      if (text === normTitle || normTitle.includes(text) || text.includes(normTitle)) {
+        return "";
+      }
+      return match;
+    });
+  }
+
+  // Strip duplicate leading cover image
+  if (coverImage) {
+    cleaned = cleaned.replace(/^\s*<p\b[^>]*>\s*<img\b[^>]+src=["']([^"']+)["'][^>]*>\s*<\/p>/i, (match, src) => {
+      if (src === coverImage || coverImage.endsWith(src) || src.endsWith(coverImage) || src.includes("hero")) {
+        return "";
+      }
+      return match;
+    });
+    cleaned = cleaned.replace(/^\s*<img\b[^>]+src=["']([^"']+)["'][^>]*>/i, (match, src) => {
+      if (src === coverImage || coverImage.endsWith(src) || src.endsWith(coverImage) || src.includes("hero")) {
+        return "";
+      }
+      return match;
+    });
+  }
+
+  return cleaned.trim();
+}
+
 export function ArticleView({ slug }: { slug: string }) {
   const { articles } = useArticles();
   const contextArticle = articles.find((a) => a.slug === slug);
@@ -204,9 +246,19 @@ export function ArticleView({ slug }: { slug: string }) {
             <Separator className="mt-8" />
 
             {/* Article Body */}
-            <div className="prose-article mt-8" itemProp="articleBody">
-              <ReactMarkdown>{article.content}</ReactMarkdown>
-            </div>
+            {/<[a-z][\s\S]*>/i.test(article.content || "") ? (
+              <div
+                className="prose-article mt-8"
+                itemProp="articleBody"
+                dangerouslySetInnerHTML={{
+                  __html: cleanArticleHtml(article.content, article.title, article.coverImage),
+                }}
+              />
+            ) : (
+              <div className="prose-article mt-8" itemProp="articleBody">
+                <ReactMarkdown>{article.content}</ReactMarkdown>
+              </div>
+            )}
           </div>
 
           {/* Right: Blog Sidebar — Latest Articles & Categories */}
