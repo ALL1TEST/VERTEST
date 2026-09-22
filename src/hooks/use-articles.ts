@@ -10,7 +10,7 @@ export function useArticles() {
 
   useEffect(() => {
     let isMounted = true;
-    fetch("/api/articles")
+    fetch("/api/articles", { cache: "no-store" })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (!isMounted || !Array.isArray(data) || data.length === 0) return;
