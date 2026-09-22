@@ -25,6 +25,21 @@ export function BlogListing() {
   const [showFilters, setShowFilters] = useState(false);
   const { blogCategory, navigateTo } = useNavigation();
 
+  // Dynamically derive all categories from siteConfig + articles
+  const allCategories = useMemo(() => {
+    const map = new Map<string, { name: string; slug: string }>();
+    categories.forEach((c) => map.set(c.slug, c));
+    articles.forEach((a) => {
+      if (a.categorySlug && !map.has(a.categorySlug)) {
+        map.set(a.categorySlug, {
+          name: a.category || a.categorySlug,
+          slug: a.categorySlug,
+        });
+      }
+    });
+    return Array.from(map.values());
+  }, [articles]);
+
   // Sync category from navigation store (e.g. clicking nav link)
   const effectiveCategory = blogCategory ?? activeCategory;
 
