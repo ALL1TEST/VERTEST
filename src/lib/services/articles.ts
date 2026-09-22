@@ -1,8 +1,6 @@
 import { db } from "@/lib/db";
 import type { Article, Author } from "@/lib/types";
 import { articles as baselineArticles } from "@/lib/data";
-import fs from "fs";
-import path from "path";
 
 // Default author fallback if not loaded from user relation
 export const defaultAuthor: Author = {
@@ -12,38 +10,6 @@ export const defaultAuthor: Author = {
   bio: "Certified horticulturist with 12 years of experience helping people create thriving indoor gardens.",
   url: "/author/elena-greenfield",
 };
-
-// Persistent cache file on disk (works in local dev & persists in Vercel lambda /tmp)
-const CACHE_FILE = path.join(
-  process.env.TMPDIR || process.env.TEMP || "/tmp",
-  "verdant-articles-cache.json"
-);
-
-function loadCachedArticles(): Article[] {
-  try {
-    if (fs.existsSync(CACHE_FILE)) {
-      const raw = fs.readFileSync(CACHE_FILE, "utf8");
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
-      }
-    }
-  } catch (e) {
-    console.warn("[Verdant] Failed to load cached articles from disk:", e);
-  }
-  return [...baselineArticles];
-}
-
-function saveCachedArticles(articlesList: Article[]): void {
-  try {
-    fs.writeFileSync(CACHE_FILE, JSON.stringify(articlesList, null, 2), "utf8");
-  } catch (e) {
-    console.warn("[Verdant] Failed to write cached articles to disk:", e);
-  }
-}
-
-// In-memory array initialized from disk cache or baseline
-let memoryArticles: Article[] = loadCachedArticles();
 
 export function transformPostToArticle(post: {
   id: string;
@@ -99,6 +65,8 @@ export function transformPostToArticle(post: {
 export async function createOrUpdateArticle(payload: {
   title: string;
   slug: string;
+  type?: string;
+  contentType?: string;
   excerpt?: string;
   content?: string;
   category?: string;
@@ -125,104 +93,80 @@ export async function createOrUpdateArticle(payload: {
     url: payload.author?.url || defaultAuthor.url,
   };
 
-  const articleItem: Article = {
-    title: payload.title,
-    slug: payload.slug,
-    excerpt: payload.excerpt || "",
-    content: payload.content || "",
-    category: payload.category || "General",
-    categorySlug: payload.categorySlug || "general",
-    author,
-    coverImage: payload.coverImage || "/images/article-beginner-plants.jpg",
-    date: payload.date || new Date().toISOString().split("T")[0],
-    readTime: payload.readTime || "5 min read",
-    featured: Boolean(payload.featured),
-    trending: Boolean(payload.trending),
-  };
-
-  // 1. Update memory & disk cache immediately
-  const existingIdx = memoryArticles.findIndex((a) => a.slug === payload.slug);
-  if (existingIdx >= 0) {
-    memoryArticles[existingIdx] = articleItem;
-  } else {
-    // Put newly published articles at the very top of the blog!
-    memoryArticles = [articleItem, ...memoryArticles];
-  }
-  saveCachedArticles(memoryArticles);
-
-  // 2. Persist to Prisma database if connected
-  try {
-    let authorRecord = await db.user.findFirst({ where: { email: "elena@verdant.com" } });
-    if (!authorRecord) {
-      authorRecord = await db.user.create({
-        data: {
-          email: "elena@verdant.com",
-          name: author.name,
-          role: author.role,
-          avatar: author.avatar,
-          bio: author.bio,
-          url: author.url,
-        },
-      });
-    }
-
-    let categoryId: string | undefined = undefined;
-    if (payload.categorySlug) {
-      const cat = await db.category.upsert({
-        where: { slug: payload.categorySlug },
-        update: { name: payload.category || payload.categorySlug },
-        create: { name: payload.category || payload.categorySlug, slug: payload.categorySlug },
-      });
-      categoryId = cat.id;
-    }
-
-    await db.post.upsert({
-      where: { slug: payload.slug },
-      update: {
-        title: payload.title,
-        excerpt: payload.excerpt || null,
-        content: payload.content || null,
-        coverImage: payload.coverImage || null,
-        categorySlug: payload.categorySlug || null,
-        categoryId: categoryId || null,
-        published: payload.published !== false,
-        readTime: payload.readTime || "5 min read",
-        featured: Boolean(payload.featured),
-        trending: Boolean(payload.trending),
-      },
-      create: {
-        title: payload.title,
-        slug: payload.slug,
-        excerpt: payload.excerpt || null,
-        content: payload.content || null,
-        coverImage: payload.coverImage || null,
-        categorySlug: payload.categorySlug || null,
-        categoryId: categoryId || null,
-        authorId: authorRecord.id,
-        published: payload.published !== false,
-        readTime: payload.readTime || "5 min read",
-        featured: Boolean(payload.featured),
-        trending: Boolean(payload.trending),
+  // Find or create author user record
+  let authorRecord = await db.user.findFirst({ where: { email: "elena@verdant.com" } });
+  if (!authorRecord) {
+    authorRecord = await db.user.create({
+      data: {
+        email: "elena@verdant.com",
+        name: author.name,
+        role: author.role,
+        avatar: author.avatar,
+        bio: author.bio,
+        url: author.url,
       },
     });
-    console.log(`[Verdant] Successfully persisted article [${payload.slug}] to Prisma database`);
-  } catch (dbError) {
-    console.warn("[Verdant] Database save warning (cached fallback in use):", dbError);
   }
 
-  return articleItem;
+  // Find or create category record if specified
+  let categoryId: string | undefined = undefined;
+  if (payload.categorySlug) {
+    const cat = await db.category.upsert({
+      where: { slug: payload.categorySlug },
+      update: { name: payload.category || payload.categorySlug },
+      create: { name: payload.category || payload.categorySlug, slug: payload.categorySlug },
+    });
+    categoryId = cat.id;
+  }
+
+  // Persist directly and persistently to PostgreSQL Post table
+  const post = await db.post.upsert({
+    where: { slug: payload.slug },
+    update: {
+      title: payload.title,
+      excerpt: payload.excerpt || null,
+      content: payload.content || null,
+      coverImage: payload.coverImage || null,
+      categorySlug: payload.categorySlug || null,
+      categoryId: categoryId || null,
+      published: payload.published !== false,
+      readTime: payload.readTime || "5 min read",
+      featured: Boolean(payload.featured),
+      trending: Boolean(payload.trending),
+      ...(payload.date ? { createdAt: new Date(payload.date) } : {}),
+    },
+    create: {
+      title: payload.title,
+      slug: payload.slug,
+      excerpt: payload.excerpt || null,
+      content: payload.content || null,
+      coverImage: payload.coverImage || null,
+      categorySlug: payload.categorySlug || null,
+      categoryId: categoryId || null,
+      authorId: authorRecord.id,
+      published: payload.published !== false,
+      readTime: payload.readTime || "5 min read",
+      featured: Boolean(payload.featured),
+      trending: Boolean(payload.trending),
+      createdAt: payload.date ? new Date(payload.date) : new Date(),
+    },
+    include: {
+      author: true,
+      category: true,
+    },
+  });
+
+  console.log(`[Verdant] Successfully persisted article [${payload.slug}] to Supabase PostgreSQL`);
+  return transformPostToArticle(post);
 }
 
 export async function deleteArticleBySlug(slug: string): Promise<boolean> {
-  memoryArticles = memoryArticles.filter((a) => a.slug !== slug);
-  saveCachedArticles(memoryArticles);
-
   try {
     await db.post.deleteMany({ where: { slug } });
     return true;
   } catch (e) {
-    console.warn("[Verdant] Database delete warning:", e);
-    return true;
+    console.error("[Verdant] Database delete error:", e);
+    throw e;
   }
 }
 
@@ -267,17 +211,14 @@ export async function getArticlesFromDb(params?: {
     });
 
     if (posts && posts.length > 0) {
-      const dbArticles = posts.map(transformPostToArticle);
-      const dbSlugs = new Set(dbArticles.map((a) => a.slug));
-      const extra = memoryArticles.filter((a) => !dbSlugs.has(a.slug));
-      return [...extra, ...dbArticles];
+      return posts.map(transformPostToArticle);
     }
   } catch (error) {
-    console.warn("DB fetch failed, falling back to cached articles:", error);
+    console.error("DB fetch error in getArticlesFromDb:", error);
   }
 
-  // Fallback to memory store (baseline + CMS published)
-  let result = [...memoryArticles];
+  // Fallback to baseline articles only if DB returns 0 articles or is unavailable
+  let result = [...baselineArticles];
 
   if (params?.categorySlug) {
     result = result.filter((a) => a.categorySlug === params.categorySlug);
@@ -316,10 +257,10 @@ export async function getArticleBySlugFromDb(slug: string): Promise<Article | nu
 
     if (post) return transformPostToArticle(post);
   } catch (error) {
-    console.warn(`Error fetching article [${slug}] from database:`, error);
+    console.error(`Error fetching article [${slug}] from database:`, error);
   }
 
-  const fallback = memoryArticles.find((a) => a.slug === slug);
+  const fallback = baselineArticles.find((a) => a.slug === slug);
   return fallback || null;
 }
 
@@ -348,11 +289,11 @@ export async function getRelatedArticlesFromDb(slug: string, limit = 3): Promise
       return posts.map(transformPostToArticle);
     }
   } catch (error) {
-    console.warn(`Error fetching related articles for [${slug}]:`, error);
+    console.error(`Error fetching related articles for [${slug}]:`, error);
   }
 
-  const current = memoryArticles.find((a) => a.slug === slug);
-  const others = memoryArticles.filter((a) => a.slug !== slug);
+  const current = baselineArticles.find((a) => a.slug === slug);
+  const others = baselineArticles.filter((a) => a.slug !== slug);
   if (!current) return others.slice(0, limit);
   const sameCategory = others.filter((a) => a.categorySlug === current.categorySlug);
   return sameCategory.length > 0 ? sameCategory.slice(0, limit) : others.slice(0, limit);
@@ -365,12 +306,12 @@ export async function getCategoriesFromDb() {
     });
     if (cats && cats.length > 0) return cats;
   } catch (error) {
-    console.warn("Error fetching categories from database:", error);
+    console.error("Error fetching categories from database:", error);
   }
 
-  // Derive categories from memory articles
+  // Derive categories from baseline articles
   const catMap = new Map<string, { id: string; name: string; slug: string }>();
-  for (const a of memoryArticles) {
+  for (const a of baselineArticles) {
     if (a.categorySlug && !catMap.has(a.categorySlug)) {
       catMap.set(a.categorySlug, {
         id: a.categorySlug,
@@ -383,13 +324,9 @@ export async function getCategoriesFromDb() {
 }
 
 export async function subscribeNewsletterInDb(email: string) {
-  try {
-    return await db.subscriber.upsert({
-      where: { email: email.trim().toLowerCase() },
-      update: { active: true },
-      create: { email: email.trim().toLowerCase(), active: true },
-    });
-  } catch (e) {
-    return { id: "sub_" + Date.now(), email, active: true, createdAt: new Date() };
-  }
+  return await db.subscriber.upsert({
+    where: { email: email.trim().toLowerCase() },
+    update: { active: true },
+    create: { email: email.trim().toLowerCase(), active: true },
+  });
 }

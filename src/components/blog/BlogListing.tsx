@@ -189,7 +189,7 @@ export function BlogListing() {
         >
           All
         </button>
-        {categories.map((cat) => {
+        {allCategories.map((cat) => {
           const articleCount = articles.filter(
             (a) => a.categorySlug === cat.slug
           ).length;

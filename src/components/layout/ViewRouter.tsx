@@ -1,6 +1,8 @@
 "use client";
 
 import { useNavigation } from "@/lib/store";
+import { ArticlesProvider } from "@/hooks/use-articles";
+import type { Article } from "@/lib/types";
 import { HeroSection } from "@/components/blog/HeroSection";
 import { CategoryLinks } from "@/components/blog/CategoryLinks";
 import { LatestPosts } from "@/components/blog/LatestPosts";
@@ -26,7 +28,7 @@ function HomeView() {
   );
 }
 
-export function ViewRouter() {
+function ViewContent() {
   const { view, articleSlug } = useNavigation();
 
   if (view === "article" && articleSlug) {
@@ -50,4 +52,12 @@ export function ViewRouter() {
   }
 
   return <HomeView />;
+}
+
+export function ViewRouter({ initialArticles }: { initialArticles?: Article[] }) {
+  return (
+    <ArticlesProvider initialArticles={initialArticles}>
+      <ViewContent />
+    </ArticlesProvider>
+  );
 }

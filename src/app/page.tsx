@@ -3,6 +3,10 @@ import { Footer } from "@/components/layout/Footer";
 import { ViewRouter } from "@/components/layout/ViewRouter";
 import { ScrollToTopButton } from "@/components/layout/ScrollToTopButton";
 import { siteConfig } from "@/lib/site-config";
+import { getArticlesFromDb } from "@/lib/services/articles";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 /* Schema.org JSON-LD per Skill Section 9 */
 const jsonLd = {
@@ -21,7 +25,9 @@ const jsonLd = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const initialArticles = await getArticlesFromDb();
+
   return (
     <>
       {/* Structured data for SEO per Skill Section 9 */}
@@ -34,12 +40,12 @@ export default function HomePage() {
 
       {/* Main content */}
       <main id="main-content" className="flex-1">
-        <ViewRouter />
+        <ViewRouter initialArticles={initialArticles} />
       </main>
 
       <Footer />
 
-      {/* Floating scroll-to-top button — appears on scroll down */}
+      {/* Floating scroll-to-top button */}
       <ScrollToTopButton />
     </>
   );

@@ -44,6 +44,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
 
+    // Verify contentType: Only blog posts (type: post) are allowed in /api/articles
+    const contentType = (body.type || body.contentType || "post").toLowerCase();
+    if (contentType === "page") {
+      return NextResponse.json(
+        { error: "Endpoint /api/articles only accepts blog posts (type: post), not static pages (type: page)" },
+        { status: 400 }
+      );
+    }
+
     const title = (body.title || "").trim();
     const slug = (body.slug || "").trim();
 
@@ -57,6 +66,8 @@ export async function POST(req: NextRequest) {
     const article = await createOrUpdateArticle({
       title,
       slug,
+      type: contentType,
+      contentType,
       excerpt: body.excerpt || "",
       content: body.content || "",
       category: body.category || "General",
