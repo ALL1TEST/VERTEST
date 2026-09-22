@@ -10,6 +10,7 @@ import { CommentSection } from "@/components/blog/CommentSection";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { BlogSidebar } from "@/components/blog/BlogSidebar";
 import { useNavigation } from "@/lib/store";
+import { useArticles } from "@/hooks/use-articles";
 import { getArticleBySlug, getRelatedArticles } from "@/lib/data";
 
 import { useState, useEffect } from "react";
@@ -23,11 +24,28 @@ function formatDate(dateStr: string): string {
 }
 
 export function ArticleView({ slug }: { slug: string }) {
-  const [article, setArticle] = useState(getArticleBySlug(slug));
-  const [related, setRelated] = useState(getRelatedArticles(slug, 3));
+  const { articles } = useArticles();
+  const contextArticle = articles.find((a) => a.slug === slug);
+  const [article, setArticle] = useState(contextArticle || getArticleBySlug(slug));
+  const [related, setRelated] = useState(() => {
+    if (contextArticle) {
+      const rel = articles
+        .filter((a) => a.slug !== slug && a.categorySlug === contextArticle.categorySlug)
+        .slice(0, 3);
+      if (rel.length > 0) return rel;
+    }
+    return getRelatedArticles(slug, 3);
+  });
   const { navigateTo } = useNavigation();
 
   useEffect(() => {
+    if (contextArticle) {
+      setArticle(contextArticle);
+      const rel = articles
+        .filter((a) => a.slug !== slug && a.categorySlug === contextArticle.categorySlug)
+        .slice(0, 3);
+      if (rel.length > 0) setRelated(rel);
+    }
     let isMounted = true;
     fetch(`/api/articles/${encodeURIComponent(slug)}`)
       .then((res) => (res.ok ? res.json() : null))
@@ -43,7 +61,7 @@ export function ArticleView({ slug }: { slug: string }) {
     return () => {
       isMounted = false;
     };
-  }, [slug]);
+  }, [slug, contextArticle, articles]);
 
   if (!article) {
     return (

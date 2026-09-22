@@ -20,7 +20,6 @@ export async function GET(
     }
 
     const related = await getRelatedArticlesFromDb(slug, 3);
-
     return NextResponse.json({ article, related }, { headers: NO_CACHE_HEADERS });
   } catch (error) {
     console.error("API /api/articles/[slug] error:", error);
@@ -46,6 +45,6 @@ export async function DELETE(
     await deleteArticleBySlug(slug);
     return cmsSuccessResponse({ ok: true, message: `Article ${slug} deleted successfully` });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Failed to delete article" }, { status: 500 });
+    return NextResponse.json({ error: error?.message || "Failed to delete article" }, { status: 500 });
   }
 }
