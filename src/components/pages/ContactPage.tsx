@@ -7,9 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
-export function ContactPage() {
-  const [page, setPage] = useState<{ title?: string; content?: string } | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+export function ContactPage({ initialPage }: { initialPage?: any }) {
+  const [page, setPage] = useState<{ title?: string; content?: string } | null>(initialPage || null);
+  const [isLoaded, setIsLoaded] = useState(Boolean(initialPage));
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -40,11 +40,8 @@ export function ContactPage() {
   }
 
   const title = page?.title ?? "Contact Us";
-  // When loaded from API/DB, strictly use page.content (even if empty).
-  // Only before the initial fetch completes, show the initial placeholder.
-  const contentHtml = isLoaded
-    ? (page?.content ?? "")
-    : "<p>Have a question, suggestion, or just want to say hello? We’d love to hear from you.</p>";
+  // Zero decalage/flicker: strictly use page content (no hardcoded fallback)
+  const contentHtml = page?.content ?? "";
 
   return (
     <div>

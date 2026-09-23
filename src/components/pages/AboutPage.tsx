@@ -26,9 +26,9 @@ const values = [
   },
 ];
 
-export function AboutPage() {
-  const [page, setPage] = useState<{ title?: string; content?: string; excerpt?: string } | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+export function AboutPage({ initialPage }: { initialPage?: any }) {
+  const [page, setPage] = useState<{ title?: string; content?: string; excerpt?: string } | null>(initialPage || null);
+  const [isLoaded, setIsLoaded] = useState(Boolean(initialPage));
 
   useEffect(() => {
     let active = true;

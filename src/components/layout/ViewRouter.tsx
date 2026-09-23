@@ -29,7 +29,7 @@ function HomeView() {
   );
 }
 
-function ViewContent({ defaultView }: { defaultView?: ViewType }) {
+function ViewContent({ defaultView, initialPages }: { defaultView?: ViewType; initialPages?: any[] }) {
   const { view, articleSlug } = useNavigation();
   const activeView = defaultView && view === "home" ? defaultView : view;
 
@@ -42,15 +42,18 @@ function ViewContent({ defaultView }: { defaultView?: ViewType }) {
   }
 
   if (activeView === "about") {
-    return <AboutPage />;
+    const aboutPage = initialPages?.find((p: any) => p.slug === "about");
+    return <AboutPage initialPage={aboutPage} />;
   }
 
   if (activeView === "contact") {
-    return <ContactPage />;
+    const contactPage = initialPages?.find((p: any) => p.slug === "contact");
+    return <ContactPage initialPage={contactPage} />;
   }
 
   if (activeView === "privacy") {
-    return <PrivacyPage />;
+    const privacyPage = initialPages?.find((p: any) => p.slug === "privacy-policy");
+    return <PrivacyPage initialPage={privacyPage} />;
   }
 
   return <HomeView />;
@@ -58,9 +61,11 @@ function ViewContent({ defaultView }: { defaultView?: ViewType }) {
 
 export function ViewRouter({
   initialArticles,
+  initialPages,
   initialView,
 }: {
   initialArticles?: Article[];
+  initialPages?: any[];
   initialView?: ViewType;
 }) {
   useEffect(() => {
@@ -71,7 +76,7 @@ export function ViewRouter({
 
   return (
     <ArticlesProvider initialArticles={initialArticles}>
-      <ViewContent defaultView={initialView} />
+      <ViewContent defaultView={initialView} initialPages={initialPages} />
     </ArticlesProvider>
   );
 }

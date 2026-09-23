@@ -44,9 +44,9 @@ const defaultPrivacyContent = `
 <p>If you have any questions about this Privacy Policy or your personal data, please contact us at <strong>privacy@verdant.com</strong>.</p>
 `.trim();
 
-export function PrivacyPage() {
-  const [page, setPage] = useState<{ title?: string; content?: string } | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+export function PrivacyPage({ initialPage }: { initialPage?: any }) {
+  const [page, setPage] = useState<{ title?: string; content?: string } | null>(initialPage || null);
+  const [isLoaded, setIsLoaded] = useState(Boolean(initialPage));
 
   useEffect(() => {
     let active = true;
