@@ -155,18 +155,20 @@ export function ArticleView({ slug }: { slug: string }) {
       </div>
 
       {/* Cover Image */}
-      <div className="mx-auto max-w-4xl px-4 pt-8 sm:px-6 lg:px-8">
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl">
-          <Image
-            src={article.coverImage}
-            alt=""
-            fill
-            sizes="(max-width: 768px) 100vw, 896px"
-            className="object-cover"
-            priority
-          />
+      {article.coverImage ? (
+        <div className="mx-auto max-w-4xl px-4 pt-8 sm:px-6 lg:px-8">
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl">
+            <Image
+              src={article.coverImage}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, 896px"
+              className="object-cover"
+              priority
+            />
+          </div>
         </div>
-      </div>
+      ) : null}
 
       {/* Article Header + Body with Share Sidebar + Blog Sidebar
           — Share (left), Article Title (center), Latest Articles (right)

@@ -50,15 +50,17 @@ function StandardCard({ article, className }: ArticleCardProps) {
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigateTo("article", article.slug); } }}
       aria-label={`Read: ${article.title}`}
     >
-      <div className="relative block aspect-[16/10] w-full overflow-hidden">
-        <Image
-          src={article.coverImage}
-          alt=""
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
-          loading="lazy"
-        />
+      <div className="relative block aspect-[16/10] w-full overflow-hidden bg-muted/20">
+        {article.coverImage ? (
+          <Image
+            src={article.coverImage}
+            alt=""
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+        ) : null}
         <Badge
           variant="secondary"
           className="absolute left-3 top-3 bg-background/90 text-xs font-medium backdrop-blur-sm hover:bg-background"
@@ -102,15 +104,17 @@ function FeaturedCard({ article, className }: ArticleCardProps) {
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigateTo("article", article.slug); } }}
       aria-label={`Read: ${article.title}`}
     >
-      <div className="relative block aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden">
-        <Image
-          src={article.coverImage}
-          alt=""
-          fill
-          sizes="(max-width: 768px) 100vw, 1200px"
-          className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
-          priority
-        />
+      <div className="relative block aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-muted/20">
+        {article.coverImage ? (
+          <Image
+            src={article.coverImage}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, 1200px"
+            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+            priority
+          />
+        ) : null}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
       </div>
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
@@ -156,17 +160,19 @@ function HorizontalCard({ article, className }: ArticleCardProps) {
       aria-label={`Read: ${article.title}`}
     >
       <div
-        className="relative block aspect-[16/10] w-full shrink-0 overflow-hidden sm:aspect-auto sm:w-[40%]"
+        className="relative block aspect-[16/10] w-full shrink-0 overflow-hidden sm:aspect-auto sm:w-[40%] bg-muted/20"
         aria-hidden="true"
       >
-        <Image
-          src={article.coverImage}
-          alt=""
-          fill
-          sizes="(max-width: 640px) 100vw, 320px"
-          className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
-          loading="lazy"
-        />
+        {article.coverImage ? (
+          <Image
+            src={article.coverImage}
+            alt=""
+            fill
+            sizes="(max-width: 640px) 100vw, 320px"
+            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+        ) : null}
       </div>
       <div className="flex flex-1 flex-col justify-center p-4 sm:p-6">
         <Badge variant="secondary" className="mb-2 w-fit text-xs font-medium">

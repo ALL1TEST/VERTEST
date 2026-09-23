@@ -20,7 +20,7 @@ export function transformPostToArticle(post: {
   published: boolean;
   featured: boolean;
   trending: boolean;
-  coverImage: string | null;
+  coverImage?: string | null;
   readTime: string | null;
   categorySlug: string | null;
   createdAt: Date;
@@ -54,7 +54,7 @@ export function transformPostToArticle(post: {
     category: post.category?.name || (post.categorySlug ? post.categorySlug.replace(/-/g, " ") : "General"),
     categorySlug: post.category?.slug || post.categorySlug || "general",
     author,
-    coverImage: post.coverImage || "/images/article-beginner-plants.jpg",
+    coverImage: post.coverImage ?? null,
     date: post.createdAt.toISOString().split("T")[0],
     readTime: post.readTime || "5 min read",
     featured: post.featured,
@@ -71,7 +71,7 @@ export async function createOrUpdateArticle(payload: {
   content?: string;
   category?: string;
   categorySlug?: string;
-  coverImage?: string;
+  coverImage?: string | null;
   author?: {
     name?: string;
     role?: string;
@@ -124,9 +124,9 @@ export async function createOrUpdateArticle(payload: {
     where: { slug: payload.slug },
     update: {
       title: payload.title,
-      excerpt: payload.excerpt || null,
+      excerpt: payload.excerpt !== undefined ? (payload.excerpt || null) : undefined,
       content: payload.content || null,
-      coverImage: payload.coverImage || null,
+      coverImage: payload.coverImage !== undefined ? (payload.coverImage || null) : undefined,
       categorySlug: payload.categorySlug || null,
       categoryId: categoryId || null,
       published: payload.published !== false,

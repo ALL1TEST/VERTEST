@@ -14,7 +14,7 @@ export interface Article {
   category: string;
   categorySlug: string;
   author: Author;
-  coverImage: string;
+  coverImage?: string | null;
   date: string;
   readTime: string;
   featured?: boolean;

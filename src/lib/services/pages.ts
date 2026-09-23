@@ -131,12 +131,24 @@ export async function getPagesFromDb(): Promise<PageItem[]> {
       } catch {}
     }
 
-    return baselinePages.map((baseline) => {
+    const result = baselinePages.map((baseline) => {
       if (dbPagesMap.has(baseline.slug)) {
-        return { ...baseline, ...dbPagesMap.get(baseline.slug) };
+        const parsed = dbPagesMap.get(baseline.slug);
+        return {
+          ...baseline,
+          ...parsed,
+          coverImage: parsed.coverImage !== undefined ? parsed.coverImage : baseline.coverImage,
+          excerpt: parsed.excerpt !== undefined ? parsed.excerpt : baseline.excerpt,
+        };
       }
       return baseline;
     });
+    for (const [slug, item] of dbPagesMap.entries()) {
+      if (!baselinePages.some((b) => b.slug === slug)) {
+        result.push(item);
+      }
+    }
+    return result;
   } catch (error) {
     console.error("[Verdant] getPagesFromDb error:", error);
     return baselinePages;
@@ -152,7 +164,15 @@ export async function getPageBySlugFromDb(slug: string): Promise<PageItem | null
     if (setting) {
       const parsed = JSON.parse(setting.value);
       const baseline = baselinePages.find((p) => p.slug === slug);
-      return baseline ? { ...baseline, ...parsed } : parsed;
+      if (baseline) {
+        return {
+          ...baseline,
+          ...parsed,
+          coverImage: parsed.coverImage !== undefined ? parsed.coverImage : baseline.coverImage,
+          excerpt: parsed.excerpt !== undefined ? parsed.excerpt : baseline.excerpt,
+        };
+      }
+      return parsed;
     }
   } catch (error) {
     console.error(`[Verdant] getPageBySlugFromDb error for [${slug}]:`, error);
@@ -167,9 +187,9 @@ export async function createOrUpdatePage(payload: Partial<PageItem> & { slug: st
   const merged: PageItem = {
     title: payload.title || existing?.title || payload.slug,
     slug: payload.slug,
-    content: payload.content || existing?.content || "",
-    excerpt: payload.excerpt !== undefined ? payload.excerpt : existing?.excerpt,
-    coverImage: payload.coverImage !== undefined ? payload.coverImage : existing?.coverImage,
+    content: payload.content !== undefined ? payload.content : (existing?.content || ""),
+    excerpt: payload.excerpt !== undefined ? payload.excerpt : (existing?.excerpt || ""),
+    coverImage: payload.coverImage !== undefined ? payload.coverImage : (existing?.coverImage || null),
     published: payload.published !== undefined ? payload.published : (existing?.published ?? true),
     date: payload.date || existing?.date || new Date().toISOString().split("T")[0],
     author: payload.author || existing?.author,

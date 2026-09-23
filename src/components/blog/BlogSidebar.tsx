@@ -41,15 +41,17 @@ export function BlogSidebar() {
                 className="group flex w-full items-start gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
                 aria-label={`Read: ${article.title}`}
               >
-                <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md">
-                  <Image
-                    src={article.coverImage}
-                    alt=""
-                    fill
-                    sizes="64px"
-                    className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-                    loading="lazy"
-                  />
+                <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-muted/20">
+                  {article.coverImage ? (
+                    <Image
+                      src={article.coverImage}
+                      alt=""
+                      fill
+                      sizes="64px"
+                      className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : null}
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-[11px] font-medium uppercase tracking-wider text-primary">
