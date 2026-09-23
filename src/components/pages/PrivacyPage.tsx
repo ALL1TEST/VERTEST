@@ -46,24 +46,28 @@ const defaultPrivacyContent = `
 
 export function PrivacyPage() {
   const [page, setPage] = useState<{ title?: string; content?: string } | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     let active = true;
-    fetch('/api/pages?slug=privacy-policy')
+    fetch('/api/pages?slug=privacy-policy', { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (active && data) {
           setPage(data);
+          setIsLoaded(true);
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        if (active) setIsLoaded(true);
+      });
     return () => {
       active = false;
     };
   }, []);
 
-  const contentHtml = page?.content || defaultPrivacyContent;
-  const title = page?.title || "Privacy Policy";
+  const contentHtml = isLoaded ? (page?.content ?? "") : defaultPrivacyContent;
+  const title = page?.title ?? "Privacy Policy";
 
   return (
     <div>
@@ -76,12 +80,14 @@ export function PrivacyPage() {
         </div>
       </section>
 
-      <section className="py-16">
-        <div
-          className="prose-article mx-auto max-w-3xl px-4 sm:px-6 lg:px-8"
-          dangerouslySetInnerHTML={{ __html: contentHtml }}
-        />
-      </section>
+      {contentHtml && contentHtml.trim() ? (
+        <section className="py-16">
+          <div
+            className="prose-article mx-auto max-w-3xl px-4 sm:px-6 lg:px-8"
+            dangerouslySetInnerHTML={{ __html: contentHtml }}
+          />
+        </section>
+      ) : null}
     </div>
   );
 }

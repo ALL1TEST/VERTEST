@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getPagesFromDb, getPageBySlugFromDb, createOrUpdatePage } from "@/lib/services/pages";
 import { verifyCmsAuth, cmsUnauthorizedResponse, NO_CACHE_HEADERS } from "@/lib/cms/auth";
 
@@ -38,6 +39,16 @@ export async function POST(req: NextRequest) {
     }
 
     const saved = await createOrUpdatePage(body);
+    try {
+      revalidatePath("/api/pages");
+      revalidatePath("/");
+      revalidatePath(`/${body.slug}`);
+      revalidatePath("/contact");
+      revalidatePath("/about");
+      revalidatePath("/privacy-policy");
+    } catch (e) {
+      console.warn("Revalidation warning:", e);
+    }
     return NextResponse.json({ ok: true, page: saved }, { headers: NO_CACHE_HEADERS });
   } catch (error) {
     console.error("API /api/pages POST error:", error);

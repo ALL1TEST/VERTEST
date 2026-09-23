@@ -9,19 +9,23 @@ import { Label } from "@/components/ui/label";
 
 export function ContactPage() {
   const [page, setPage] = useState<{ title?: string; content?: string } | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let active = true;
-    fetch('/api/pages?slug=contact')
+    fetch('/api/pages?slug=contact', { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (active && data) {
           setPage(data);
+          setIsLoaded(true);
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        if (active) setIsLoaded(true);
+      });
     return () => {
       active = false;
     };
@@ -35,8 +39,12 @@ export function ContactPage() {
     setSubmitted(true);
   }
 
-  const title = page?.title || "Contact Us";
-  const contentHtml = page?.content || "<p>Have a question, suggestion, or just want to say hello? We’d love to hear from you.</p>";
+  const title = page?.title ?? "Contact Us";
+  // When loaded from API/DB, strictly use page.content (even if empty).
+  // Only before the initial fetch completes, show the initial placeholder.
+  const contentHtml = isLoaded
+    ? (page?.content ?? "")
+    : "<p>Have a question, suggestion, or just want to say hello? We’d love to hear from you.</p>";
 
   return (
     <div>
@@ -46,10 +54,12 @@ export function ContactPage() {
           <h1 className="font-serif text-3xl tracking-tight text-foreground sm:text-4xl lg:text-5xl">
             {title}
           </h1>
-          <div
-            className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground"
-            dangerouslySetInnerHTML={{ __html: contentHtml }}
-          />
+          {contentHtml && contentHtml.trim() ? (
+            <div
+              className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground"
+              dangerouslySetInnerHTML={{ __html: contentHtml }}
+            />
+          ) : null}
         </div>
       </section>
 

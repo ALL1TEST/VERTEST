@@ -27,24 +27,29 @@ const values = [
 ];
 
 export function AboutPage() {
-  const [page, setPage] = useState<{ title?: string; content?: string } | null>(null);
+  const [page, setPage] = useState<{ title?: string; content?: string; excerpt?: string } | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     let active = true;
-    fetch('/api/pages?slug=about')
+    fetch('/api/pages?slug=about', { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (active && data) {
           setPage(data);
+          setIsLoaded(true);
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        if (active) setIsLoaded(true);
+      });
     return () => {
       active = false;
     };
   }, []);
 
-  const title = page?.title || `About ${siteConfig.name}`;
+  const title = page?.title ?? `About ${siteConfig.name}`;
+  const heroSubtitle = isLoaded ? (page?.excerpt ?? "") : `We started ${siteConfig.name} with one simple belief: everyone deserves to experience the joy of growing healthy, beautiful indoor plants.`;
 
   return (
     <div>
@@ -54,10 +59,11 @@ export function AboutPage() {
           <h1 className="font-serif text-3xl tracking-tight text-foreground sm:text-4xl lg:text-5xl">
             {title}
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            We started {siteConfig.name} with one simple belief: everyone deserves to
-            experience the joy of growing healthy, beautiful indoor plants.
-          </p>
+          {heroSubtitle && heroSubtitle.trim() ? (
+            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              {heroSubtitle}
+            </p>
+          ) : null}
         </div>
       </section>
 
