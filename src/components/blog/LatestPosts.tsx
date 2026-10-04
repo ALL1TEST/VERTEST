@@ -1,14 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ArticleCard } from "./ArticleCard";
 import { Button } from "@/components/ui/button";
 import { useArticles } from "@/hooks/use-articles";
-import { useNavigation } from "@/lib/store";
 
 export function LatestPosts() {
   const { latestArticles } = useArticles();
-  const { navigateTo } = useNavigation();
 
   return (
     <section aria-labelledby="latest-heading" className="py-12 sm:py-16">
@@ -27,31 +26,35 @@ export function LatestPosts() {
             </p>
           </div>
           <Button
+            asChild
             variant="ghost"
             className="hidden shrink-0 text-sm sm:inline-flex"
-            onClick={() => navigateTo("blog")}
           >
-            View all
-            <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
+            <Link href="/blog">
+              View all
+              <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
+            </Link>
           </Button>
         </div>
 
-        {/* Card grid — 1 col mobile, 2 tablet, 3 desktop per Section 18 & 26 */}
+        {/* Card grid */}
         <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {latestArticles.map((article) => (
             <ArticleCard key={article.slug} article={article} />
           ))}
         </div>
 
-        {/* Mobile "View all" button per Section 14 touch-friendly */}
+        {/* Mobile "View all" button */}
         <div className="mt-8 flex justify-center sm:hidden">
           <Button
+            asChild
             variant="outline"
             className="w-full max-w-xs"
-            onClick={() => navigateTo("blog")}
           >
-            View all articles
-            <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
+            <Link href="/blog">
+              View all articles
+              <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
+            </Link>
           </Button>
         </div>
       </div>

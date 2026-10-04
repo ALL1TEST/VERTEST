@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Article, ArticleCardVariant } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { useNavigation } from "@/lib/store";
 
 interface ArticleCardProps {
   article: Article;
@@ -35,19 +35,15 @@ export function ArticleCard({
   return <StandardCard article={article} className={className} />;
 }
 
-/* Standard Card — most versatile per Section 26 */
+/* Standard Card */
 function StandardCard({ article, className }: ArticleCardProps) {
-  const { navigateTo } = useNavigation();
   return (
-    <article
+    <Link
+      href={`/blog/${article.slug}`}
       className={cn(
-        "group relative flex cursor-pointer flex-col overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:ring-2 focus-within:ring-ring",
+        "group relative flex flex-col overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         className
       )}
-      role="button"
-      tabIndex={0}
-      onClick={() => navigateTo("article", article.slug)}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigateTo("article", article.slug); } }}
       aria-label={`Read: ${article.title}`}
     >
       <div className="relative block aspect-[16/10] w-full overflow-hidden bg-muted/20">
@@ -85,23 +81,19 @@ function StandardCard({ article, className }: ArticleCardProps) {
           <span className="text-xs text-muted-foreground">{article.readTime}</span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
-/* Featured Card — large image, overlay text per Section 26 */
+/* Featured Card */
 function FeaturedCard({ article, className }: ArticleCardProps) {
-  const { navigateTo } = useNavigation();
   return (
-    <article
+    <Link
+      href={`/blog/${article.slug}`}
       className={cn(
-        "group relative cursor-pointer overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-lg focus-within:ring-2 focus-within:ring-ring",
+        "group relative block overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         className
       )}
-      role="button"
-      tabIndex={0}
-      onClick={() => navigateTo("article", article.slug)}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigateTo("article", article.slug); } }}
       aria-label={`Read: ${article.title}`}
     >
       <div className="relative block aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-muted/20">
@@ -140,23 +132,19 @@ function FeaturedCard({ article, className }: ArticleCardProps) {
           <span className="text-xs text-white/70">{article.readTime}</span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
-/* Horizontal Card — image left, content right per Section 26 */
+/* Horizontal Card */
 function HorizontalCard({ article, className }: ArticleCardProps) {
-  const { navigateTo } = useNavigation();
   return (
-    <article
+    <Link
+      href={`/blog/${article.slug}`}
       className={cn(
-        "group flex cursor-pointer flex-col overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:ring-2 focus-within:ring-ring sm:flex-row sm:items-stretch",
+        "group flex flex-col overflow-hidden rounded-xl bg-card shadow-sm transition-shadow duration-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:flex-row sm:items-stretch",
         className
       )}
-      role="button"
-      tabIndex={0}
-      onClick={() => navigateTo("article", article.slug)}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigateTo("article", article.slug); } }}
       aria-label={`Read: ${article.title}`}
     >
       <div
@@ -196,6 +184,6 @@ function HorizontalCard({ article, className }: ArticleCardProps) {
           </span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }

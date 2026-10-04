@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, Search, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,22 +11,21 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useNavigation } from "@/lib/store";
 import { siteConfig } from "@/lib/site-config";
 
 const navItems = [
-  { label: "Blog", action: "blog" as const },
-  { label: "Plant Care", action: "category" as const, category: "plant-care" },
-  { label: "Beginner Guides", action: "category" as const, category: "beginner-guides" },
-  { label: "Design Ideas", action: "category" as const, category: "design-ideas" },
-  { label: "Plant Profiles", action: "category" as const, category: "plant-profiles" },
-  { label: "About", action: "about" as const },
+  { label: "Blog", href: "/blog" },
+  { label: "Plant Care", href: "/category/plant-care" },
+  { label: "Beginner Guides", href: "/category/beginner-guides" },
+  { label: "Design Ideas", href: "/category/design-ideas" },
+  { label: "Plant Profiles", href: "/category/plant-profiles" },
+  { label: "About", href: "/about" },
 ];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { view, goHome, navigateTo, blogCategory } = useNavigation();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 16);
@@ -32,27 +33,6 @@ export function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleNav = useCallback(
-    (action: string, category?: string) => {
-      if (action === "blog") {
-        navigateTo("blog");
-      } else if (action === "category" && category) {
-        navigateTo("blog", null, category);
-      } else if (action === "about") {
-        navigateTo("about");
-      } else {
-        goHome();
-      }
-      setMobileMenuOpen(false);
-    },
-    [navigateTo, goHome]
-  );
-
-  const handleGoHome = useCallback(() => {
-    goHome();
-    setMobileMenuOpen(false);
-  }, [goHome]);
 
   return (
     <header
@@ -68,8 +48,8 @@ export function Header() {
         className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
       >
         {/* Logo */}
-        <button
-          onClick={goHome}
+        <Link
+          href="/"
           className="flex items-center gap-2 transition-opacity hover:opacity-80"
           aria-label={`${siteConfig.name} — Home`}
         >
@@ -77,20 +57,20 @@ export function Header() {
           <span className="font-serif text-xl tracking-tight text-foreground">
             {siteConfig.name}
           </span>
-        </button>
+        </Link>
 
         {/* Desktop Navigation */}
         <ul className="hidden items-center gap-1 lg:flex" role="menubar">
           {navItems.map((item) => {
             const isActive =
-              (item.action === "blog" && view === "blog" && !blogCategory) ||
-              (item.action === "category" && blogCategory === item.category) ||
-              (item.action === "about" && view === "about");
+              item.href === "/"
+                ? pathname === "/"
+                : pathname === item.href || (item.href !== "/blog" && pathname?.startsWith(item.href));
             return (
               <li key={item.label} role="none">
-                <button
+                <Link
                   role="menuitem"
-                  onClick={() => handleNav(item.action, item.category)}
+                  href={item.href}
                   className={`rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                     isActive
                       ? "bg-accent text-accent-foreground"
@@ -98,7 +78,7 @@ export function Header() {
                   }`}
                 >
                   {item.label}
-                </button>
+                </Link>
               </li>
             );
           })}
@@ -107,13 +87,15 @@ export function Header() {
         {/* Right-side actions */}
         <div className="flex items-center gap-2">
           <Button
+            asChild
             variant="ghost"
             size="icon"
             aria-label="Search articles"
             className="text-muted-foreground hover:text-foreground"
-            onClick={() => navigateTo("blog")}
           >
-            <Search className="h-5 w-5" />
+            <Link href="/blog">
+              <Search className="h-5 w-5" />
+            </Link>
           </Button>
 
           {/* Mobile menu */}
@@ -135,8 +117,9 @@ export function Header() {
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <div className="flex flex-col gap-6 pt-6">
                 <div className="flex items-center justify-between">
-                  <button
-                    onClick={handleGoHome}
+                  <Link
+                    href="/"
+                    onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-2"
                     aria-label={`${siteConfig.name} — Home`}
                   >
@@ -147,27 +130,35 @@ export function Header() {
                     <span className="font-serif text-lg text-foreground">
                       {siteConfig.name}
                     </span>
-                  </button>
+                  </Link>
                 </div>
 
                 <nav aria-label="Mobile navigation">
                   <ul className="flex flex-col gap-1" role="menu">
-                    {navItems.map((item) => (
-                      <li key={item.label} role="none">
-                        <button
-                          role="menuitem"
-                          onClick={() => {
-                            handleNav(item.action, item.category);
-                          }}
-                          className="block w-full rounded-md px-3 py-3 text-left text-base font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                        >
-                          {item.label}
-                        </button>
-                      </li>
-                    ))}
+                    {navItems.map((item) => {
+                      const isActive =
+                        item.href === "/"
+                          ? pathname === "/"
+                          : pathname === item.href || (item.href !== "/blog" && pathname?.startsWith(item.href));
+                      return (
+                        <li key={item.label} role="none">
+                          <Link
+                            role="menuitem"
+                            href={item.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className={`block w-full rounded-md px-3 py-3 text-left text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                              isActive
+                                ? "bg-accent text-accent-foreground font-semibold"
+                                : "text-foreground hover:bg-accent hover:text-accent-foreground"
+                            }`}
+                          >
+                            {item.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </nav>
-
               </div>
             </SheetContent>
           </Sheet>

@@ -61,6 +61,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { AppLayout } from "@/components/layout/AppLayout";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -78,7 +80,7 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        {children}
+        <AppLayout>{children}</AppLayout>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,10 +18,17 @@ const sortOptions: { label: string; value: BlogSort }[] = [
   { label: "Popular", value: "popular" },
 ];
 
-export function BlogListing() {
+export function BlogListing({ initialCategory }: { initialCategory?: string } = {}) {
+  const router = useRouter();
   const { articles } = useArticles();
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string | null>(initialCategory || null);
+
+  useEffect(() => {
+    if (initialCategory !== undefined) {
+      setActiveCategory(initialCategory || null);
+    }
+  }, [initialCategory]);
   const [sort, setSort] = useState<BlogSort>("newest");
   const [showFilters, setShowFilters] = useState(false);
   const { blogCategory, navigateTo } = useNavigation();
@@ -80,12 +88,14 @@ export function BlogListing() {
   }, [search, effectiveCategory, sort]);
 
   const handleCategoryClick = (slug: string) => {
-    if (activeCategory === slug) {
+    if (effectiveCategory === slug) {
       setActiveCategory(null);
       navigateTo("blog", null, null);
+      router.push("/blog");
     } else {
       setActiveCategory(slug);
       navigateTo("blog", null, slug);
+      router.push(`/category/${slug}`);
     }
   };
 
@@ -240,6 +250,7 @@ export function BlogListing() {
                 setSearch("");
                 setActiveCategory(null);
                 navigateTo("blog", null, null);
+                router.push("/blog");
               }}
               className="ml-1 text-primary underline-offset-4 hover:underline"
             >
@@ -272,6 +283,7 @@ export function BlogListing() {
               setSearch("");
               setActiveCategory(null);
               navigateTo("blog", null, null);
+              router.push("/blog");
             }}
           >
             View all articles

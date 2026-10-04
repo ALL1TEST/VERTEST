@@ -1,9 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ArticleCard } from "./ArticleCard";
 import { useArticles } from "@/hooks/use-articles";
-import { useNavigation } from "@/lib/store";
 import type { Article } from "@/lib/types";
 
 interface CategorySpotlightProps {
@@ -13,21 +13,19 @@ interface CategorySpotlightProps {
 }
 
 function CategoryColumn({ title, slug, articles }: CategorySpotlightProps) {
-  const { navigateTo } = useNavigation();
-
   return (
     <div>
       <div className="flex items-center justify-between gap-2">
         <h3 className="font-serif text-lg tracking-tight text-foreground sm:text-xl">
           {title}
         </h3>
-        <button
-          onClick={() => navigateTo("blog", null, slug)}
+        <Link
+          href={`/category/${slug}`}
           className="flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:underline"
         >
           View all
           <ArrowRight className="h-3 w-3" aria-hidden="true" />
-        </button>
+        </Link>
       </div>
       <div className="mt-4 flex flex-col gap-4">
         {articles.slice(0, 3).map((article) => (
@@ -54,7 +52,7 @@ export function CategorySpotlight() {
           Dive deeper into the subjects you care about.
         </p>
 
-        {/* 2-column on desktop, stacked on mobile per Section 18 */}
+        {/* 2-column on desktop, stacked on mobile */}
         <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-2">
           <CategoryColumn
             title="Plant Care"

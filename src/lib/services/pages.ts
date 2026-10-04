@@ -134,12 +134,14 @@ export async function getPagesFromDb(): Promise<PageItem[]> {
     const result = baselinePages.map((baseline) => {
       if (dbPagesMap.has(baseline.slug)) {
         const parsed = dbPagesMap.get(baseline.slug);
-        return {
-          ...baseline,
-          ...parsed,
-          coverImage: parsed.coverImage !== undefined ? parsed.coverImage : baseline.coverImage,
-          excerpt: parsed.excerpt !== undefined ? parsed.excerpt : baseline.excerpt,
-        };
+        if (parsed) {
+          return {
+            ...baseline,
+            ...parsed,
+            coverImage: parsed.coverImage !== undefined ? parsed.coverImage : baseline.coverImage,
+            excerpt: parsed.excerpt !== undefined ? parsed.excerpt : baseline.excerpt,
+          };
+        }
       }
       return baseline;
     });

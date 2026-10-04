@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { articles } from "@/lib/data";
 import { categories } from "@/lib/site-config";
-import { useNavigation } from "@/lib/store";
 
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -15,8 +15,6 @@ function formatDate(dateStr: string): string {
 }
 
 export function BlogSidebar() {
-  const { navigateTo } = useNavigation();
-
   // Top 5 latest articles for the sidebar
   const sidebarLatest = [...articles]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -36,8 +34,8 @@ export function BlogSidebar() {
         <ul className="mt-5 space-y-5">
           {sidebarLatest.map((article) => (
             <li key={article.slug}>
-              <button
-                onClick={() => navigateTo("article", article.slug)}
+              <Link
+                href={`/blog/${article.slug}`}
                 className="group flex w-full items-start gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
                 aria-label={`Read: ${article.title}`}
               >
@@ -64,7 +62,7 @@ export function BlogSidebar() {
                     {formatDate(article.date)}
                   </span>
                 </span>
-              </button>
+              </Link>
             </li>
           ))}
         </ul>
@@ -86,8 +84,8 @@ export function BlogSidebar() {
             ).length;
             return (
               <li key={cat.slug}>
-                <button
-                  onClick={() => navigateTo("blog", null, cat.slug)}
+                <Link
+                  href={`/category/${cat.slug}`}
                   className="group flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <span className="text-sm font-medium text-foreground transition-colors group-hover:text-primary">
@@ -102,7 +100,7 @@ export function BlogSidebar() {
                       aria-hidden="true"
                     />
                   </span>
-                </button>
+                </Link>
               </li>
             );
           })}

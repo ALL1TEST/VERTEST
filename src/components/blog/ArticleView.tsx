@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import { BlogSidebar } from "@/components/blog/BlogSidebar";
 import { useNavigation } from "@/lib/store";
 import { useArticles } from "@/hooks/use-articles";
 import { getArticleBySlug, getRelatedArticles } from "@/lib/data";
+import type { Article } from "@/lib/types";
 
 import { useState, useEffect } from "react";
 
@@ -24,7 +26,7 @@ function formatDate(dateStr: string): string {
 }
 
 
-function cleanArticleHtml(html: string, title?: string, coverImage?: string): string {
+function cleanArticleHtml(html: string, title?: string, coverImage?: string | null): string {
   if (!html) return "";
   let cleaned = html
     .replace(/\s+draggable\s*=\s*["'](?:true|false)["']/gi, "")
@@ -65,9 +67,9 @@ function cleanArticleHtml(html: string, title?: string, coverImage?: string): st
   return cleaned.trim();
 }
 
-export function ArticleView({ slug }: { slug: string }) {
+export function ArticleView({ slug, initialArticle }: { slug: string; initialArticle?: Article | null }) {
   const { articles } = useArticles();
-  const contextArticle = articles.find((a) => a.slug === slug);
+  const contextArticle = initialArticle || articles.find((a) => a.slug === slug);
   const [article, setArticle] = useState(contextArticle || getArticleBySlug(slug));
   const [related, setRelated] = useState(() => {
     if (contextArticle) {
@@ -113,12 +115,14 @@ export function ArticleView({ slug }: { slug: string }) {
           The article you are looking for does not exist or has been moved.
         </p>
         <Button
+          asChild
           variant="outline"
           className="mt-6"
-          onClick={() => navigateTo("blog")}
         >
-          <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
-          Back to Blog
+          <Link href="/blog">
+            <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+            Back to Blog
+          </Link>
         </Button>
       </div>
     );
@@ -129,28 +133,31 @@ export function ArticleView({ slug }: { slug: string }) {
       {/* Breadcrumb / Back nav */}
       <div className="border-b">
         <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
-          <button
-            onClick={() => navigateTo("blog")}
+          <Link
+            href="/blog"
             className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back
-          </button>
+          </Link>
           <span className="text-muted-foreground/40" aria-hidden="true">
             /
           </span>
-          <button
-            onClick={() => navigateTo("blog")}
+          <Link
+            href="/blog"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
           >
             Blog
-          </button>
+          </Link>
           <span className="text-muted-foreground/40" aria-hidden="true">
             /
           </span>
-          <span className="text-sm text-muted-foreground line-clamp-1">
+          <Link
+            href={`/category/${article.categorySlug}`}
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors line-clamp-1"
+          >
             {article.category}
-          </span>
+          </Link>
         </div>
       </div>
 
@@ -330,10 +337,10 @@ export function ArticleView({ slug }: { slug: string }) {
           </div>
           <div className="mt-8 text-center">
             <Button
+              asChild
               variant="outline"
-              onClick={() => navigateTo("blog")}
             >
-              View all articles
+              <Link href="/blog">View all articles</Link>
             </Button>
           </div>
         </section>

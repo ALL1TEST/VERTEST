@@ -1,9 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { Leaf } from "lucide-react";
 import { siteConfig, categories } from "@/lib/site-config";
 import { Separator } from "@/components/ui/separator";
-import { useNavigation } from "@/lib/store";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -75,17 +75,16 @@ const exploreItems = [
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const { navigateTo, goHome } = useNavigation();
 
   return (
     <footer role="contentinfo" className="border-t bg-card">
-      {/* Footer Main — 4-column per Skill Section 17 */}
+      {/* Footer Main */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Column 1: Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <button
-              onClick={goHome}
+            <Link
+              href="/"
               className="inline-flex items-center gap-2"
               aria-label={`${siteConfig.name} — Home`}
             >
@@ -93,7 +92,7 @@ export function Footer() {
               <span className="font-serif text-lg text-foreground">
                 {siteConfig.name}
               </span>
-            </button>
+            </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
               {siteConfig.description}
             </p>
@@ -123,18 +122,18 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5" role="list">
               {exploreItems.map((item) => (
                 <li key={item.category}>
-                  <button
-                    onClick={() => navigateTo("blog", null, item.category)}
+                  <Link
+                    href={`/category/${item.category}`}
                     className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
                   >
                     {item.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 3: Categories — 5-7 links max per Section 17 */}
+          {/* Column 3: Categories */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
               Categories
@@ -142,12 +141,12 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5" role="list">
               {categories.slice(0, 6).map((cat) => (
                 <li key={cat.slug}>
-                  <button
-                    onClick={() => navigateTo("blog", null, cat.slug)}
+                  <Link
+                    href={`/category/${cat.slug}`}
                     className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
                   >
                     {cat.name}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -160,28 +159,28 @@ export function Footer() {
             </h3>
             <ul className="mt-4 space-y-2.5" role="list">
               <li>
-                <button
-                  onClick={() => navigateTo("about")}
+                <Link
+                  href="/about"
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
                 >
                   About Us
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => navigateTo("contact")}
+                <Link
+                  href="/contact"
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
                 >
                   Contact
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => navigateTo("privacy")}
+                <Link
+                  href="/privacy"
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline"
                 >
                   Privacy Policy
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -190,7 +189,7 @@ export function Footer() {
 
       <Separator />
 
-      {/* Footer Bottom per Skill Section 17 */}
+      {/* Footer Bottom */}
       <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
           <p className="text-xs text-muted-foreground">

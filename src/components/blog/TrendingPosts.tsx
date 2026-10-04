@@ -1,14 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ArticleCard } from "./ArticleCard";
 import { Button } from "@/components/ui/button";
 import { useArticles } from "@/hooks/use-articles";
-import { useNavigation } from "@/lib/store";
 
 export function TrendingPosts() {
   const { trendingArticles } = useArticles();
-  const { navigateTo } = useNavigation();
 
   return (
     <section aria-labelledby="trending-heading" className="bg-muted/40 py-12 sm:py-16">
@@ -26,16 +25,18 @@ export function TrendingPosts() {
             </p>
           </div>
           <Button
+            asChild
             variant="ghost"
             className="hidden shrink-0 text-sm sm:inline-flex"
-            onClick={() => navigateTo("blog")}
           >
-            See all
-            <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
+            <Link href="/blog">
+              See all
+              <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
+            </Link>
           </Button>
         </div>
 
-        {/* Different layout style per Section 18 — horizontal cards */}
+        {/* Horizontal cards */}
         <div className="mt-8 flex flex-col gap-5 sm:gap-6">
           {trendingArticles.map((article) => (
             <ArticleCard key={article.slug} article={article} variant="horizontal" />
