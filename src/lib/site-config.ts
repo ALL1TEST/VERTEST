@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Verdant",
   description:
     "Your trusted guide to growing beautiful indoor plants. Expert care tips, plant guides, and inspiration for plant lovers at every level.",
-  url: "https://verdant.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://verdantt.vercel.app",
   ogImage: "/images/hero-plant.jpg",
   author: "Verdant Editorial Team",
   creator: "Verdant",
