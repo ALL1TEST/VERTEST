@@ -8,25 +8,31 @@ import { Input } from "@/components/ui/input";
 export function NewsletterSection() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) return;
     setStatus("loading");
+    setErrorMessage("");
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: email.trim() }),
       });
-      if (res.ok) {
+      const data = await res.json().catch(() => null);
+
+      if (res.ok && data && (data.success || data.id)) {
         setStatus("success");
         setEmail("");
       } else {
         setStatus("error");
+        setErrorMessage(data?.error || "Failed to subscribe. Please try again.");
       }
     } catch {
       setStatus("error");
+      setErrorMessage("Network error. Please try again later.");
     }
   }
 
@@ -89,7 +95,10 @@ export function NewsletterSection() {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
-              if (status === "error") setStatus("idle");
+              if (status === "error") {
+                setStatus("idle");
+                setErrorMessage("");
+              }
             }}
             aria-describedby="newsletter-hint"
             className="h-12 rounded-r-none border-0 bg-white/10 text-primary-foreground placeholder:text-primary-foreground/50 focus-visible:ring-0 focus-visible:ring-offset-0 sm:flex-1"
@@ -109,6 +118,12 @@ export function NewsletterSection() {
             )}
           </Button>
         </form>
+
+        {status === "error" && (
+          <p role="alert" className="mt-2 text-xs text-rose-200 font-medium">
+            {errorMessage || "Failed to subscribe. Please try again."}
+          </p>
+        )}
 
         {/* Privacy reassurance per Skill Section 25 */}
         <p
