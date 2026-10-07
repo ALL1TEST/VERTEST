@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const articleSlug = searchParams.get("articleSlug");
@@ -12,8 +14,19 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  // Check global comment toggle setting
+  const enableSetting = await db.siteSetting.findUnique({
+    where: { key: "enable_comments" },
+  });
+  const commentsEnabled = enableSetting ? enableSetting.value !== "false" : true;
+
+  // CANONICAL SECURITY & MODERATION RULE:
+  // Public website MUST ONLY render comments that are APPROVED!
   const comments = await db.comment.findMany({
-    where: { articleSlug },
+    where: {
+      articleSlug,
+      status: "APPROVED",
+    },
     orderBy: { createdAt: "desc" },
   });
 
@@ -24,13 +37,33 @@ export async function GET(req: NextRequest) {
       name: c.name,
       email: "",
       content: c.content,
+      status: c.status,
       createdAt: c.createdAt.toISOString(),
-    }))
+    })),
+    {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
+        "X-Comments-Enabled": String(commentsEnabled),
+      },
+    }
   );
 }
 
 export async function POST(req: NextRequest) {
   try {
+    // 1. Check if comments are enabled
+    const enableSetting = await db.siteSetting.findUnique({
+      where: { key: "enable_comments" },
+    });
+    if (enableSetting && enableSetting.value === "false") {
+      return NextResponse.json(
+        { error: "Comments are closed for this article." },
+        { status: 403 }
+      );
+    }
+
     const body = await req.json();
     const { articleSlug, name, email, content } = body;
 
@@ -63,8 +96,39 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // 2. Auto Spam Detection
+    let initialStatus = "PENDING";
+
+    const spamSetting = await db.siteSetting.findUnique({
+      where: { key: "comment_auto_spam_detection" },
+    });
+    const autoSpamEnabled = spamSetting ? spamSetting.value !== "false" : true;
+
+    if (autoSpamEnabled) {
+      const cleanContent = content.trim().toLowerCase();
+      const spamKeywords = [
+        "viagra", "cialis", "casino", "poker", "slot machine", "free spins",
+        "crypto giveaway", "bitcoin profit", "telegram @", "whatsapp +",
+        "buy followers", "seo ranking", "backlinks", "loan offer", "porn",
+        "hookup", "dating service", "investment opportunity"
+      ];
+      
+      const linkCount = (content.match(/https?:\/\//gi) || []).length;
+      const hasSpamKeyword = spamKeywords.some((kw) => cleanContent.includes(kw));
+
+      if (linkCount >= 3 || hasSpamKeyword) {
+        initialStatus = "SPAM";
+      }
+    }
+
     const comment = await db.comment.create({
-      data: { articleSlug, name: name.trim(), email: email.trim().toLowerCase(), content: content.trim() },
+      data: {
+        articleSlug,
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        content: content.trim(),
+        status: initialStatus,
+      },
     });
 
     return NextResponse.json({
@@ -73,7 +137,12 @@ export async function POST(req: NextRequest) {
       name: comment.name,
       email: "",
       content: comment.content,
+      status: comment.status,
       createdAt: comment.createdAt.toISOString(),
+      message:
+        initialStatus === "SPAM"
+          ? "Your comment was flagged for moderator review."
+          : "Thank you! Your comment has been submitted and is awaiting approval by a moderator.",
     });
   } catch (error) {
     console.error("POST /api/comments error:", error);

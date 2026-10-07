@@ -58,7 +58,10 @@ model Comment {
   name        String
   email       String
   content     String
+  status      String   @default("PENDING")
   createdAt   DateTime @default(now())
+
+  @@index([articleSlug, status])
 }
 
 model Subscriber {

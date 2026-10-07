@@ -33,5 +33,6 @@ export interface Comment {
   name: string;
   email: string;
   content: string;
+  status?: string;
   createdAt: string;
 }
