@@ -59,6 +59,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    google: "Ew5K5kHoLTjxccBQtI0tlrXCc6lyuaCrHSvbS5Uy5hg",
+  },
 };
 
 import { AppLayout } from "@/components/layout/AppLayout";
