@@ -91,17 +91,19 @@ export function CommentSection({ articleSlug }: { articleSlug: string }) {
 
       if (!res.ok) {
         const data = await res.json();
-        setError(data.error || "Something went wrong");
+        setError(data.error || "Failed to post comment");
         return;
       }
 
       const data = await res.json();
       setSuccessMessage(
-        data.message || "Thank you! Your comment has been submitted and is awaiting moderation."
+        data.message || "Your comment has been posted successfully."
       );
       setName("");
       setEmail("");
       setContent("");
+      // Immediately refresh comments so approved comment renders instantly
+      fetchComments();
     } catch {
       setError("Failed to post comment. Please try again.");
     } finally {
@@ -130,7 +132,7 @@ export function CommentSection({ articleSlug }: { articleSlug: string }) {
       {/* Closed comments notice */}
       {!commentsEnabled ? (
         <div className="mt-6 rounded-lg border bg-muted/40 p-4 text-center text-sm text-muted-foreground">
-          Comments are closed for this article.
+          Comments are currently closed.
         </div>
       ) : (
         /* Comment Form */
@@ -189,7 +191,7 @@ export function CommentSection({ articleSlug }: { articleSlug: string }) {
         </form>
       )}
 
-      {/* Comments List — only approved comments */}
+      {/* Comments List — only approved comments are rendered */}
       {comments.length > 0 && (
         <div className="mt-10 divide-y">
           <h3 className="font-serif text-xl tracking-tight text-foreground sm:text-2xl mb-4">

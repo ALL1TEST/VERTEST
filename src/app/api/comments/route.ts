@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -59,7 +60,7 @@ export async function POST(req: NextRequest) {
     });
     if (enableSetting && enableSetting.value === "false") {
       return NextResponse.json(
-        { error: "Comments are closed for this article." },
+        { error: "Comments are currently closed." },
         { status: 403 }
       );
     }
@@ -97,7 +98,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Auto Spam Detection
-    let initialStatus = "PENDING";
+    let initialStatus = "APPROVED";
 
     const spamSetting = await db.siteSetting.findUnique({
       where: { key: "comment_auto_spam_detection" },
@@ -131,6 +132,13 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    try {
+      revalidatePath(`/blog/${articleSlug}`);
+      revalidatePath("/blog");
+    } catch {
+      // ignore in environments without cache revalidation
+    }
+
     return NextResponse.json({
       id: comment.id,
       articleSlug: comment.articleSlug,
@@ -141,8 +149,8 @@ export async function POST(req: NextRequest) {
       createdAt: comment.createdAt.toISOString(),
       message:
         initialStatus === "SPAM"
-          ? "Your comment was flagged for moderator review."
-          : "Thank you! Your comment has been submitted and is awaiting approval by a moderator.",
+          ? "Your comment was flagged for review."
+          : "Your comment has been posted successfully.",
     });
   } catch (error) {
     console.error("POST /api/comments error:", error);
