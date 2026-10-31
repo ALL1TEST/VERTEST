@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { DM_Serif_Display } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -76,22 +75,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Google Analytics (gtag.js) */}
-        <Script
-          strategy="afterInteractive"
+        {/* Google tag (gtag.js) */}
+        <script
+          async
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${GA_MEASUREMENT_ID}', {
-                page_path: window.location.pathname,
-              });
+              gtag('config', '${GA_MEASUREMENT_ID}');
             `,
           }}
         />
