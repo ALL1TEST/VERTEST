@@ -44,7 +44,6 @@ function CommentItem({ comment }: { comment: Comment }) {
 
 export function CommentSection({ articleSlug }: { articleSlug: string }) {
   const [comments, setComments] = useState<Comment[]>([]);
-  const [commentsEnabled, setCommentsEnabled] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [content, setContent] = useState("");
@@ -58,10 +57,6 @@ export function CommentSection({ articleSlug }: { articleSlug: string }) {
         cache: "no-store",
       });
       if (res.ok) {
-        const isEnabledHeader = res.headers.get("X-Comments-Enabled");
-        if (isEnabledHeader !== null) {
-          setCommentsEnabled(isEnabledHeader !== "false");
-        }
         const data = await res.json();
         if (Array.isArray(data)) {
           setComments(data);
@@ -102,7 +97,6 @@ export function CommentSection({ articleSlug }: { articleSlug: string }) {
       setName("");
       setEmail("");
       setContent("");
-      // Immediately refresh comments so approved comment renders instantly
       fetchComments();
     } catch {
       setError("Failed to post comment. Please try again.");
@@ -117,79 +111,68 @@ export function CommentSection({ articleSlug }: { articleSlug: string }) {
         id="comments-heading"
         className="font-serif text-2xl tracking-tight text-foreground sm:text-3xl"
       >
-        {comments.length > 0
-          ? `${comments.length} Comment${comments.length !== 1 ? "s" : ""}`
-          : "Leave a Reply"}
+        Leave a Reply
       </h2>
 
-      {comments.length === 0 && commentsEnabled && (
-        <p className="mt-2 text-sm text-muted-foreground">
-          Your email address will not be published. Required fields are marked{" "}
-          <span className="text-destructive">*</span>
-        </p>
-      )}
+      <p className="mt-2 text-sm text-muted-foreground">
+        Your email address will not be published. Required fields are marked{" "}
+        <span className="text-destructive">*</span>
+      </p>
 
-      {/* Closed comments notice */}
-      {!commentsEnabled ? (
-        <div className="mt-6 rounded-lg border bg-muted/40 p-4 text-center text-sm text-muted-foreground">
-          Comments are currently closed.
+      {/* Comment Form */}
+      <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+        {successMessage && (
+          <div className="flex items-start gap-2.5 rounded-lg border border-emerald-200 bg-emerald-50/70 p-4 text-sm text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300">
+            <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600 mt-0.5" />
+            <span>{successMessage}</span>
+          </div>
+        )}
+
+        <div>
+          <label htmlFor="comment-text" className="sr-only">Comment *</label>
+          <Textarea
+            id="comment-text"
+            placeholder="Comment *"
+            required
+            rows={5}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
         </div>
-      ) : (
-        /* Comment Form */
-        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
-          {successMessage && (
-            <div className="flex items-start gap-2.5 rounded-lg border border-emerald-200 bg-emerald-50/70 p-4 text-sm text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300">
-              <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600 mt-0.5" />
-              <span>{successMessage}</span>
-            </div>
-          )}
-
+        <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="comment-text" className="sr-only">Comment *</label>
-            <Textarea
-              id="comment-text"
-              placeholder="Comment *"
+            <label htmlFor="comment-name" className="sr-only">Name *</label>
+            <Input
+              id="comment-name"
+              placeholder="Name *"
               required
-              rows={5}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label htmlFor="comment-name" className="sr-only">Name *</label>
-              <Input
-                id="comment-name"
-                placeholder="Name *"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="comment-email" className="sr-only">Email *</label>
-              <Input
-                id="comment-email"
-                type="email"
-                placeholder="Email *"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+          <div>
+            <label htmlFor="comment-email" className="sr-only">Email *</label>
+            <Input
+              id="comment-email"
+              type="email"
+              placeholder="Email *"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
-          {error && (
-            <div className="flex items-center gap-2 text-sm text-destructive" role="alert">
-              <AlertCircle className="h-4 w-4 shrink-0" />
-              <span>{error}</span>
-            </div>
-          )}
-          <Button type="submit" disabled={loading}>
-            {loading ? "Posting..." : "Post Comment"}
-            <Send className="ml-2 h-4 w-4" aria-hidden="true" />
-          </Button>
-        </form>
-      )}
+        </div>
+        {error && (
+          <div className="flex items-center gap-2 text-sm text-destructive" role="alert">
+            <AlertCircle className="h-4 w-4 shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+        <Button type="submit" disabled={loading}>
+          {loading ? "Posting..." : "Post Comment"}
+          <Send className="ml-2 h-4 w-4" aria-hidden="true" />
+        </Button>
+      </form>
 
       {/* Comments List — only approved comments are rendered */}
       {comments.length > 0 && (

@@ -54,17 +54,6 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    // 1. Check if comments are enabled
-    const enableSetting = await db.siteSetting.findUnique({
-      where: { key: "enable_comments" },
-    });
-    if (enableSetting && enableSetting.value === "false") {
-      return NextResponse.json(
-        { error: "Comments are currently closed." },
-        { status: 403 }
-      );
-    }
-
     const body = await req.json();
     const { articleSlug, name, email, content } = body;
 
@@ -97,9 +86,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2. Auto Spam Detection
-    let initialStatus = "APPROVED";
+    // 1. Check Allow Comments setting
+    // When enable_comments === 'false', comments require manual approval by the admin (status = 'PENDING').
+    // When enable_comments !== 'false', comments are automatically approved (status = 'APPROVED').
+    const enableSetting = await db.siteSetting.findUnique({
+      where: { key: "enable_comments" },
+    });
+    const allowDirectly = enableSetting ? enableSetting.value !== "false" : true;
 
+    let initialStatus = allowDirectly ? "APPROVED" : "PENDING";
+
+    // 2. Auto Spam Detection
     const spamSetting = await db.siteSetting.findUnique({
       where: { key: "comment_auto_spam_detection" },
     });
@@ -139,6 +136,13 @@ export async function POST(req: NextRequest) {
       // ignore in environments without cache revalidation
     }
 
+    let message = "Your comment has been posted successfully.";
+    if (initialStatus === "PENDING") {
+      message = "Thank you! Your comment has been submitted and is awaiting approval by a moderator.";
+    } else if (initialStatus === "SPAM") {
+      message = "Your comment was flagged for review.";
+    }
+
     return NextResponse.json({
       id: comment.id,
       articleSlug: comment.articleSlug,
@@ -147,10 +151,7 @@ export async function POST(req: NextRequest) {
       content: comment.content,
       status: comment.status,
       createdAt: comment.createdAt.toISOString(),
-      message:
-        initialStatus === "SPAM"
-          ? "Your comment was flagged for review."
-          : "Your comment has been posted successfully.",
+      message,
     });
   } catch (error) {
     console.error("POST /api/comments error:", error);
